@@ -1,0 +1,550 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* ==========================================
+   ARENAGG - PREMIUM ESPORTS WEB APPLICATION
+   Dark Navy | Electric Blue | iOS Glass UI
+========================================== */
+
+:root {
+  --arena-bg: #050b18;
+  --arena-panel: rgba(13, 27, 49, 0.76);
+  --arena-border: rgba(125, 190, 255, 0.18);
+  --arena-blue: #258cff;
+  --arena-cyan: #45d7ff;
+  --arena-text: #f4f8ff;
+  --arena-muted: #91a5c0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--arena-bg);
+  color: var(--arena-text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ==========================================
+   MAIN PAGE BACKGROUND
+========================================== */
+
+.arena-page {
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 15% 5%,
+      rgba(0, 112, 255, 0.17),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 85% 35%,
+      rgba(0, 190, 255, 0.09),
+      transparent 35%
+    ),
+    #050b18;
+  color: var(--arena-text);
+}
+
+/* ==========================================
+   GLASS EFFECT
+========================================== */
+
+.arena-glass {
+  background: rgba(14, 30, 54, 0.62);
+  border: 1px solid var(--arena-border);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.24);
+  border-radius: 22px;
+}
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.arena-nav {
+  background: rgba(5, 13, 28, 0.76);
+  border: 1px solid rgba(125, 190, 255, 0.15);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 20px;
+}
+
+/* ==========================================
+   HERO SECTION
+========================================== */
+
+.arena-hero {
+  position: relative;
+  min-height: 430px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--arena-border);
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 10, 24, 0.96) 0%,
+      rgba(3, 10, 24, 0.72) 48%,
+      rgba(3, 10, 24, 0.22) 100%
+    ),
+    url("/games/hero-gaming.jpg") center / cover no-repeat;
+}
+
+/* ==========================================
+   HERO BADGE
+========================================== */
+
+.arena-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid rgba(69, 215, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(25, 130, 255, 0.12);
+  color: var(--arena-cyan);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ==========================================
+   GLASS BUTTONS
+========================================== */
+
+.arena-glass-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+  padding: 13px 24px;
+  border: 1px solid rgba(130, 195, 255, 0.4);
+  border-radius: 15px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(36, 137, 255, 0.95),
+    rgba(0, 185, 255, 0.72)
+  );
+
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  box-shadow:
+    0 8px 25px rgba(0, 120, 255, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+  transition: all 0.25s ease;
+}
+
+.arena-glass-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.22),
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.5s ease;
+}
+
+.arena-glass-button:hover::before {
+  transform: translateX(120%);
+}
+
+.arena-glass-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 140, 255, 0.4);
+}
+
+.arena-glass-button:active {
+  transform: scale(0.97);
+}
+
+.arena-glass-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary button */
+
+.arena-glass-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 22px;
+  border: 1px solid rgba(130, 195, 255, 0.25);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.055);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: all 0.25s ease;
+}
+
+.arena-glass-secondary:hover {
+  background: rgba(35, 135, 255, 0.16);
+  border-color: rgba(69, 215, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.arena-glass-secondary:active {
+  transform: scale(0.97);
+}
+
+/* ==========================================
+   GAME SHOWCASE CARDS
+========================================== */
+
+.arena-game-freefire,
+.arena-game-bgmi,
+.arena-game-valorant {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 280px;
+  overflow: hidden;
+  isolation: isolate;
+
+  border: 1px solid rgba(125, 190, 255, 0.22);
+  border-radius: 24px;
+
+  background-color: #0a1930;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.28);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* FREE FIRE MAX */
+
+.arena-game-freefire {
+  background-image:
+    linear-gradient(
+      0deg,
+      rgba(3, 10, 24, 0.96),
+      rgba(3, 10, 24, 0.08) 85%
+    ),
+    url("/games/freefire.jpg");
+}
+
+/* BGMI */
+
+.arena-game-bgmi {
+  background-image:
+    linear-gradient(
+      0deg,
+      rgba(3, 10, 24, 0.96),
+      rgba(3, 10, 24, 0.08) 85%
+    ),
+    url("/games/bgmi.jpg");
+}
+
+/* VALORANT */
+
+.arena-game-valorant {
+  background-image:
+    linear-gradient(
+      0deg,
+      rgba(3, 10, 24, 0.96),
+      rgba(3, 10, 24, 0.08) 85%
+    ),
+    url("/games/valorant.jpg");
+}
+
+/* Game card hover */
+
+@media (hover: hover) {
+  .arena-game-freefire:hover,
+  .arena-game-bgmi:hover,
+  .arena-game-valorant:hover {
+    transform: translateY(-6px);
+    border-color: rgba(69, 170, 255, 0.8);
+    box-shadow: 0 18px 45px rgba(0, 110, 255, 0.2);
+  }
+}
+
+/* ==========================================
+   TOURNAMENT CARDS
+========================================== */
+
+.arena-tournament,
+.arena-premium-card {
+  background: rgba(13, 28, 51, 0.72);
+  border: 1px solid rgba(125, 190, 255, 0.17);
+  border-radius: 22px;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.arena-tournament:hover,
+.arena-premium-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(69, 170, 255, 0.45);
+  box-shadow: 0 16px 40px rgba(0, 110, 255, 0.12);
+}
+
+/* ==========================================
+   INPUTS AND FORM ELEMENTS
+========================================== */
+
+.arena-page input,
+.arena-page select,
+.arena-page textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid rgba(125, 190, 255, 0.22);
+  border-radius: 13px;
+  outline: none;
+
+  background: rgba(7, 19, 37, 0.82);
+  color: white;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.arena-page input:focus,
+.arena-page select:focus,
+.arena-page textarea:focus {
+  border-color: var(--arena-blue);
+  box-shadow: 0 0 0 3px rgba(37, 140, 255, 0.16);
+}
+
+.arena-page input::placeholder,
+.arena-page textarea::placeholder {
+  color: #71849f;
+}
+
+/* ==========================================
+   FILTERS AND SMALL BUTTONS
+========================================== */
+
+.arena-filter {
+  padding: 9px 16px;
+  border: 1px solid var(--arena-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--arena-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.arena-filter:hover,
+.arena-filter.active {
+  background: rgba(37, 140, 255, 0.2);
+  border-color: var(--arena-blue);
+  color: white;
+}
+
+/* ==========================================
+   LINKS AND TEXT
+========================================== */
+
+.arena-page a {
+  transition: color 0.2s ease;
+}
+
+.arena-page a:hover {
+  color: var(--arena-cyan);
+}
+
+.arena-muted {
+  color: var(--arena-muted);
+}
+
+.arena-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    #62baff,
+    #45d7ff
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+.arena-animate {
+  animation: arenaFadeUp 0.65s ease both;
+}
+
+@keyframes arenaFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   RESPONSIVE TABLET
+========================================== */
+
+@media (max-width: 900px) {
+  .arena-hero {
+    min-height: 380px;
+    background-position: 60% center;
+  }
+
+  .arena-game-freefire,
+  .arena-game-bgmi,
+  .arena-game-valorant {
+    min-height: 245px;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE MOBILE
+========================================== */
+
+@media (max-width: 640px) {
+  .arena-page {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .arena-hero {
+    min-height: 360px;
+    border-radius: 22px;
+    background-position: 60% center;
+  }
+
+  .arena-glass {
+    border-radius: 18px;
+  }
+
+
+
+  .arena-glass-button,
+  .arena-glass-secondary {
+    padding: 12px 18px;
+    border-radius: 13px;
+  }
+  .arena-tournament,
+  .arena-premium-card {
+    border-radius: 18px;
+  }
+}
+
+/* ==========================================
+   MOBILE TOUCH FEEDBACK
+========================================== */
+
+@media (hover: none) {
+  .arena-glass-button:active,
+  .arena-glass-secondary:active {
+    transform: scale(0.97);
+  }
+
+  .arena-game-freefire:active,
+  .arena-game-bgmi:active,
+  .arena-game-valorant:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+.arena-page button:focus-visible,
+.arena-page a:focus-visible {
+  outline: 2px solid var(--arena-cyan);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* ARENAGG - USER AND ADMIN FORM THEME */
+
+input,
+textarea,
+select {
+  color: #f4f8ff !important;
+  background: #0d1b31 !important;
+  border: 1px solid rgba(125, 190, 255, 0.25) !important;
+  caret-color: #45d7ff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #91a5c0 !important;
+  opacity: 1;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  color: #ffffff !important;
+  background: #0d1b31 !important;
+  border-color: #258cff !important;
+  outline: none;
+}
+
+select option {
+  color: #ffffff;
+  background: #0d1b31;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #45d7ff;
+  box-shadow: 0 0 0 1000px #0d1b31 inset !important;
+}
