@@ -1,35 +1,183 @@
+
 'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminApi } from '@/lib/adminApi';
 import { istInputToIso, toLocalInput } from '@/lib/format';
-export default function TournamentForm({ games, initial }: { games: { id: string; name: string }[]; initial?: any }) {
+
+export default function TournamentForm({
+  games,
+  initial,
+}: {
+  games: { id: string; name: string }[];
+  initial?: any;
+}) {
   const r = useRouter();
-  const [err, setErr] = useState(''); const [busy, setBusy] = useState(false);
+
+  const [err, setErr] = useState('');
+  const [busy, setBusy] = useState(false);
+
   async function submit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault(); setBusy(true); setErr('');
-    const f = new FormData(e.currentTarget); const g = (k: string) => String(f.get(k) ?? '');
+    e.preventDefault();
+    setErr('');
+    setBusy(true);
+
+    const fd = new FormData(e.currentTarget);
+
+    const body = {
+      game_id: String(fd.get('game_id') || ''),
+      title: String(fd.get('title') || ''),
+      description: String(fd.get('description') || ''),
+      starts_at: istInputToIso(String(fd.get('starts_at') || '')),
+      team_size: Number(fd.get('team_size') || 1),
+      max_teams: Number(fd.get('max_teams') || 12),
+      rules: String(fd.get('rules') || ''),
+      status: String(fd.get('status') || 'open'),
+    };
+
     try {
-      const body = { game_id: g('game_id'), title: g('title'), description: g('description'), starts_at: istInputToIso(g('starts_at')), team_size: Number(g('team_size')), max_teams: Number(g('max_teams')), rules: g('rules'), status: g('status') };
-      await adminApi('tournaments', initial ? 'PATCH' : 'POST', initial ? { id: initial.id, ...body } : body);
-      r.push('/admin'); r.refresh();
-    } catch (x: any) { setErr(x.message); setBusy(false); }
+      await adminApi(
+        'tournaments',
+        initial ? 'PATCH' : 'POST',
+        initial ? { ...body, id: initial.id } : body
+      );
+
+      r.push('/admin');
+      r.refresh();
+    } catch (e: any) {
+      setErr(e?.message || 'Unable to save tournament');
+    } finally {
+      setBusy(false);
+    }
   }
+
   return (
-    <form onSubmit={submit} className="card grid max-w-3xl gap-4">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div><label className="l">Game</label><select name="game_id" className="input" defaultValue={initial?.game_id}>{games.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}</select></div>
-        <div><label className="l">Status</label><select name="status" className="input" defaultValue={initial?.status ?? 'draft'}>
-          <option value="draft">Draft (hidden)</option><option value="open">Published · registrations open</option><option value="closed">Registrations closed</option><option value="live">Live</option><option value="completed">Completed</option></select></div>
-        <div className="sm:col-span-2"><label className="l">Title</label><input name="title" className="input" required defaultValue={initial?.title} /></div>
-        <div><label className="l">Date &amp; time</label><input type="datetime-local" name="starts_at" className="input" required defaultValue={toLocalInput(initial?.starts_at)} /></div>
-        <div><label className="l">Team size (players per team, excl. substitute)</label><input type="number" min={1} max={10} name="team_size" className="input" required defaultValue={initial?.team_size ?? 4} /></div>
-        <div><label className="l">Maximum teams</label><input type="number" min={2} max={500} name="max_teams" className="input" required defaultValue={initial?.max_teams ?? 12} /></div>
+    <form
+      onSubmit={submit}
+      className="card grid w-full max-w-3xl gap-5 p-4 sm:p-6"
+    >
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div>
+          <label className="l mb-2 block">Game</label>
+          <select
+            name="game_id"
+            className="input w-full"
+            required
+            defaultValue={initial?.game_id || ''}
+          >
+            <option value="">Select game</option>
+            {games.map((g) => (
+              <option key={g.id} value={g.id}>
+                {g.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="l mb-2 block">Status</label>
+          <select
+            name="status"
+            className="input w-full"
+            defaultValue={initial?.status || 'open'}
+          >
+            <option value="open">Open</option>
+            <option value="closed">Closed</option>
+            <option value="live">Live</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="l mb-2 block">Tournament title</label>
+          <input
+            name="title"
+            className="input w-full"
+            required
+            defaultValue={initial?.title || ''}
+            placeholder="Enter tournament name"
+          />
+        </div>
+
+        <div>
+          <label className="l mb-2 block">Start date & time</label>
+          <input
+            name="starts_at"
+            type="datetime-local"
+            className="input w-full"
+            required
+            defaultValue={initial?.starts_at ? toLocalInput(initial.starts_at) : ''}
+          />
+        </div>
+
+        <div>
+          <label className="l mb-2 block">Team size</label>
+          <input
+            name="team_size"
+            type="number"
+            min="1"
+            max="10"
+            className="input w-full"
+            required
+            defaultValue={initial?.team_size || 4}
+          />
+        </div>
+
+        <div>
+          <label className="l mb-2 block">Maximum teams</label>
+          <input
+            name="max_teams"
+            type="number"
+            min="2"
+            max="100"
+            className="input w-full"
+            required
+            defaultValue={initial?.max_teams || 12}
+          />
+        </div>
       </div>
-      <div><label className="l">Short description</label><input name="description" className="input" maxLength={500} defaultValue={initial?.description} /></div>
-      <div><label className="l">Rules</label><textarea name="rules" rows={7} className="input" maxLength={5000} defaultValue={initial?.rules} /></div>
-      {err && <div role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-800">{err}</div>}
-      <div><button className="btn" disabled={busy}>{busy ? 'Saving…' : initial ? 'Save changes' : 'Create tournament'}</button></div>
+
+      <div>
+        <label className="l mb-2 block">Description</label>
+        <textarea
+          name="description"
+          className="input w-full"
+          rows={4}
+          defaultValue={initial?.description || ''}
+          placeholder="Tournament details"
+        />
+      </div>
+
+      <div>
+        <label className="l mb-2 block">Rules</label>
+        <textarea
+          name="rules"
+          className="input w-full"
+          rows={4}
+          defaultValue={initial?.rules || ''}
+          placeholder="Tournament rules"
+        />
+      </div>
+
+      {err && (
+        <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-red-300">
+          {err}
+        </div>
+      )}
+
+      {/* Premium submit button */}
+      <button
+        type="submit"
+        className="arena-submit-button w-full"
+        disabled={busy}
+      >
+        {busy
+          ? 'Saving...'
+          : initial
+          ? 'Save Tournament'
+          : '＋ Create Tournament'}
+      </button>
     </form>
   );
 }

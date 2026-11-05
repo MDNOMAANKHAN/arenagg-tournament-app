@@ -18,20 +18,26 @@ export default function RegisterForm({
   const loaded = useRef(Date.now());
 
   const [err, setErr] = useState('');
-  const [fields, setFields] = useState<Record<string, string[]>>({});
   const [busy, setBusy] = useState(false);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setBusy(true);
     setErr('');
-    setFields({});
+    setBusy(true);
 
-    const f = new FormData(e.currentTarget);
-    const g = (k: string) => String(f.get(k) ?? '').trim();
+    const fd = new FormData(e.currentTarget);
+    const g = (n: string) => String(fd.get(n) || '').trim();
 
-    const sn = g('sn');
-    const sg = g('sg');
+    const teammates = Array.from(
+      { length: Math.max(0, t.team_size - 1) },
+      (_, i) => ({
+        name: g(`tn${i}`),
+        game_id: g(`tg${i}`),
+      })
+    );
+
+    const substituteName = g('sn');
+    const substituteGameId = g('sg');
 
     const body = {
       tournament_id: t.id,
@@ -39,17 +45,14 @@ export default function RegisterForm({
       captain_name: g('captain_name'),
       captain_game_id: g('captain_game_id'),
       captain_contact: g('captain_contact'),
-
-      teammates: Array.from(
-        { length: t.team_size - 1 },
-        (_, i) => ({
-          name: g('tn' + i),
-          game_id: g('tg' + i),
-        })
-      ),
-
-      substitute: sn || sg ? { name: sn, game_id: sg } : null,
-
+      teammates,
+      substitute:
+        substituteName || substituteGameId
+          ? {
+              name: substituteName,
+              game_id: substituteGameId,
+            }
+          : null,
       website: g('website'),
       t: loaded.current,
     };
@@ -61,145 +64,194 @@ export default function RegisterForm({
         body: JSON.stringify(body),
       });
 
-      const j = await res.json().catch(() => ({}));
+      const data = await res.json();
 
-      if (res.ok && typeof j.code === 'string') {
-        r.push('/registration/' + j.code);
+      if (!res.ok) {
+        setErr(
+          data?.fields
+            ? Object.entries(data.fields)
+                .map(([field, messages]) =>
+                  `${field}: ${(messages as string[]).join(', ')}`
+                )
+                .join(' | ')
+            : data?.error || 'Registration failed'
+        );
         return;
       }
 
-      setErr(j.error || 'Something went wrong.');
-      setFields(j.fields || {});
+      r.push(`/registration/${data.code}`);
+      r.refresh();
     } catch {
-      setErr('Network error. Please try again.');
+      setErr('Something went wrong. Please try again.');
+    } finally {
+      setBusy(false);
     }
-
-    setBusy(false);
   }
 
-  const I = (n: string, label: string, ph = '') => (
-    <div>
-      <label className="l" htmlFor={n}>{label}</label>
+  const I = (
+    n: string,
+    label: string,
+    ph = '',
+    required = true
+  ) => (
+    <div className="w-full min-w-0">
+      <label className="l mb-2 block" htmlFor={n}>
+        {label}
+      </label>
+
       <input
         id={n}
         name={n}
-        className="input"
+        className="input w-full min-w-0 transition-all duration-300 hover:border-cyan-400/50 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
         placeholder={ph}
         autoComplete="off"
-        maxLength={
-          n.includes('game_id') || n.startsWith('tg') ? 40 : 60
-        }
-        required
+        maxLength={100}
+        required={required}
       />
     </div>
   );
 
   return (
-    <form
-      onSubmit={submit}
-      className="card rise grid gap-6"
-      style={{ '--i': 1 } as React.CSSProperties}
-    >
-      <input
-        name="website"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden
-        className="absolute -left-[9999px] h-0 w-0 opacity-0"
-      />
+    <div className="relative mx-auto flex w-full min-w-0 items-center justify-center">
 
-      {/* TEAM & CAPTAIN */}
-      <div>
-        <div className="mb-3 text-sm font-extrabold">
-          1 · Team &amp; captain
-        </div>
-        <div className="grid gap-3.5 sm:grid-cols-2">
-          {I('team_name', 'Team name', 'Night Wolves')}
-          {I('captain_name', 'Captain name')}
-          {I('captain_game_id', 'Captain gaming ID', 'Player#1234')}
-          {I('captain_contact', 'Captain phone or email', '+91 98xxxxxxxx')}
-        </div>
-      </div>
+      <form
+        onSubmit={submit}
+        className="card rise grid w-full min-w-0 max-w-none gap-6 overflow-hidden border border-cyan-400/25 bg-slate-950/95 p-5 shadow-[0_0_55px_rgba(6,182,212,0.12)] backdrop-blur-xl sm:gap-8 sm:p-8 lg:p-10"
+      >
 
-      {/* TEAMMATES */}
-      {t.team_size > 1 && (
-        <div>
-          <div className="mb-3 text-sm font-extrabold">
-            2 · Teammates ({t.team_size - 1})
-          </div>
-          <div className="grid gap-3.5 sm:grid-cols-2">
-            {Array.from(
-              { length: t.team_size - 1 },
-              (_, i) => (
-                <div key={i} className="contents">
-                  {I('tn' + i, `Teammate ${i + 1} name`)}
-                  {I('tg' + i, `Teammate ${i + 1} gaming ID`)}
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* SUBSTITUTE */}
-      <div>
-        <div className="mb-3 text-sm font-extrabold">
-          {t.team_size > 1 ? '3' : '2'} · Substitute{' '}
-          <span className="font-medium text-muted">(optional)</span>
-        </div>
-        <div className="grid gap-3.5 sm:grid-cols-2">
-          <div>
-            <label className="l" htmlFor="sn">Substitute name</label>
-            <input id="sn" name="sn" className="input" />
-          </div>
-          <div>
-            <label className="l" htmlFor="sg">Substitute gaming ID</label>
-            <input id="sg" name="sg" className="input" />
-          </div>
-        </div>
-      </div>
-
-      {/* UPI PAYMENT SCANNER */}
-      <div className="rounded-xl border p-4">
-        <div className="mb-3 text-sm font-extrabold">
-          Payment · Scan & Pay
-        </div>
-
-        <UPIPayment
-          amount={t.entry_fee ?? 100}
-          tournamentName="ArenaGG Tournament"
-          teamName="Your Team"
+        {/* SPAM PROTECTION */}
+        <input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
         />
 
-        <div className="mt-4 rounded-xl bg-blue-50 p-4 text-sm text-blue-900">
-          <b>Waiting for admin approval</b>
-          <p className="mt-2">
-            Complete your payment using the UPI scanner.
-            Your team will be confirmed after the administrator
-            verifies your payment.
+        {/* CENTRED INTRODUCTION */}
+        <div className="flex flex-col items-center justify-center border-b border-white/10 pb-6 text-center">
+
+          <div className="mb-3 flex items-center justify-center gap-2">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
+
+            <span className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-400">
+              ArenaGG Competition
+            </span>
+          </div>
+
+          <h2 className="w-full text-center text-2xl font-black tracking-tight text-white sm:text-3xl">
+            Tournament <span className="text-cyan-400">Registration</span>
+          </h2>
+
+          <p className="mt-2 text-center text-sm leading-6 text-slate-400">
+            Enter your squad details and get ready to compete.
           </p>
-        </div>
-      </div>
 
-      {/* ERRORS */}
-      {err && (
-        <div
-          role="alert"
-          className="rounded-xl bg-red-50 p-3.5 text-sm text-red-800"
-        >
-          <b>{err}</b>
-          {Object.entries(fields).map(([k, v]) => (
-            <div key={k} className="mt-1 text-xs">
-              {k.replace(/_/g, ' ')}: {v.join(', ')}
+        </div>
+
+        {/* TEAM AND CAPTAIN */}
+        <section className="grid min-w-0 gap-4">
+
+          <h2 className="flex items-center gap-3 text-xl font-bold text-white">
+            <span className="h-7 w-1 rounded-full bg-cyan-400" />
+            Team & Captain
+          </h2>
+
+          <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+            {I('team_name', 'Team Name', 'Enter your team name')}
+            {I('captain_name', 'Captain Name', 'Full name')}
+            {I('captain_game_id', 'Captain Gaming ID', 'Your game ID')}
+            {I('captain_contact', 'Captain Phone Number', 'Contact number')}
+          </div>
+
+        </section>
+
+        {/* TEAMMATES */}
+        {t.team_size > 1 && (
+          <section className="grid min-w-0 gap-4">
+
+            <h2 className="flex items-center gap-3 text-xl font-bold text-white">
+              <span className="h-7 w-1 rounded-full bg-violet-400" />
+              Teammates
+            </h2>
+
+            <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+              {Array.from({ length: t.team_size - 1 }, (_, i) => (
+                <div
+                  key={i}
+                  className="group grid min-w-0 gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40 hover:bg-violet-400/[0.06] hover:shadow-[0_0_25px_rgba(167,139,250,0.08)]"
+                >
+                  <h3 className="font-semibold text-violet-300">
+                    Player {i + 2}
+                  </h3>
+
+                  {I(`tn${i}`, `Player ${i + 2} Name`, 'Full name')}
+                  {I(`tg${i}`, `Player ${i + 2} Gaming ID`, 'Gaming ID')}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
 
-      {/* SUBMIT */}
-      <button className="btn w-full !py-4" disabled={busy}>
-        {busy ? 'Submitting…' : 'Submit registration →'}
-      </button>
-    </form>
+          </section>
+        )}
+
+        {/* SUBSTITUTE */}
+        <section className="grid min-w-0 gap-4">
+
+          <h2 className="flex items-center gap-3 text-xl font-bold text-white">
+            <span className="h-7 w-1 rounded-full bg-fuchsia-400" />
+            Substitute Player (Optional)
+          </h2>
+
+          <div className="grid min-w-0 grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition duration-300 hover:border-fuchsia-400/20 sm:grid-cols-2">
+            {I('sn', 'Substitute Name', 'Full name', false)}
+            {I('sg', 'Substitute Gaming ID', 'Gaming ID', false)}
+          </div>
+
+        </section>
+
+        {/* PAYMENT */}
+        <section className="grid min-w-0 gap-4 rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/[0.07] to-blue-500/[0.03] p-4 shadow-[0_0_25px_rgba(6,182,212,0.04)] sm:p-5">
+
+          <h2 className="flex items-center gap-3 text-xl font-bold text-white">
+            <span className="h-7 w-1 rounded-full bg-emerald-400" />
+            Entry Fee Payment
+          </h2>
+
+          <UPIPayment
+            amount={t.entry_fee ?? 100}
+            tournamentName="ArenaGG Tournament"
+            teamName="Your Team"
+          />
+
+          <p className="text-sm leading-6 text-blue-300">
+            After submitting your registration, your entry will remain pending
+            until the admin verifies your payment and approves your team.
+          </p>
+
+        </section>
+
+        {/* ERROR */}
+        {err && (
+          <div
+            role="alert"
+            className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300"
+          >
+            {err}
+          </div>
+        )}
+
+        {/* SUBMIT */}
+        <button
+          type="submit"
+          disabled={busy}
+          className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 font-black uppercase tracking-wider text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <span className="relative z-10">
+            {busy ? 'Submitting Registration...' : 'Submit Registration'}
+          </span>
+        </button>
+
+      </form>
+    </div>
   );
 }
