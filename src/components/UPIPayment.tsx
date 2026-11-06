@@ -3,6 +3,7 @@
 
 import QRCode from "qrcode";
 import { useEffect, useState } from "react";
+import { UPI_ID } from "@/lib/payment";
 
 interface UPIPaymentProps {
   amount: number;
@@ -19,7 +20,7 @@ export default function UPIPayment({
 
   useEffect(() => {
     const upi =
-      `upi://pay?pa=7330804540@ybl` +
+      `upi://pay?pa=${encodeURIComponent(UPI_ID)}` +
       `&pn=ArenaGG` +
       `&am=${amount}` +
       `&cu=INR` +
@@ -37,7 +38,7 @@ export default function UPIPayment({
       </h2>
 
       <p className="mt-2">
-        UPI ID: 7330804540@ybl
+        UPI ID: {UPI_ID}
       </p>
 
       {qr && (

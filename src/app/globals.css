@@ -1,6 +1,262 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ==========================================
+   DESIGN PRIMITIVES
+   The whole app uses these short class names
+   (wrap, card, btn, st, input, bar, rise, l)
+   but they were never defined in this file,
+   so every one of them rendered as plain
+   unstyled text. Kept below the Tailwind
+   layers so utilities can still override.
+========================================== */
+
+.wrap {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.card {
+  border: 1px solid rgba(125, 190, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(13, 27, 49, 0.72);
+  padding: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+}
+
+/* form controls */
+
+.input {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 14px;
+  border: 1px solid rgba(125, 190, 255, 0.22);
+  border-radius: 12px;
+  background: rgba(9, 20, 38, 0.9);
+  color: var(--arena-text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: #7186a3;
+}
+
+.input:focus {
+  border-color: #359bff;
+  box-shadow: 0 0 0 3px rgba(40, 135, 255, 0.13);
+}
+
+select.input {
+  appearance: auto;
+}
+
+/* small field label used above inputs */
+
+.l {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8fa4c2;
+}
+
+/* buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid rgba(120, 200, 255, 0.45);
+  border-radius: 12px;
+  background: linear-gradient(120deg, #1685ff, #0758d5);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 8px 22px rgba(0, 105, 255, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 125, 255, 0.35);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn.light {
+  border-color: rgba(125, 190, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: #d6e2f4;
+  box-shadow: none;
+}
+
+.btn.light:hover {
+  border-color: rgba(69, 215, 255, 0.5);
+  color: #9fe0ff;
+}
+
+.btn.ghost {
+  border-color: rgba(125, 190, 255, 0.2);
+  background: transparent;
+  color: #cfdcef;
+  box-shadow: none;
+}
+
+.btn.ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn.danger {
+  border-color: rgba(248, 113, 113, 0.4);
+  background: rgba(239, 68, 68, 0.14);
+  color: #fca5a5;
+  box-shadow: none;
+}
+
+.btn.danger:hover {
+  background: rgba(239, 68, 68, 0.24);
+}
+
+.btn.sm {
+  min-height: 34px;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 9px;
+}
+
+/* status pills */
+
+.st {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.st.ok {
+  border-color: rgba(52, 211, 153, 0.35);
+  background: rgba(52, 211, 153, 0.13);
+  color: #6ee7b7;
+}
+
+.st.wait {
+  border-color: rgba(251, 191, 36, 0.35);
+  background: rgba(251, 191, 36, 0.13);
+  color: #fcd34d;
+}
+
+.st.bad {
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(248, 113, 113, 0.13);
+  color: #fca5a5;
+}
+
+.st.info {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.13);
+  color: #7dd3fc;
+}
+
+.st.gray {
+  border-color: rgba(148, 163, 184, 0.26);
+  background: rgba(148, 163, 184, 0.1);
+  color: #cbd5e1;
+}
+
+/* capacity bar */
+
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.bar > i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #45d7ff, #258cff);
+}
+
+/* tables — several pages use a bare <table> and their headers were
+   collapsing into each other ("TeamPlacementPointsKills") */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8fa4c2;
+  border-bottom: 1px solid rgba(125, 190, 255, 0.16);
+  white-space: nowrap;
+}
+
+tbody td {
+  padding: 12px 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(125, 190, 255, 0.08);
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+tbody tr:hover {
+  background: rgba(69, 215, 255, 0.04);
+}
+
+/* entrance animation used by .rise and inline styles */
+
+.rise {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ==========================================
    ARENAGG - PREMIUM ESPORTS WEB APPLICATION
    Dark Navy | Electric Blue | iOS Glass UI

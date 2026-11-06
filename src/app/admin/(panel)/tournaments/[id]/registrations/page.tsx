@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getAdmin } from '@/lib/auth';
 import { fmt } from '@/lib/format';
 import RegActions from '@/components/RegActions';
+import PaymentProofCell from '@/components/PaymentProofCell';
 
 const TONE: Record<string, string> = {
   pending: 'wait',
@@ -31,7 +32,7 @@ export default async function Registrations({
   const { data } = await a.sb
     .from('registrations')
     .select(
-      'id,reg_code,team_name,captain_name,captain_contact,status,created_at,registration_members(name,gaming_id,role)'
+      'id,reg_code,team_name,captain_name,captain_contact,status,created_at,payment_status,payment_amount,payment_utr,payment_proof_path,registration_members(name,gaming_id,role)'
     )
     .eq('tournament_id', t.id)
     .order('created_at', { ascending: false });
@@ -167,11 +168,12 @@ export default async function Registrations({
           <table className="w-full min-w-[1100px] table-fixed border-collapse text-left">
 
             <colgroup>
-              <col className="w-[15%]" />
-              <col className="w-[14%]" />
-              <col className="w-[29%]" />
-              <col className="w-[18%]" />
-              <col className="w-[10%]" />
+              <col className="w-[13%]" />
+              <col className="w-[12%]" />
+              <col className="w-[24%]" />
+              <col className="w-[11%]" />
+              <col className="w-[9%]" />
+              <col className="w-[17%]" />
               <col className="w-[14%]" />
             </colgroup>
 
@@ -195,6 +197,10 @@ export default async function Registrations({
 
                 <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">
                   Status
+                </th>
+
+                <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Payment
                 </th>
 
                 <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">
@@ -273,6 +279,17 @@ export default async function Registrations({
                     >
                       {r.status}
                     </span>
+                  </td>
+
+                  {/* Payment */}
+                  <td className="px-5 py-5 align-middle">
+                    <PaymentProofCell
+                      registrationId={r.id}
+                      amount={r.payment_amount}
+                      status={r.payment_status}
+                      hasProof={!!r.payment_proof_path}
+                      utr={r.payment_utr}
+                    />
                   </td>
 
                   {/* Actions */}

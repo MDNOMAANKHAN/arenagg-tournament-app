@@ -4,7 +4,7 @@ const games = [
     name: 'Free Fire MAX',
     subtitle: 'Battle Royale',
     imageClass: 'arena-game-freefire',
-    href: '/?game=freefire#tournaments',
+    href: '/?game=free-fire-max#tournaments',
   },
   {
     name: 'BGMI',

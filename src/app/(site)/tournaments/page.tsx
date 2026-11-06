@@ -1,6 +1,5 @@
 
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { supabaseServer } from '@/lib/supabase/server';
 import {
   fmt,
@@ -11,169 +10,115 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-export default async function TournamentPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  if (!/^[0-9a-f-]{36}$/i.test(params.id)) {
-    notFound();
-  }
-
+/**
+ * All tournaments list.
+ *
+ * This route used to be a copy of the detail page that read `params.id`
+ * (undefined at /tournaments) and called notFound() — so the URL always 404'd.
+ */
+export default async function TournamentsPage() {
   const sb = supabaseServer();
+
+  const { data: games } = await sb.from('games').select('slug,name').order('name');
 
   const { data } = await sb
     .from('tournament_public')
     .select('*')
-    .eq('id', params.id)
-    .maybeSingle();
+    .in('status', ['open', 'closed', 'live', 'completed'])
+    .order('starts_at');
 
-  if (!data) notFound();
-
-  const t = data as PublicTournament;
-  const s = slotInfo(t);
-  const c = gameColor(t.game_slug);
-
-  const [{ data: matches }, { data: results }] = await Promise.all([
-    sb
-      .from('matches')
-      .select('id,round_label,match_no,scheduled_at,status')
-      .eq('tournament_id', t.id)
-      .order('match_no'),
-
-    sb
-      .from('results_public')
-      .select('team_name,placement,points,kills')
-      .eq('tournament_id', t.id)
-      .order('placement'),
-  ]);
+  const ts = (data ?? []) as PublicTournament[];
 
   return (
-    <main className="wrap grid min-w-0 gap-6 py-10 lg:grid-cols-[minmax(0,1fr)_340px]">
-      <div className="grid min-w-0 content-start gap-6">
-        <div className="rise">
-          <div
-            className="text-xs font-bold tracking-widest"
-            style={{ color: c }}
-          >
-            {t.game_name.toUpperCase()}
-          </div>
-
-          <h1 className="mt-1 text-4xl">{t.title}</h1>
-
-          {t.description && (
-            <p className="mt-2 text-muted">{t.description}</p>
-          )}
-        </div>
-
-        <section className="card">
-          <h2 className="mb-2 text-xl">Rules</h2>
-          <div className="whitespace-pre-wrap text-sm leading-7">
-            {t.rules || 'Rules will be announced by the organizer.'}
-          </div>
-        </section>
-
-        {!!matches?.length && (
-          <section className="card min-w-0">
-            <h2 className="mb-2 text-xl">Matches</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Round</th>
-                    <th>When</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {matches.map((m) => (
-                    <tr key={m.id}>
-                      <td>{m.match_no}</td>
-                      <td><b>{m.round_label}</b></td>
-                      <td>{m.scheduled_at ? fmt(m.scheduled_at) : 'TBA'}</td>
-                      <td>
-                        <span className="st gray">{m.status}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        )}
-
-        {!!results?.length && (
-          <section className="card min-w-0">
-            <h2 className="mb-2 text-xl">Results</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th>Place</th>
-                    <th>Team</th>
-                    <th>Points</th>
-                    <th>Kills</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {results.map((r) => (
-                    <tr key={r.team_name}>
-                      <td><b>#{r.placement}</b></td>
-                      <td>{r.team_name}</td>
-                      <td>{r.points}</td>
-                      <td>{r.kills}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        )}
+    <main className="wrap py-10">
+      <div className="text-xs font-bold tracking-widest text-accd">
+        ALL COMPETITIONS
       </div>
 
-      <aside
-        className="card rise h-fit"
-        style={{ '--i': 1 } as React.CSSProperties}
-      >
-        <dl className="grid gap-3 text-sm">
-          <div className="flex justify-between gap-3">
-            <dt className="text-muted">Starts</dt>
-            <dd className="font-bold">{fmt(t.starts_at)}</dd>
-          </div>
+      <h1 className="mb-2 mt-1 text-4xl font-black">Tournaments</h1>
 
-          <div className="flex justify-between gap-3">
-            <dt className="text-muted">Format</dt>
-            <dd className="font-bold">
-              {t.team_size === 1 ? 'Solo' : `Squad of ${t.team_size}`}
-            </dd>
-          </div>
+      <p className="mb-6 text-sm text-muted">
+        {ts.length} tournament{ts.length === 1 ? '' : 's'} across{' '}
+        {(games ?? []).length} games.
+      </p>
 
-          <div className="flex justify-between gap-3">
-            <dt className="text-muted">Entry</dt>
-            <dd className="font-bold">Free</dd>
-          </div>
+      <div className="mb-8 flex flex-wrap gap-2">
+        <Link className="btn light sm" href="/">
+          ← Back to home
+        </Link>
 
-          <div className="flex justify-between gap-3">
-            <dt className="text-muted">Teams</dt>
-            <dd className="font-bold">
-              {t.registered} / {t.max_teams}
-            </dd>
-          </div>
-        </dl>
-
-        <div className="bar my-4">
-          <i style={{ width: `${s.pct}%` }} />
-        </div>
-
-        {s.canRegister ? (
-          <Link href={`/register/${t.id}`} className="btn w-full">
-            Register free →
+        {(games ?? []).map((g) => (
+          <Link
+            key={g.slug}
+            className="btn light sm"
+            href={`/?game=${g.slug}#tournaments`}
+          >
+            {g.name}
           </Link>
-        ) : (
-          <div className="st gray w-full text-center">{s.label}</div>
-        )}
-      </aside>
+        ))}
+      </div>
+
+      {ts.length ? (
+        <div className="grid gap-4">
+          {ts.map((t) => {
+            const s = slotInfo(t);
+
+            return (
+              <article key={t.id} className="card">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span
+                    className="text-xs font-black tracking-widest"
+                    style={{ color: gameColor(t.game_slug) }}
+                  >
+                    {t.game_name.toUpperCase()}
+                  </span>
+
+                  <span
+                    className={`st ${
+                      s.canRegister
+                        ? 'ok'
+                        : t.status === 'cancelled'
+                        ? 'bad'
+                        : t.status === 'live'
+                        ? 'info'
+                        : 'gray'
+                    }`}
+                  >
+                    {s.label}
+                  </span>
+                </div>
+
+                <h2 className="mt-2 text-xl font-black">
+                  <Link href={`/tournaments/${t.id}`}>{t.title}</Link>
+                </h2>
+
+                <p className="mt-2 text-sm text-muted">
+                  {fmt(t.starts_at)} ·{' '}
+                  {t.team_size === 1 ? 'Solo' : `Squad of ${t.team_size}`} ·{' '}
+                  {t.registered}/{t.max_teams} teams ·{' '}
+                  {t.entry_fee > 0 ? `₹${t.entry_fee} entry` : 'Free entry'}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Link href={`/tournaments/${t.id}`} className="btn light sm">
+                    Details &amp; rules
+                  </Link>
+
+                  {s.canRegister && (
+                    <Link href={`/register/${t.id}`} className="btn sm">
+                      Register now →
+                    </Link>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="card text-center text-muted">
+          No tournaments are open right now. Check back soon.
+        </div>
+      )}
     </main>
   );
 }

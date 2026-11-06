@@ -77,9 +77,10 @@ export function slotInfo(t: PublicTournament) {
     t.status === 'open' &&
     left > 0 &&
     new Date(t.starts_at) > new Date();
-
   const label =
-    t.status === 'live'
+    t.status === 'cancelled'
+      ? 'Cancelled'
+      : t.status === 'live'
       ? 'Live'
       : t.status === 'completed'
       ? 'Completed'
