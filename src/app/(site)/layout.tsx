@@ -18,7 +18,7 @@ export default function SiteLayout({
           </Link>
 
           <nav className="flex items-center gap-6 text-sm font-medium text-[#C7D2E8]">
-            <Link href="/#tournaments">Tournaments</Link>
+            <Link href="/tournaments">Tournaments</Link>
             <Link href="/results">Results</Link>
           </nav>
         </div>

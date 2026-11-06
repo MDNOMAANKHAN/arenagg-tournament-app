@@ -22,14 +22,22 @@ export default async function HomePage({ searchParams }: HomeProps) {
     .select("slug,name")
     .order("name");
 
+  // Only filter by a slug that actually exists, so a stale/typo'd ?game= link
+  // (e.g. ?game=freefire) still shows the full list instead of an empty page.
+  const gameSlugs = new Set((games ?? []).map((g) => g.slug));
+  const activeGame =
+    searchParams.game && gameSlugs.has(searchParams.game)
+      ? searchParams.game
+      : "";
+
   let q = sb
     .from("tournament_public")
     .select("*")
     .in("status", ["open", "closed", "live"])
     .order("starts_at");
 
-  if (searchParams.game) {
-    q = q.eq("game_slug", searchParams.game);
+  if (activeGame) {
+    q = q.eq("game_slug", activeGame);
   }
 
   const { data } = await q;
@@ -206,7 +214,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
                 scroll={false}
                 href="/#tournaments"
                 className={`arena-glass-button arena-glass-secondary rounded-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 ${
-                  !searchParams.game
+                  !activeGame
                     ? "border-cyan-300/60 bg-cyan-400/10 text-cyan-200 shadow-lg shadow-cyan-500/10"
                     : ""
                 }`}
@@ -220,7 +228,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
                   key={g.slug}
                   href={`/?game=${g.slug}#tournaments`}
                   className={`arena-glass-button arena-glass-secondary rounded-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 ${
-                    searchParams.game === g.slug
+                    activeGame === g.slug
                       ? "border-cyan-300/60 bg-cyan-400/10 text-cyan-200 shadow-lg shadow-cyan-500/10"
                       : ""
                   }`}

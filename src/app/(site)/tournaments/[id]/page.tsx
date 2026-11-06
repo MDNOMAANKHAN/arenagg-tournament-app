@@ -414,7 +414,9 @@ export default async function TournamentPage({
 
               <div className="flex items-center justify-between gap-3">
                 <dt className="text-slate-400">Entry fee</dt>
-                <dd className="font-bold text-emerald-400">Free</dd>
+                <dd className="font-bold text-emerald-400">
+                  {t.entry_fee > 0 ? `₹${t.entry_fee}` : 'Free'}
+                </dd>
               </div>
 
               <div className="flex items-center justify-between gap-3">

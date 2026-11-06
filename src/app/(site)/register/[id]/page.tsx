@@ -50,7 +50,8 @@ export default async function RegisterPage({
           </h1>
 
           <p className="mt-3 text-center text-sm text-muted sm:text-base">
-            {fmt(t.starts_at)} · {s.label} · Free entry
+            {fmt(t.starts_at)} · {s.label} ·{' '}
+            {t.entry_fee > 0 ? `Entry ₹${t.entry_fee}` : 'Free entry'}
           </p>
 
         </header>
@@ -61,6 +62,7 @@ export default async function RegisterPage({
             <RegisterForm
               tournament={{
                 id: t.id,
+                title: t.title,
                 team_size: t.team_size,
                 entry_fee: t.entry_fee,
               }}
