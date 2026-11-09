@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   const parsed = registerSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: 'Please fix the highlighted problems.', fields: parsed.error.flatten().fieldErrors }, { status: 422 });
   const { website, t, ...payload } = parsed.data;
-  if (website || Date.now() - t < 3000) return NextResponse.json({ error: 'Request rejected.' }, { status: 400 }); // honeypot / too-fast bot
+  if (website || !Number.isFinite(t)) return NextResponse.json({ error: 'Request rejected.' }, { status: 400 }); // honeypot; do not reject fast autofill or mobile submissions
 
   // Prefer the hosting platform's normalized client-IP header. Configure trusted proxy headers at deployment.
   const ip = (req.headers.get('x-real-ip') || req.headers.get('x-forwarded-for') || 'unknown').split(',')[0].trim().slice(0, 128);
