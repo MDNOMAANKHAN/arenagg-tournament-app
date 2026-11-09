@@ -45,7 +45,7 @@ export async function middleware(req: NextRequest) {
 
   const { data: admin, error } = await sb
     .from('admins')
-    .select('user_id')
+    .select('role')
     .eq('user_id', user.id)
     .maybeSingle();
 
