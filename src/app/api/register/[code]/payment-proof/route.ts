@@ -21,6 +21,24 @@ function sniff(buf: Buffer): string | null {
   return null;
 }
 
+function hasValidOrigin(req: NextRequest): boolean {
+  const origin = req.headers.get('origin');
+  // Browsers send Origin for cross-origin requests. Compare it with the
+  // actual public request host (Vercel/reverse-proxy aware), not a separately
+  // configured canonical URL that may differ by www or custom domain.
+  if (!origin) return true;
+
+  try {
+    const originHost = new URL(origin).host.toLowerCase();
+    const forwardedHost = req.headers.get('x-forwarded-host')?.split(',')[0].trim();
+    const requestHost = req.headers.get('host');
+    const expectedHost = (forwardedHost || requestHost || new URL(req.url).host).toLowerCase();
+    return originHost === expectedHost;
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(req: NextRequest, context: { params: { code: string } }) {
   const code = context.params.code;
 
@@ -28,12 +46,8 @@ export async function POST(req: NextRequest, context: { params: { code: string }
     return NextResponse.json({ error: 'Invalid registration ID.' }, { status: 404 });
   }
 
-  // Same-origin only, same reasoning as /api/register.
-  const origin = req.headers.get('origin');
-  const expectedOrigin = process.env.NEXT_PUBLIC_SITE_URL
-    ? new URL(process.env.NEXT_PUBLIC_SITE_URL).origin
-    : new URL(req.url).origin;
-  if (origin && origin !== expectedOrigin) {
+  // Keep same-origin protection while supporting the public host behind Vercel.
+  if (!hasValidOrigin(req)) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
