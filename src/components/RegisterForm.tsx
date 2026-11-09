@@ -234,8 +234,9 @@ export default function RegisterForm({
 
             <p className="text-sm leading-6 text-blue-300">
               Pay ₹{entryFee} to the UPI ID above, then submit your
-              registration. On the next screen you can upload the payment
-              screenshot so the organiser can verify it and approve your team.
+              registration. On the next screen, upload your payment screenshot
+              (PNG, JPG or WEBP, up to 5 MB). Your paid entry stays pending until
+              the organiser verifies the screenshot.
             </p>
 
           </section>
