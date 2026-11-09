@@ -11,10 +11,26 @@ const MSG: Record<string, [number, string]> = {
   DUPLICATE_ID: [409, 'One or more gaming IDs are already registered in this tournament.'],
   INVALID_REGISTRATION: [422, 'Please complete all required registration details.'],
 };
-export async function POST(req: NextRequest) {
+function hasValidOrigin(req: NextRequest): boolean {
   const origin = req.headers.get('origin');
-  const expectedOrigin = process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL).origin : new URL(req.url).origin;
-  if (origin && origin !== expectedOrigin) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  // Browsers send Origin for cross-origin requests. Compare it with the
+  // actual public request host (Vercel/reverse-proxy aware), not a separately
+  // configured canonical URL that may differ by www or custom domain.
+  if (!origin) return true;
+
+  try {
+    const originHost = new URL(origin).host.toLowerCase();
+    const forwardedHost = req.headers.get('x-forwarded-host')?.split(',')[0].trim();
+    const requestHost = req.headers.get('host');
+    const expectedHost = (forwardedHost || requestHost || new URL(req.url).host).toLowerCase();
+    return originHost === expectedHost;
+  } catch {
+    return false;
+  }
+}
+
+export async function POST(req: NextRequest) {
+  if (!hasValidOrigin(req)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   const length = Number(req.headers.get('content-length') || 0);
   if (length > 20_000) return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
 
