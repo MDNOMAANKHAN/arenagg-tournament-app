@@ -11,19 +11,54 @@ const MSG: Record<string, [number, string]> = {
   DUPLICATE_ID: [409, 'One or more gaming IDs are already registered in this tournament.'],
   INVALID_REGISTRATION: [422, 'Please complete all required registration details.'],
 };
+function normalizeHost(value: string | null | undefined): string | null {
+  if (!value) return null;
+  const candidate = value.split(',')[0].trim();
+  if (!candidate) return null;
+
+  try {
+    const url = new URL(candidate.includes('://') ? candidate : `https://${candidate}`);
+    return url.host.toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
 function hasValidOrigin(req: NextRequest): boolean {
   const origin = req.headers.get('origin');
-  // Browsers send Origin for cross-origin requests. Compare it with the
-  // actual public request host (Vercel/reverse-proxy aware), not a separately
-  // configured canonical URL that may differ by www or custom domain.
+  // Non-browser clients may omit Origin. Browser requests must match a host
+  // supplied by the trusted proxy or one of this deployment's configured
+  // canonical Vercel/site domains.
   if (!origin) return true;
 
   try {
-    const originHost = new URL(origin).host.toLowerCase();
-    const forwardedHost = req.headers.get('x-forwarded-host')?.split(',')[0].trim();
-    const requestHost = req.headers.get('host');
-    const expectedHost = (forwardedHost || requestHost || new URL(req.url).host).toLowerCase();
-    return originHost === expectedHost;
+    const parsedOrigin = new URL(origin);
+    const isLocalhost = parsedOrigin.hostname === 'localhost' || parsedOrigin.hostname === '127.0.0.1';
+    if (parsedOrigin.protocol !== 'https:' && !isLocalhost) return false;
+
+    const allowedHosts = new Set(
+      [
+        req.headers.get('x-forwarded-host'),
+        req.headers.get('host'),
+        req.nextUrl.host,
+        process.env.NEXT_PUBLIC_SITE_URL,
+        process.env.SITE_URL,
+        process.env.VERCEL_URL,
+        process.env.VERCEL_PROJECT_PRODUCTION_URL,
+      ]
+        .map(normalizeHost)
+        .filter((host): host is string => Boolean(host))
+    );
+
+    const originHost = parsedOrigin.host.toLowerCase();
+    const allowed = allowedHosts.has(originHost);
+    if (!allowed) {
+      console.warn('Registration origin rejected', {
+        originHost,
+        allowedHosts: [...allowedHosts],
+      });
+    }
+    return allowed;
   } catch {
     return false;
   }
