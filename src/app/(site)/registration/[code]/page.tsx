@@ -172,7 +172,7 @@ export default async function Confirmation({
                 <div className="h-7 w-1 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/40" />
 
                 <h2 className="text-lg font-black text-white">
-                  Payment
+                  Payment screenshot required
                 </h2>
               </div>
 
@@ -209,6 +209,11 @@ export default async function Confirmation({
               </div>
 
               <div className="rounded-2xl border border-cyan-300/20 bg-[#061326]/80 p-4 sm:p-5">
+                <p className="mb-4 text-sm leading-6 text-slate-300">
+                  After paying the entry fee, upload your UPI payment screenshot
+                  here. Your registration is received, but payment verification
+                  remains pending until the organiser checks the screenshot.
+                </p>
                 <PaymentProofUpload
                   code={params.code.toUpperCase()}
                   alreadyUploaded={!!r.has_payment_proof}
