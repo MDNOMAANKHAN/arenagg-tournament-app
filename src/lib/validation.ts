@@ -1,5 +1,6 @@
 
 import { z } from 'zod';
+import { MAX_TEAMS_PER_TOURNAMENT } from '@/lib/payment';
 
 const name = z.string().trim().min(2).max(60);
 
@@ -64,17 +65,27 @@ export const registerSchema = z
 
 const iso = z.string().datetime({ offset: true });
 
+export const TOURNAMENT_STATUSES = [
+  'draft',
+  'open',
+  'closed',
+  'live',
+  'completed',
+  'cancelled',
+] as const;
+
 export const tournamentSchema = z.object({
   game_id: z.string().uuid(),
   title: z.string().trim().min(3).max(80),
   description: z.string().max(500).default(''),
   starts_at: iso,
   team_size: z.number().int().min(1).max(10),
-  max_teams: z.number().int().min(2).max(500),
+  // The payment migration narrows tournaments_max_teams_check to 2..12.
+  max_teams: z.number().int().min(2).max(MAX_TEAMS_PER_TOURNAMENT),
+  entry_fee: z.number().int().min(0).max(100000).default(100),
   rules: z.string().max(5000).default(''),
-  status: z.enum(['draft', 'open', 'closed', 'live', 'completed']),
+  status: z.enum(TOURNAMENT_STATUSES),
 });
-
 export const matchSchema = z.object({
   tournament_id: z.string().uuid(),
   round_label: z.string().trim().min(1).max(60),
@@ -92,6 +103,11 @@ export const resultSchema = z.object({
   published: z.boolean().default(false),
 });
 
-export const regStatusSchema = z.object({
-  status: z.enum(['pending', 'approved', 'rejected']),
-});
+export const regStatusSchema = z
+  .object({
+    status: z.enum(['pending', 'approved', 'rejected']).optional(),
+    payment_status: z.enum(['pending', 'paid', 'rejected']).optional(),
+  })
+  .refine((d) => d.status !== undefined || d.payment_status !== undefined, {
+    message: 'Nothing to update',
+  });

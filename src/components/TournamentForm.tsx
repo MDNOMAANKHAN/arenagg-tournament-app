@@ -32,6 +32,7 @@ export default function TournamentForm({
       starts_at: istInputToIso(String(fd.get('starts_at') || '')),
       team_size: Number(fd.get('team_size') || 1),
       max_teams: Number(fd.get('max_teams') || 12),
+      entry_fee: Number(fd.get('entry_fee') || 0),
       rules: String(fd.get('rules') || ''),
       status: String(fd.get('status') || 'open'),
     };
@@ -86,9 +87,27 @@ export default function TournamentForm({
             <option value="closed">Closed</option>
             <option value="live">Live</option>
             <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
           </select>
         </div>
 
+        <div>
+          <label className="l mb-2 block">Entry fee (₹)</label>
+          <input
+            name="entry_fee"
+            type="number"
+            min="0"
+            max="100000"
+            step="1"
+            className="input w-full"
+            required
+            defaultValue={initial?.entry_fee ?? 100}
+          />
+          <p className="mt-1 text-xs text-white/40">
+            Set 0 for a free tournament. Shown on the site and used for the UPI
+            amount.
+          </p>
+        </div>
         <div>
           <label className="l mb-2 block">Tournament title</label>
           <input
@@ -130,7 +149,7 @@ export default function TournamentForm({
             name="max_teams"
             type="number"
             min="2"
-            max="100"
+            max="12"
             className="input w-full"
             required
             defaultValue={initial?.max_teams || 12}

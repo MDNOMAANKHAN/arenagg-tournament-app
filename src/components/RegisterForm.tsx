@@ -10,6 +10,7 @@ export default function RegisterForm({
 }: {
   tournament: {
     id: string;
+    title?: string;
     team_size: number;
     entry_fee?: number;
   };
@@ -19,6 +20,9 @@ export default function RegisterForm({
 
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
+  const [teamName, setTeamName] = useState('');
+
+  const entryFee = t.entry_fee ?? 0;
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -92,7 +96,8 @@ export default function RegisterForm({
     n: string,
     label: string,
     ph = '',
-    required = true
+    required = true,
+    onInput?: (value: string) => void
   ) => (
     <div className="w-full min-w-0">
       <label className="l mb-2 block" htmlFor={n}>
@@ -107,6 +112,9 @@ export default function RegisterForm({
         autoComplete="off"
         maxLength={100}
         required={required}
+        onChange={
+          onInput ? (e) => onInput(e.currentTarget.value) : undefined
+        }
       />
     </div>
   );
@@ -158,7 +166,7 @@ export default function RegisterForm({
           </h2>
 
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
-            {I('team_name', 'Team Name', 'Enter your team name')}
+            {I('team_name', 'Team Name', 'Enter your team name', true, setTeamName)}
             {I('captain_name', 'Captain Name', 'Full name')}
             {I('captain_game_id', 'Captain Gaming ID', 'Your game ID')}
             {I('captain_contact', 'Captain Phone Number', 'Contact number')}
@@ -209,26 +217,29 @@ export default function RegisterForm({
 
         </section>
 
-        {/* PAYMENT */}
-        <section className="grid min-w-0 gap-4 rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/[0.07] to-blue-500/[0.03] p-4 shadow-[0_0_25px_rgba(6,182,212,0.04)] sm:p-5">
+        {/* PAYMENT — only for paid tournaments */}
+        {entryFee > 0 && (
+          <section className="grid min-w-0 gap-4 rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/[0.07] to-blue-500/[0.03] p-4 shadow-[0_0_25px_rgba(6,182,212,0.04)] sm:p-5">
 
-          <h2 className="flex items-center gap-3 text-xl font-bold text-white">
-            <span className="h-7 w-1 rounded-full bg-emerald-400" />
-            Entry Fee Payment
-          </h2>
+            <h2 className="flex items-center gap-3 text-xl font-bold text-white">
+              <span className="h-7 w-1 rounded-full bg-emerald-400" />
+              Entry Fee Payment
+            </h2>
 
-          <UPIPayment
-            amount={t.entry_fee ?? 100}
-            tournamentName="ArenaGG Tournament"
-            teamName="Your Team"
-          />
+            <UPIPayment
+              amount={entryFee}
+              tournamentName={t.title || 'ArenaGG Tournament'}
+              teamName={teamName || 'Your Team'}
+            />
 
-          <p className="text-sm leading-6 text-blue-300">
-            After submitting your registration, your entry will remain pending
-            until the admin verifies your payment and approves your team.
-          </p>
+            <p className="text-sm leading-6 text-blue-300">
+              Pay ₹{entryFee} to the UPI ID above, then submit your
+              registration. On the next screen you can upload the payment
+              screenshot so the organiser can verify it and approve your team.
+            </p>
 
-        </section>
+          </section>
+        )}
 
         {/* ERROR */}
         {err && (

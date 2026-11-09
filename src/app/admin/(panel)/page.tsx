@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { getAdmin } from '@/lib/auth';
 import { fmt } from '@/lib/format';
+import CancelTournament from '@/components/CancelTournament';
 
 const TONE: Record<string, string> = {
   draft: 'gray',
@@ -9,6 +10,7 @@ const TONE: Record<string, string> = {
   closed: 'wait',
   live: 'info',
   completed: 'gray',
+  cancelled: 'bad',
 };
 
 export default async function Dashboard() {
@@ -302,7 +304,7 @@ export default async function Dashboard() {
                   </div>
 
                   {/* ACTION BUTTONS */}
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 xl:w-[420px] xl:shrink-0">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:w-[420px] xl:shrink-0 lg:grid-cols-2">
 
                     <Link
                       href={`/admin/tournaments/${t.id}`}
@@ -324,6 +326,12 @@ export default async function Dashboard() {
                     >
                       Matches
                     </Link>
+
+                    <CancelTournament
+                      id={t.id}
+                      title={t.title}
+                      cancelled={t.status === 'cancelled'}
+                    />
 
                   </div>
 

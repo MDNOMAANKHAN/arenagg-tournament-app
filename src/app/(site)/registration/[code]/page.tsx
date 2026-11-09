@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 import { createHash } from 'crypto';
 import { supabaseService } from '@/lib/supabase/service';
 import { fmt } from '@/lib/format';
+import PaymentProofUpload from '@/components/PaymentProofUpload';
 
 export const dynamic = 'force-dynamic';
 
@@ -162,6 +163,61 @@ export default async function Confirmation({
             </dl>
 
           </div>
+
+          {/* PAYMENT PROOF — only for paid tournaments */}
+          {r.entry_fee > 0 && (
+            <div className="relative mt-8">
+
+              <div className="mb-5 flex items-center gap-3">
+                <div className="h-7 w-1 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/40" />
+
+                <h2 className="text-lg font-black text-white">
+                  Payment
+                </h2>
+              </div>
+
+              <div className="mb-4 grid gap-3">
+
+                <div className="flex flex-col gap-1 rounded-xl border border-white/5 bg-white/[0.025] p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="text-sm text-slate-400">Entry fee</span>
+                  <span className="text-sm font-bold text-white sm:text-right">
+                    ₹{r.payment_amount ?? r.entry_fee}
+                  </span>
+                </div>
+
+                <div className="flex flex-col gap-1 rounded-xl border border-white/5 bg-white/[0.025] p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="text-sm text-slate-400">Payment status</span>
+                  <span>
+                    <span
+                      className={`st ${
+                        r.payment_status === 'paid'
+                          ? 'ok'
+                          : r.payment_status === 'rejected'
+                          ? 'bad'
+                          : 'wait'
+                      }`}
+                    >
+                      {r.payment_status === 'paid'
+                        ? 'Verified by organiser'
+                        : r.payment_status === 'rejected'
+                        ? 'Rejected — contact organiser'
+                        : 'Awaiting verification'}
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+
+              <div className="rounded-2xl border border-cyan-300/20 bg-[#061326]/80 p-4 sm:p-5">
+                <PaymentProofUpload
+                  code={params.code.toUpperCase()}
+                  alreadyUploaded={!!r.has_payment_proof}
+                  rejected={r.status === 'rejected'}
+                />
+              </div>
+
+            </div>
+          )}
 
           {/* ACTION */}
           <div className="relative mt-8">
