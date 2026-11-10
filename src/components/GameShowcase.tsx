@@ -1,21 +1,26 @@
 
+import Image from "next/image";
+
 const games = [
   {
     name: 'Free Fire MAX',
     subtitle: 'Battle Royale',
     imageClass: 'arena-game-freefire',
+    imageSrc: '/games/freefire.jpg',
     href: '/?game=free-fire-max#tournaments',
   },
   {
     name: 'BGMI',
     subtitle: 'Survival Battle',
     imageClass: 'arena-game-bgmi',
+    imageSrc: '/games/bgmi.jpg',
     href: '/?game=bgmi#tournaments',
   },
   {
     name: 'Valorant',
     subtitle: 'Tactical 5v5',
     imageClass: 'arena-game-valorant',
+    imageSrc: '/games/valorant.jpg',
     href: '/?game=valorant#tournaments',
   },
 ];
@@ -41,6 +46,14 @@ export default function GameShowcase() {
             className={`arena-game-card ${game.imageClass} arena-animate group`}
             style={{ animationDelay: `${index * 120}ms` }}
           >
+            <Image
+              src={game.imageSrc}
+              alt=""
+              fill
+              quality={75}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="arena-game-image"
+            />
             <div className="relative z-10 flex h-full min-h-[260px] flex-col justify-end p-6">
               <span className="arena-badge w-fit">{game.subtitle}</span>
 
