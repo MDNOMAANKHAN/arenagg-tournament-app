@@ -375,7 +375,7 @@ export default async function TournamentPage({
               </div>
             </div>
 
-            <div className="whitespace-pre-wrap text-sm leading-7 text-slate-300">
+            <div className="break-words rounded-xl border border-white/10 bg-[#070e1a]/70 p-4 text-sm leading-7 text-slate-300 whitespace-pre-wrap sm:p-5" aria-label="Tournament rules">
               {t.rules || 'Rules will be announced by the organizer.'}
             </div>
           </section>
@@ -384,8 +384,8 @@ export default async function TournamentPage({
           {!!matches?.length && (
             <section className="card min-w-0">
               <h2 className="mb-4 text-xl font-black">Matches</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full">
+              <div className="overflow-x-auto" role="region" aria-label="Tournament matches table" tabIndex={0}>
+                <table className="w-full min-w-[480px]">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -413,8 +413,8 @@ export default async function TournamentPage({
           {!!results?.length && (
             <section className="card min-w-0">
               <h2 className="mb-4 text-xl font-black">Results</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full">
+              <div className="overflow-x-auto" role="region" aria-label="Tournament results table" tabIndex={0}>
+                <table className="w-full min-w-[480px]">
                   <thead>
                     <tr>
                       <th>Place</th>
