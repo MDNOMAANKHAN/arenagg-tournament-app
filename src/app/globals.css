@@ -684,7 +684,10 @@ body {
 @media (max-width: 900px) {
   .arena-hero {
     min-height: 380px;
-    background-position: 60% center;
+  }
+
+  .arena-hero-image {
+    object-position: 60% center;
   }
 
   .arena-game-freefire,
@@ -707,7 +710,10 @@ body {
   .arena-hero {
     min-height: 360px;
     border-radius: 22px;
-    background-position: 60% center;
+  }
+
+  .arena-hero-image {
+    object-position: 60% center;
   }
 
   .arena-glass {
