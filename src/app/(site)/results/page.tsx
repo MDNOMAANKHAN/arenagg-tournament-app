@@ -1,6 +1,21 @@
+import type { Metadata } from 'next';
 import { supabaseServer } from '@/lib/supabase/server';
 import { gameColor } from '@/lib/format';
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Esports Tournament Results',
+  description:
+    'View published ARENAGG tournament results, team placements, points and kills across community esports competitions.',
+  alternates: { canonical: '/results' },
+  openGraph: {
+    type: 'website',
+    title: 'Esports Tournament Results | ARENAGG',
+    description:
+      'Check published placements and tournament results on ARENAGG.',
+    url: '/results',
+  },
+};
 export default async function Results() {
   const { data } = await supabaseServer().from('results_public').select('*').order('placement');
   const groups = new Map<string, { title: string; game: string; slug: string; rows: any[] }>();
