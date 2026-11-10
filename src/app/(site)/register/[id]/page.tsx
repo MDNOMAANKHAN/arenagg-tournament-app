@@ -1,4 +1,4 @@
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { supabaseServer } from '@/lib/supabase/server';
@@ -6,6 +6,11 @@ import RegisterForm from '@/components/RegisterForm';
 import { fmt, gameColor, slotInfo, type PublicTournament } from '@/lib/format';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Tournament Registration',
+  robots: { index: false, follow: false },
+};
 
 export default async function RegisterPage({
   params,
