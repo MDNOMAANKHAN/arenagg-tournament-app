@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import Image from "next/image";
 import GameShowcase from "@/components/GameShowcase";
 import { supabaseServer } from "@/lib/supabase/server";
 import TournamentCard from "@/components/TournamentCard";
@@ -73,10 +74,20 @@ export default async function HomePage({ searchParams }: HomeProps) {
         {/* HERO SECTION */}
         <section className="arena-hero arena-animate relative mt-4 overflow-hidden rounded-3xl border border-blue-300/15 p-7 shadow-2xl shadow-blue-950/30 backdrop-blur-xl sm:p-12 lg:p-16">
 
+          <Image
+            src="/games/hero-gaming.jpg"
+            alt=""
+            fill
+            priority
+            quality={75}
+            sizes="100vw"
+            className="arena-hero-image"
+          />
+
           <div className="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-blue-500/15 blur-[100px]" />
           <div className="pointer-events-none absolute -bottom-32 right-1/4 h-72 w-72 rounded-full bg-cyan-400/10 blur-[100px]" />
 
-          <div className="relative max-w-2xl">
+          <div className="relative z-10 max-w-2xl">
 
             <span className="arena-badge inline-flex items-center gap-2">
               <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
