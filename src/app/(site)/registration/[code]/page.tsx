@@ -1,4 +1,4 @@
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
@@ -8,6 +8,11 @@ import { fmt } from '@/lib/format';
 import PaymentProofUpload from '@/components/PaymentProofUpload';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Registration Confirmation',
+  robots: { index: false, follow: false, noarchive: true },
+};
 
 export default async function Confirmation({
   params,
