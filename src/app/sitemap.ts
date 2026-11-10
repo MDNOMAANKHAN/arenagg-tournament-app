@@ -38,7 +38,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const tournamentRoutes: MetadataRoute.Sitemap = data.map((t) => ({
     url: `${siteUrl}/tournaments/${t.id}`,
-    lastModified: t.starts_at ? new Date(t.starts_at) : now,
     changeFrequency: 'daily',
     priority: t.status === 'open' ? 0.9 : 0.7,
   }));
