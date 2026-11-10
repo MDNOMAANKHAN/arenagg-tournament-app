@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 
 import Link from 'next/link';
 import { supabaseServer } from '@/lib/supabase/server';
@@ -9,6 +10,20 @@ import {
 } from '@/lib/format';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Esports Tournaments | Free Fire MAX, BGMI & Valorant',
+  description:
+    'Explore community esports tournaments on ARENAGG. Find Free Fire MAX, BGMI and Valorant competitions, check schedules and rules, and register your team.',
+  alternates: { canonical: '/tournaments' },
+  openGraph: {
+    type: 'website',
+    title: 'Esports Tournaments | ARENAGG',
+    description:
+      'Explore Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG.',
+    url: '/tournaments',
+  },
+};
 
 /**
  * All tournaments list.
