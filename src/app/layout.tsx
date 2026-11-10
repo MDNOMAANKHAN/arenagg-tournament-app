@@ -1,11 +1,46 @@
-
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl = "https://arenagg.live";
+
 export const metadata: Metadata = {
-  title: "ARENAGG | Community Esports Platform",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "ARENAGG | Esports Tournaments & Community Gaming",
+    template: "%s | ARENAGG",
+  },
   description:
-    "Join ARENAGG tournaments for Free Fire MAX, BGMI, and Valorant.",
+    "Discover and join community esports tournaments for Free Fire MAX, BGMI and Valorant on ARENAGG. Explore competitions, tournament rules, schedules and results.",
+  applicationName: "ARENAGG",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "ARENAGG",
+    title: "ARENAGG | Esports Tournaments & Community Gaming",
+    description:
+      "Find community tournaments for Free Fire MAX, BGMI and Valorant. Compete with your team on ARENAGG.",
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary",
+    title: "ARENAGG | Esports Tournaments & Community Gaming",
+    description:
+      "Discover community esports tournaments for Free Fire MAX, BGMI and Valorant.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({
