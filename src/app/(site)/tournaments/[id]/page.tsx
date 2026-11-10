@@ -16,6 +16,57 @@ type PublicTeam = {
   status: 'pending' | 'approved' | 'rejected';
 };
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  if (!/^[0-9a-f-]{36}$/i.test(params.id)) {
+    return {
+      title: 'Tournament not found',
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const { data } = await supabaseServer()
+    .from('tournament_public')
+    .select('id,title,description,game_name,game_slug,starts_at,status')
+    .eq('id', params.id)
+    .maybeSingle();
+
+  if (!data || data.status === 'draft' || data.status === 'cancelled') {
+    return {
+      title: 'Tournament not found',
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = `${data.title} – ${data.game_name} Tournament`;
+  const description =
+    data.description?.trim() ||
+    `View ${data.title}, a ${data.game_name} community esports tournament on ARENAGG. Check the schedule, rules, team status and registration availability.`;
+  const url = `/tournaments/${data.id}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'website',
+      url,
+      title,
+      description,
+      siteName: 'ARENAGG',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
+    robots: { index: true, follow: true },
+  };
+}
+
 export default async function TournamentPage({
   params,
 }: {
