@@ -37,10 +37,6 @@ export default function UPIPayment({
         Pay ₹{amount}
       </h2>
 
-      <p className="mt-2">
-        UPI ID: {UPI_ID}
-      </p>
-
       {qr && (
         <img
           src={qr}
