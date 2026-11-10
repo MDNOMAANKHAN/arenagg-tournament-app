@@ -8,8 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: [
         '/admin/',
         '/api/',
-        '/register/',
-        '/registration/',
       ],
     },
     sitemap: 'https://arenagg.live/sitemap.xml',
