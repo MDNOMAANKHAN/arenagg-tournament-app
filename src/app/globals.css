@@ -346,14 +346,27 @@ body {
   border: 1px solid var(--arena-border);
   border-radius: 28px;
 
-  background:
-    linear-gradient(
-      90deg,
-      rgba(3, 10, 24, 0.96) 0%,
-      rgba(3, 10, 24, 0.72) 48%,
-      rgba(3, 10, 24, 0.22) 100%
-    ),
-    url("/games/hero-gaming.jpg") center / cover no-repeat;
+  background-color: #050b18;
+}
+
+.arena-hero-image {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center;
+}
+
+.arena-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(3, 10, 24, 0.96) 0%,
+    rgba(3, 10, 24, 0.72) 48%,
+    rgba(3, 10, 24, 0.22) 100%
+  );
 }
 
 /* ==========================================
@@ -490,9 +503,6 @@ body {
   border-radius: 24px;
 
   background-color: #0a1930;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.28);
 
@@ -502,40 +512,27 @@ body {
     box-shadow 0.3s ease;
 }
 
-/* FREE FIRE MAX */
+/* Game artwork is delivered through responsive Next.js Image elements. */
 
-.arena-game-freefire {
-  background-image:
-    linear-gradient(
-      0deg,
-      rgba(3, 10, 24, 0.96),
-      rgba(3, 10, 24, 0.08) 85%
-    ),
-    url("/games/freefire.jpg");
+.arena-game-image {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center;
 }
 
-/* BGMI */
-
-.arena-game-bgmi {
-  background-image:
-    linear-gradient(
-      0deg,
-      rgba(3, 10, 24, 0.96),
-      rgba(3, 10, 24, 0.08) 85%
-    ),
-    url("/games/bgmi.jpg");
-}
-
-/* VALORANT */
-
-.arena-game-valorant {
-  background-image:
-    linear-gradient(
-      0deg,
-      rgba(3, 10, 24, 0.96),
-      rgba(3, 10, 24, 0.08) 85%
-    ),
-    url("/games/valorant.jpg");
+.arena-game-freefire::before,
+.arena-game-bgmi::before,
+.arena-game-valorant::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    rgba(3, 10, 24, 0.96),
+    rgba(3, 10, 24, 0.08) 85%
+  );
 }
 
 /* Game card hover */
@@ -687,7 +684,10 @@ body {
 @media (max-width: 900px) {
   .arena-hero {
     min-height: 380px;
-    background-position: 60% center;
+  }
+
+  .arena-hero-image {
+    object-position: 60% center;
   }
 
   .arena-game-freefire,
@@ -710,7 +710,10 @@ body {
   .arena-hero {
     min-height: 360px;
     border-radius: 22px;
-    background-position: 60% center;
+  }
+
+  .arena-hero-image {
+    object-position: 60% center;
   }
 
   .arena-glass {

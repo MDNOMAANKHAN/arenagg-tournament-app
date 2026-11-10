@@ -214,7 +214,7 @@ These were blocking `npm run dev` from working at all against a local database:
 | New tables were not reachable through the Data API (`permission denied for table games`) | `auto_expose_new_tables = true` in `supabase/config.toml` (plus explicit grants in the new migrations) |
 | No admin user, so `/admin` could not be entered | `supabase/seed.sql` seeds one confirmed super_admin with an `auth.identities` row |
 
-Local admin login: `mdnomaankhan5@gmail.com` / `arenagg-dev-123`
+Local development credentials are intentionally not documented in this repository. Use private local environment setup only, and never reuse seeded development credentials in production.
 
 ---
 
