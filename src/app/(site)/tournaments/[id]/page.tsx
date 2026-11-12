@@ -291,64 +291,92 @@ export default async function TournamentPage({
               </div>
             </div>
 
-            {/* TEAM LIST */}
-            <div className="mt-8">
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-                <h3 className="font-black text-white">
-                  Participating Teams
-                </h3>
-                <span className="text-xs text-slate-500">
-                  {publicTeams.length} applications
-                </span>
+            {/* PARTICIPATING TEAMS: APPROVED + PENDING */}
+            {teamsError ? (
+              <div className="mt-8 rounded-xl border border-red-400/20 bg-red-400/5 p-5 text-sm text-red-300">
+                Team status is temporarily unavailable.
               </div>
-
-              {teamsError ? (
-                <div className="rounded-xl border border-red-400/20 bg-red-400/5 p-5 text-sm text-red-300">
-                  Team status is temporarily unavailable.
-                </div>
-              ) : publicTeams.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-white/15 p-9 text-center">
-                  <div className="text-4xl">🏆</div>
-                  <p className="mt-3 font-bold text-white">
-                    Be the first to compete!
-                  </p>
-                  <p className="mt-2 text-xs text-slate-400">
-                    No teams have registered yet.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {publicTeams.map((team, index) => (
-                    <div
-                      key={`${team.team_name}-${index}`}
-                      className="group flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-[#080f1d]/80 p-4 transition duration-300 hover:translate-x-1 hover:border-cyan-400/30 hover:bg-cyan-400/[0.035]"
-                      style={{
-                        animation: 'fadeInUp .45s ease-out both',
-                        animationDelay: `${200 + index * 65}ms`,
-                      }}
-                    >
-                      <div className="flex min-w-0 items-center gap-3">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06] text-sm font-black text-cyan-300">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-
-                        <span className="break-words font-bold text-slate-200 transition-colors group-hover:text-cyan-200">
-                          {team.team_name}
-                        </span>
-                      </div>
-
-                      {team.status === 'approved' ? (
-                        <span className="st ok">✓ Approved</span>
-                      ) : team.status === 'pending' ? (
-                        <span className="st wait">◷ Pending</span>
-                      ) : (
-                        <span className="st gray">Rejected</span>
-                      )}
+            ) : (
+              <div className="mt-8 space-y-7">
+                <div>
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="font-black text-white">Participating Teams</h3>
+                    <span className="text-xs text-slate-500">
+                      {activeCount} applications
+                    </span>
+                  </div>
+                  {publicTeams.filter((team) => team.status !== 'rejected').length === 0 ? (
+                    <div className="rounded-xl border border-dashed border-white/15 p-9 text-center">
+                      <div className="text-4xl">🏆</div>
+                      <p className="mt-3 font-bold text-white">Be the first to compete!</p>
+                      <p className="mt-2 text-xs text-slate-400">
+                        No active applications yet.
+                      </p>
                     </div>
-                  ))}
+                  ) : (
+                    <div className="space-y-3">
+                      {publicTeams
+                        .filter((team) => team.status !== 'rejected')
+                        .map((team, index) => (
+                          <div
+                            key={`active-${team.team_name}-${index}`}
+                            className="group flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-[#080f1d]/80 p-4 transition duration-300 hover:translate-x-1 hover:border-cyan-400/30 hover:bg-cyan-400/[0.035]"
+                            style={{
+                              animation: 'fadeInUp .45s ease-out both',
+                              animationDelay: `${200 + index * 65}ms`,
+                            }}
+                          >
+                            <div className="flex min-w-0 items-center gap-3">
+                              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06] text-sm font-black text-cyan-300">
+                                {String(index + 1).padStart(2, '0')}
+                              </span>
+                              <span className="break-words font-bold text-slate-200 transition-colors group-hover:text-cyan-200">
+                                {team.team_name}
+                              </span>
+                            </div>
+                            {team.status === 'approved' ? (
+                              <span className="st ok">✓ Approved</span>
+                            ) : (
+                              <span className="st wait">◷ Awaiting admin approval</span>
+                            )}
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+
+                {/* REJECTED APPLICATIONS: SEPARATE AND VISIBLE */}
+                <div className="border-t border-white/[0.07] pt-6">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="font-black text-white">Rejected Applications</h3>
+                    <span className="rounded-full border border-red-400/20 bg-red-400/[0.06] px-2.5 py-1 text-[11px] font-bold text-red-300">
+                      {rejectedCount}
+                    </span>
+                  </div>
+                  {rejectedCount === 0 ? (
+                    <div className="rounded-xl border border-dashed border-white/10 px-4 py-5 text-sm text-slate-500">
+                      No rejected applications.
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {publicTeams
+                        .filter((team) => team.status === 'rejected')
+                        .map((team, index) => (
+                          <div
+                            key={`rejected-${team.team_name}-${index}`}
+                            className="flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-xl border border-red-400/10 bg-red-400/[0.025] p-4"
+                          >
+                            <span className="break-words font-bold text-slate-300">
+                              {team.team_name}
+                            </span>
+                            <span className="st gray">Rejected</span>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             <p className="mt-5 border-t border-white/[0.07] pt-4 text-[11px] leading-5 text-slate-500">
               Public information is limited to team names and approval statuses.
