@@ -13,8 +13,18 @@ const R: Record<string, Cfg> = {
 const bad = (error: string, status = 400) => NextResponse.json({ error }, { status });
 
 async function handle(req: NextRequest, resource: string, op: 'create' | 'update' | 'remove') {
+  // Admin mutations use cookie-based sessions, so fail closed if the browser
+  // does not send an Origin header. This blocks cross-site form/fetch requests
+  // from reaching state-changing endpoints.
   const origin = req.headers.get('origin');
-  if (origin && origin !== new URL(req.url).origin) return bad('Forbidden', 403);
+  if (!origin) return bad('Forbidden', 403);
+  try {
+    if (new URL(origin).origin !== new URL(req.url).origin) {
+      return bad('Forbidden', 403);
+    }
+  } catch {
+    return bad('Forbidden', 403);
+  }
   const admin = await getAdmin();                       // server-side permission check on every call
   if (!admin) return bad('Forbidden', 403);
   const cfg = R[resource];
