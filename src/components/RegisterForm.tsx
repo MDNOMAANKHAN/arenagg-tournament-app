@@ -21,12 +21,19 @@ export default function RegisterForm({
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [teamName, setTeamName] = useState('');
+  const [paymentFile, setPaymentFile] = useState<File | null>(null);
+  const [paymentUtr, setPaymentUtr] = useState('');
+  const [registrationCode, setRegistrationCode] = useState('');
 
   const entryFee = t.entry_fee ?? 0;
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErr('');
+    if (entryFee > 0 && !paymentFile) {
+      setErr('Please upload your payment screenshot before submitting.');
+      return;
+    }
     setBusy(true);
 
     const fd = new FormData(e.currentTarget);
@@ -62,31 +69,57 @@ export default function RegisterForm({
     };
 
     try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
+      // If the registration was already created but the screenshot upload failed,
+      // retry only the upload. Never create a duplicate team registration.
+      let code = registrationCode;
 
-      const data = await res.json();
+      if (!code) {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
 
-      if (!res.ok) {
-        setErr(
-          data?.fields
-            ? Object.entries(data.fields)
-                .map(([field, messages]) =>
-                  `${field}: ${(messages as string[]).join(', ')}`
-                )
-                .join(' | ')
-            : data?.error || 'Registration failed'
-        );
-        return;
+        const data = await res.json();
+
+        if (!res.ok) {
+          setErr(
+            data?.fields
+              ? Object.entries(data.fields)
+                  .map(([field, messages]) =>
+                    `${field}: ${(messages as string[]).join(', ')}`
+                  )
+                  .join(' | ')
+              : data?.error || 'Registration failed'
+          );
+          return;
+        }
+
+        code = data.code;
+        setRegistrationCode(code);
       }
 
-      r.push(`/registration/${data.code}`);
+      if (entryFee > 0 && paymentFile) {
+        const proof = new FormData();
+        proof.append('file', paymentFile);
+        if (paymentUtr.trim()) proof.append('utr', paymentUtr.trim());
+
+        const upload = await fetch(`/api/register/${encodeURIComponent(code)}/payment-proof`, {
+          method: 'POST',
+          body: proof,
+        });
+        const uploadData = await upload.json().catch(() => ({}));
+
+        if (!upload.ok) {
+          setErr(`Your team registration was created (ID: ${code}), but the payment screenshot could not be uploaded. Your details are saved. Press Submit Registration again to retry the screenshot upload without creating another registration. ${uploadData?.error || ''}`);
+          return;
+        }
+      }
+
+      r.push(`/registration/${code}`);
       r.refresh();
     } catch {
-      setErr('Something went wrong. Please try again.');
+      setErr('Something went wrong. If your registration was created, use its registration ID to continue. Please try again.');
     } finally {
       setBusy(false);
     }
@@ -232,11 +265,66 @@ export default function RegisterForm({
               teamName={teamName || 'Your Team'}
             />
 
+            <div className="grid gap-3">
+              <div>
+                <label htmlFor="payment-screenshot" className="l mb-2 block">
+                  Payment Screenshot <span className="text-rose-300">*</span>
+                </label>
+                <input
+                  id="payment-screenshot"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  required
+                  onChange={(event) => {
+                    const file = event.currentTarget.files?.[0] ?? null;
+                    if (file && file.size > 5 * 1024 * 1024) {
+                      setPaymentFile(null);
+                      setErr('Screenshot must be 5 MB or smaller.');
+                      event.currentTarget.value = '';
+                      return;
+                    }
+                    if (file && !/^image\\/(png|jpeg|webp)$/.test(file.type)) {
+                      setPaymentFile(null);
+                      setErr('Please choose a PNG, JPG or WEBP image.');
+                      event.currentTarget.value = '';
+                      return;
+                    }
+                    setErr('');
+                    setPaymentFile(file);
+                  }}
+                  className="w-full cursor-pointer rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-300 file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:bg-cyan-400/15 file:px-4 file:py-2 file:text-xs file:font-bold file:text-cyan-200 hover:border-cyan-400/30"
+                />
+                <p className="mt-2 text-xs leading-5 text-slate-500">
+                  PNG, JPG or WEBP · Maximum 5 MB · Visible only to the organiser.
+                </p>
+              </div>
+
+              <div>
+                <label htmlFor="payment-utr" className="l mb-2 block">
+                  UPI Reference / UTR <span className="text-slate-500">(optional)</span>
+                </label>
+                <input
+                  id="payment-utr"
+                  value={paymentUtr}
+                  onChange={(event) => setPaymentUtr(event.currentTarget.value.slice(0, 40))}
+                  maxLength={40}
+                  autoComplete="off"
+                  placeholder="e.g. 423456789012"
+                  className="input w-full min-w-0"
+                />
+              </div>
+
+              {paymentFile && (
+                <p className="rounded-lg border border-emerald-400/20 bg-emerald-400/[0.06] px-3 py-2 text-xs text-emerald-200">
+                  Screenshot selected: {paymentFile.name}
+                </p>
+              )}
+            </div>
+
             <p className="text-sm leading-6 text-blue-300">
-              Pay ₹{entryFee} to the UPI ID above, then submit your
-              registration. On the next screen, upload your payment screenshot
-              (PNG, JPG or WEBP, up to 5 MB). Your paid entry stays pending until
-              the organiser verifies the screenshot.
+              Scan the QR code, complete your payment, attach the screenshot,
+              and submit everything together. Your registration remains pending
+              until the organiser verifies your payment.
             </p>
 
           </section>
@@ -259,7 +347,7 @@ export default function RegisterForm({
           className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 font-black uppercase tracking-wider text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <span className="relative z-10">
-            {busy ? 'Submitting Registration...' : 'Submit Registration'}
+            {busy ? (registrationCode ? 'Uploading Payment Screenshot...' : 'Submitting Registration...') : 'Submit Registration'}
           </span>
         </button>
 
