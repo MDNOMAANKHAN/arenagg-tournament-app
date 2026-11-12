@@ -5,7 +5,6 @@ import { headers } from 'next/headers';
 import { createHash } from 'crypto';
 import { supabaseService } from '@/lib/supabase/service';
 import { fmt } from '@/lib/format';
-import PaymentProofUpload from '@/components/PaymentProofUpload';
 
 export const dynamic = 'force-dynamic';
 
@@ -213,18 +212,7 @@ export default async function Confirmation({
 
               </div>
 
-              <div className="rounded-2xl border border-cyan-300/20 bg-[#061326]/80 p-4 sm:p-5">
-                <p className="mb-4 text-sm leading-6 text-slate-300">
-                  After paying the entry fee, upload your UPI payment screenshot
-                  here. Your registration is received, but payment verification
-                  remains pending until the organiser checks the screenshot.
-                </p>
-                <PaymentProofUpload
-                  code={params.code.toUpperCase()}
-                  alreadyUploaded={!!r.has_payment_proof}
-                  rejected={r.status === 'rejected'}
-                />
-              </div>
+
 
             </div>
           )}
