@@ -283,7 +283,7 @@ export default function RegisterForm({
                       event.currentTarget.value = '';
                       return;
                     }
-                    if (file && !/^image\\/(png|jpeg|webp)$/.test(file.type)) {
+                    if (file && !/^image\/(png|jpeg|webp)$/.test(file.type)) {
                       setPaymentFile(null);
                       setErr('Please choose a PNG, JPG or WEBP image.');
                       event.currentTarget.value = '';
