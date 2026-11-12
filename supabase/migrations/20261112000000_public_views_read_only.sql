@@ -174,6 +174,22 @@ revoke all on function public.is_super_admin() from public, anon, authenticated;
 grant execute on function public.is_admin() to authenticated;
 grant execute on function public.is_super_admin() to authenticated;
 
+-- Keep the service-role-only SECURITY DEFINER RPCs pinned to trusted
+-- schemas. pg_catalog is first so built-ins cannot be shadowed.
+alter function public.register_team(jsonb)
+  set search_path = pg_catalog, public, extensions;
+alter function public.check_rate_limit(text, integer, integer)
+  set search_path = pg_catalog, public, extensions;
+alter function public.get_registration_public(text)
+  set search_path = pg_catalog, public, extensions;
+
+revoke all on function public.register_team(jsonb) from public, anon, authenticated;
+revoke all on function public.check_rate_limit(text, integer, integer) from public, anon, authenticated;
+revoke all on function public.get_registration_public(text) from public, anon, authenticated;
+grant execute on function public.register_team(jsonb) to service_role;
+grant execute on function public.check_rate_limit(text, integer, integer) to service_role;
+grant execute on function public.get_registration_public(text) to service_role;
+
 -- Trigger functions do not need to be callable through the Data API.
 create or replace function public.sync_members_active()
 returns trigger
