@@ -291,48 +291,40 @@ export default async function TournamentPage({
               </div>
             </div>
 
-            {/* PUBLIC TEAM STATUS SECTIONS */}
+            {/* PARTICIPATING TEAMS: APPROVED + PENDING */}
             {teamsError ? (
               <div className="mt-8 rounded-xl border border-red-400/20 bg-red-400/5 p-5 text-sm text-red-300">
                 Team status is temporarily unavailable.
               </div>
             ) : (
-              <div className="mt-8 space-y-6">
-                {[
-                  {
-                    title: 'Approved Teams',
-                    status: 'approved' as const,
-                    items: publicTeams.filter((team) => team.status === 'approved'),
-                    badge: 'st ok',
-                    statusLabel: '✓ Approved',
-                    empty: 'No teams have been approved yet.',
-                  },
-                  {
-                    title: 'Awaiting Approval',
-                    status: 'pending' as const,
-                    items: publicTeams.filter((team) => team.status === 'pending'),
-                    badge: 'st wait',
-                    statusLabel: '◷ Pending',
-                    empty: 'No applications are waiting for approval.',
-                  },
-                ].map((group) => (
-                  <div key={group.status}>
-                    <div className="mb-3 flex items-center justify-between gap-3">
-                      <h3 className="font-black text-white">{group.title}</h3>
-                      <span className="text-xs text-slate-500">
-                        {group.items.length} {group.items.length === 1 ? 'team' : 'teams'}
-                      </span>
+              <div className="mt-8 space-y-7">
+                <div>
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="font-black text-white">Participating Teams</h3>
+                    <span className="text-xs text-slate-500">
+                      {activeCount} applications
+                    </span>
+                  </div>
+                  {publicTeams.filter((team) => team.status !== 'rejected').length === 0 ? (
+                    <div className="rounded-xl border border-dashed border-white/15 p-9 text-center">
+                      <div className="text-4xl">🏆</div>
+                      <p className="mt-3 font-bold text-white">Be the first to compete!</p>
+                      <p className="mt-2 text-xs text-slate-400">
+                        No active applications yet.
+                      </p>
                     </div>
-                    {group.items.length === 0 ? (
-                      <div className="rounded-xl border border-dashed border-white/10 px-4 py-5 text-sm text-slate-500">
-                        {group.empty}
-                      </div>
-                    ) : (
-                      <div className="space-y-3">
-                        {group.items.map((team, index) => (
+                  ) : (
+                    <div className="space-y-3">
+                      {publicTeams
+                        .filter((team) => team.status !== 'rejected')
+                        .map((team, index) => (
                           <div
-                            key={`${group.status}-${team.team_name}-${index}`}
+                            key={`active-${team.team_name}-${index}`}
                             className="group flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-[#080f1d]/80 p-4 transition duration-300 hover:translate-x-1 hover:border-cyan-400/30 hover:bg-cyan-400/[0.035]"
+                            style={{
+                              animation: 'fadeInUp .45s ease-out both',
+                              animationDelay: `${200 + index * 65}ms`,
+                            }}
                           >
                             <div className="flex min-w-0 items-center gap-3">
                               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06] text-sm font-black text-cyan-300">
@@ -342,49 +334,47 @@ export default async function TournamentPage({
                                 {team.team_name}
                               </span>
                             </div>
-                            <span className={group.badge}>{group.statusLabel}</span>
+                            {team.status === 'approved' ? (
+                              <span className="st ok">✓ Approved</span>
+                            ) : (
+                              <span className="st wait">◷ Awaiting admin approval</span>
+                            )}
                           </div>
                         ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  )}
+                </div>
 
-                <details className="group rounded-xl border border-red-400/15 bg-red-400/[0.025]">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl p-4 transition hover:bg-red-400/[0.04] [&::-webkit-details-marker]:hidden">
-                    <span className="flex min-w-0 items-center gap-3">
-                      <span className="font-black text-slate-200">Rejected Applications</span>
-                      <span className="rounded-full border border-red-400/20 bg-red-400/[0.06] px-2.5 py-1 text-[11px] font-bold text-red-300">
-                        {rejectedCount}
-                      </span>
+                {/* REJECTED APPLICATIONS: SEPARATE AND VISIBLE */}
+                <div className="border-t border-white/[0.07] pt-6">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="font-black text-white">Rejected Applications</h3>
+                    <span className="rounded-full border border-red-400/20 bg-red-400/[0.06] px-2.5 py-1 text-[11px] font-bold text-red-300">
+                      {rejectedCount}
                     </span>
-                    <span className="shrink-0 text-xs font-bold text-slate-400 group-open:hidden">
-                      Show teams +
-                    </span>
-                    <span className="hidden shrink-0 text-xs font-bold text-slate-400 group-open:inline">
-                      Hide teams −
-                    </span>
-                  </summary>
-                  <div className="space-y-3 border-t border-red-400/10 p-4">
-                    {rejectedCount === 0 ? (
-                      <p className="text-sm text-slate-500">No rejected applications.</p>
-                    ) : (
-                      publicTeams
+                  </div>
+                  {rejectedCount === 0 ? (
+                    <div className="rounded-xl border border-dashed border-white/10 px-4 py-5 text-sm text-slate-500">
+                      No rejected applications.
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {publicTeams
                         .filter((team) => team.status === 'rejected')
                         .map((team, index) => (
                           <div
                             key={`rejected-${team.team_name}-${index}`}
-                            className="flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-xl border border-white/[0.07] bg-[#080f1d]/80 p-4"
+                            className="flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-xl border border-red-400/10 bg-red-400/[0.025] p-4"
                           >
                             <span className="break-words font-bold text-slate-300">
                               {team.team_name}
                             </span>
                             <span className="st gray">Rejected</span>
                           </div>
-                        ))
-                    )}
-                  </div>
-                </details>
+                        ))}
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
