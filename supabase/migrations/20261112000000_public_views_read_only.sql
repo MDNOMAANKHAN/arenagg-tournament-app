@@ -76,6 +76,11 @@ grant select on table
   public.tournaments
 to anon;
 
+-- The only Storage bucket is private and all object operations are routed
+-- through server-side service-role handlers. No browser role needs direct
+-- access to storage.objects.
+revoke all privileges on table storage.objects from public, anon, authenticated;
+
 -- 2) Restrict admin policies to signed-in users. Public visitors should only
 -- evaluate the explicit public-read policies, not admin helper functions.
 drop policy if exists admins_self on public.admins;
