@@ -3,6 +3,29 @@ import "./globals.css";
 
 const siteUrl = "https://arenagg.live";
 
+// Factual identifiers for search engines and structured-data consumers.
+// Only verified brand and website details are included.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      "name": "ARENAGG",
+      "url": siteUrl,
+      "description": "ARENAGG is a community esports website."
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "name": "ARENAGG",
+      "url": siteUrl,
+      "publisher": { "@id": `${siteUrl}/#organization` },
+      "inLanguage": "en-IN"
+    }
+  ]
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -51,6 +74,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-[#050b18] text-white">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
         {children}
       </body>
     </html>
