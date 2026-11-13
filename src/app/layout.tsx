@@ -10,17 +10,17 @@ const structuredData = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "${siteUrl}/#organization",
+      "@id": `${siteUrl}/#organization`,
       "name": "ARENAGG",
       "url": siteUrl,
       "description": "ARENAGG is a community esports website."
     },
     {
       "@type": "WebSite",
-      "@id": "${siteUrl}/#website",
+      "@id": `${siteUrl}/#website`,
       "name": "ARENAGG",
       "url": siteUrl,
-      "publisher": { "@id": "${siteUrl}/#organization" },
+      "publisher": { "@id": `${siteUrl}/#organization` },
       "inLanguage": "en-IN"
     }
   ]
