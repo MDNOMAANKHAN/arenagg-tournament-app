@@ -9,7 +9,7 @@ export default function SiteLayout({
     <div className="flex min-h-screen flex-col bg-[#050b18] text-white">
       <a
         href="#main-content"
-        className="sr-only z-50 rounded-lg bg-[#1685ff] px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#45d7ff]"
+        className="skip-link"
       >
         Skip to main content
       </a>
@@ -28,29 +28,24 @@ export default function SiteLayout({
             aria-label="Primary navigation"
             className="flex flex-wrap items-center gap-1 text-sm font-medium text-[#C7D2E8]"
           >
-            <Link
-              href="/tournaments"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl px-3 py-2 transition-colors duration-200 hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#45d7ff]"
-            >
+            <Link href="/tournaments" className="public-nav-link">
               Tournaments
             </Link>
-            <Link
-              href="/results"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl px-3 py-2 transition-colors duration-200 hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#45d7ff]"
-            >
+            <Link href="/results" className="public-nav-link">
               Results
             </Link>
           </nav>
         </div>
       </header>
 
-      <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+      <div id="main-content" tabIndex={-1} className="min-w-0 flex-1 outline-none">
         {children}
-      </main>
+      </div>
 
       <footer className="mt-auto shrink-0 border-t border-blue-200/10 py-6 text-xs text-slate-400">
-        <div className="mx-auto max-w-7xl px-4 sm:px-8">
-          © ARENAGG · Community esports. Not affiliated with game publishers.
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <span className="font-bold tracking-wide text-slate-300">ARENAGG</span>
+          <span>© {new Date().getFullYear()} ARENAGG · Community esports. Not affiliated with game publishers.</span>
         </div>
       </footer>
     </div>

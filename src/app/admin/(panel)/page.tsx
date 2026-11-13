@@ -206,7 +206,7 @@ export default async function Dashboard() {
       </section>
 
       {/* TOURNAMENTS */}
-      <section className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+      <section id="tournaments" tabIndex={-1} aria-labelledby="admin-tournaments-heading" className="scroll-mt-24 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
 
         <div className="flex flex-col justify-between gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:p-6">
 
@@ -215,7 +215,7 @@ export default async function Dashboard() {
               MANAGEMENT CENTER
             </div>
 
-            <h2 className="mt-2 text-xl font-black sm:text-2xl">
+            <h2 id="admin-tournaments-heading" className="mt-2 text-xl font-black sm:text-2xl">
               Your Tournaments
             </h2>
 

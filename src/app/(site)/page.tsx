@@ -297,24 +297,6 @@ export default async function HomePage({ searchParams }: HomeProps) {
 
         </section>
 
-        {/* FOOTER */}
-        <footer className="relative border-t border-blue-200/10 py-9 text-center">
-
-          <div className="mb-3 text-sm font-black tracking-widest text-white">
-            ARENA
-            <span className="text-cyan-400">GG</span>
-          </div>
-
-          <p className="text-xs text-slate-500 sm:text-sm">
-            © {new Date().getFullYear()} ARENAGG. Game On. Rise Together.
-          </p>
-
-          <p className="mt-2 text-[10px] font-bold tracking-[0.25em] text-white/20">
-            BUILT FOR THE COMPETITIVE COMMUNITY
-          </p>
-
-        </footer>
-
       </div>
     </main>
   );
