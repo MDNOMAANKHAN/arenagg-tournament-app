@@ -905,17 +905,6 @@ input:-webkit-autofill:focus {
   color: white;
 }
 
-.admin-nav-item:first-child {
-  border-color: rgba(55, 151, 255, .24);
-  background: linear-gradient(
-    110deg,
-    rgba(31, 117, 255, .17),
-    rgba(0, 180, 255, .035)
-  );
-  color: #80c5ff;
-  box-shadow: inset 3px 0 #329aff;
-}
-
 .nav-icon {
   display: grid;
   width: 29px;
