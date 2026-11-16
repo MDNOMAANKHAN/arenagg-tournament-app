@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const siteUrl = "https://arenagg.live";
+const brandLogo = `${siteUrl}/arenagg-favicon.svg`;
 
 // Factual identifiers for search engines and structured-data consumers.
-// Only verified brand and website details are included.
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -13,6 +13,7 @@ const structuredData = {
       "@id": `${siteUrl}/#organization`,
       "name": "ARENAGG",
       "url": siteUrl,
+      "logo": brandLogo,
       "description": "ARENAGG is a community esports website."
     },
     {
@@ -35,6 +36,15 @@ export const metadata: Metadata = {
   description:
     "Discover and join community esports tournaments for Free Fire MAX, BGMI and Valorant on ARENAGG. Explore competitions, tournament rules, schedules and results.",
   applicationName: "ARENAGG",
+  icons: {
+    icon: [
+      {
+        url: "/arenagg-favicon.svg",
+        type: "image/svg+xml",
+        sizes: "any",
+      },
+    ],
+  },
   alternates: {
     canonical: "/",
   },
