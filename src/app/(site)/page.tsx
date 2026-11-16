@@ -297,6 +297,19 @@ export default async function HomePage({ searchParams }: HomeProps) {
 
         </section>
 
+        {/* COMMUNITY AND ABOUT CTA */}
+        <section className="mb-10 grid gap-5 rounded-3xl border border-blue-300/15 bg-gradient-to-br from-[#102341]/90 to-[#081326]/90 p-6 shadow-xl shadow-blue-950/20 sm:p-9 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <p className="text-xs font-black tracking-[0.25em] text-cyan-300">BE PART OF THE COMMUNITY</p>
+            <h2 className="mt-3 text-2xl font-black text-white sm:text-3xl">Your next match starts here.</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">Learn more about ArenaGG, follow tournament updates and connect with our gaming community.</p>
+          </div>
+          <div className="flex flex-wrap gap-3 lg:justify-end">
+            <Link href="/about" className="arena-glass-secondary">About ArenaGG</Link>
+            <Link href="/contact" className="arena-glass-button">Contact Us →</Link>
+          </div>
+        </section>
+
       </div>
     </main>
   );
