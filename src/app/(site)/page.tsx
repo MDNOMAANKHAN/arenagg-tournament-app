@@ -124,7 +124,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
 
               <Link
                 href="/results"
-                className="arena-glass-secondary transition duration-300 hover:-translate-y-1"
+                className="arena-glass-button arena-glass-secondary transition duration-300 hover:-translate-y-1 hover:border-cyan-400/50 hover:text-cyan-300"
               >
                 View Results
               </Link>
@@ -224,7 +224,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
               <Link
                 scroll={false}
                 href="/#tournaments"
-                className={`arena-filter rounded-xl transition duration-300 ${
+                className={`arena-glass-button arena-glass-secondary rounded-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 ${
                   !activeGame
                     ? "border-cyan-300/60 bg-cyan-400/10 text-cyan-200 shadow-lg shadow-cyan-500/10"
                     : ""
@@ -238,7 +238,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
                   scroll={false}
                   key={g.slug}
                   href={`/?game=${g.slug}#tournaments`}
-                  className={`arena-filter rounded-xl transition duration-300 ${
+                  className={`arena-glass-button arena-glass-secondary rounded-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 ${
                     activeGame === g.slug
                       ? "border-cyan-300/60 bg-cyan-400/10 text-cyan-200 shadow-lg shadow-cyan-500/10"
                       : ""
@@ -288,27 +288,13 @@ export default async function HomePage({ searchParams }: HomeProps) {
               </h3>
 
               <p className="relative mx-auto mt-3 max-w-md text-sm leading-7 text-slate-400">
-                No tournaments are open right now. Join the ArenaGG WhatsApp channel for announcements, then check the tournament list again.
+                No tournaments are open right now. Check back soon for upcoming competitions.
               </p>
-              <a href="https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q" target="_blank" rel="noopener noreferrer" className="arena-glass-button relative mt-6">Join WhatsApp Channel →</a>
 
             </div>
 
           )}
 
-        </section>
-
-        {/* COMMUNITY AND ABOUT CTA */}
-        <section className="mb-10 grid gap-5 rounded-3xl border border-blue-300/15 bg-gradient-to-br from-[#102341]/90 to-[#081326]/90 p-6 shadow-xl shadow-blue-950/20 sm:p-9 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
-            <p className="text-xs font-black tracking-[0.25em] text-cyan-300">BE PART OF THE COMMUNITY</p>
-            <h2 className="mt-3 text-2xl font-black text-white sm:text-3xl">Your next match starts here.</h2>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">Learn more about ArenaGG, follow tournament updates and connect with our gaming community.</p>
-          </div>
-          <div className="flex flex-wrap gap-3 lg:justify-end">
-            <Link href="/about" className="arena-glass-secondary">About ArenaGG</Link>
-            <Link href="/contact" className="arena-glass-button">Contact Us →</Link>
-          </div>
         </section>
 
       </div>
