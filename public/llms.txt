@@ -1,0 +1,24 @@
+# ARENAGG
+
+> ARENAGG is a community esports website.
+
+- Official website: https://arenagg.live/
+- Website name: ARENAGG
+- Primary language: English (India)
+- Public sections: homepage, tournaments, and results.
+- Publisher identity: ARENAGG.
+- The website is not affiliated with game publishers.
+
+## Public website locations
+
+- Homepage: https://arenagg.live/
+- Tournaments section: https://arenagg.live/tournaments
+- Results section: https://arenagg.live/results
+
+## Crawler notes
+
+- XML sitemap: https://arenagg.live/sitemap.xml
+- Crawler access rules: https://arenagg.live/robots.txt
+- Administrative and API paths are not public content.
+
+This file is a concise factual site description. It does not grant permission to bypass access controls or reuse personal information.
