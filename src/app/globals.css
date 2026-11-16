@@ -1374,12 +1374,6 @@ body {
   width: fit-content;
   max-width: 100%;
 }
-.arena-page .text-xs,
-.arena-page .text-\\[10px\\],
-.arena-page .text-\\[11px\\],
-.arena-page .text-\\[12px\\] {
-  line-height: 1.5;
-}
 
 /* Lift dark surfaces instead of inverting them. */
 .arena-glass,
