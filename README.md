@@ -5,7 +5,7 @@
    `insert into public.admins (user_id, email, role) select id, email, 'super_admin' from auth.users where email = 'you@example.com';`
    Turn off public email sign-ups in Supabase Auth.
 3. Copy `.env.example` to `.env.local` and fill all five values (Supabase URL, anon key, service-role key, site URL, rate-limit salt). Never expose the service-role key in browser code or commit `.env.local`.
-4. Run `npm install` and `npm run dev`. Public site: http://localhost:3000. Admin: http://localhost:3000/admin.
+4. Run `npm install` and `npm run dev`. Public site: http://localhost:3000.
 5. Create a tournament with status **Published · registrations open**, submit a test registration, approve it in the admin panel, then add matches and results.
 6. Registration management includes search by team/captain/gaming ID/registration code, status filters, and admin-only CSV export. Tournament and match date/time fields use India Standard Time (IST).
 7. Registration codes use 80 bits of randomness. Public code lookup is server-only and rate-limited.
