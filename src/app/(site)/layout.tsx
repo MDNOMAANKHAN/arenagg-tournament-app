@@ -74,7 +74,7 @@ export default function SiteLayout({
           <div>
             <h2 className="font-bold uppercase tracking-[0.16em] text-slate-200">Get in touch</h2>
             <a className="mt-3 block hover:text-cyan-300" href="tel:7330804540">Call: 7330804540</a>
-            <a className="mt-2 inline-flex min-h-10 items-center rounded-lg border border-emerald-400/25 bg-emerald-400/10 px-3 font-bold text-emerald-200 hover:bg-emerald-400/15" href="https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q" target="_blank" rel="noopener noreferrer">Join WhatsApp Channel ↗</a>
+            <a className="mt-2 inline-flex min-h-11 items-center rounded-xl border border-blue-300/30 bg-blue-400/10 px-4 font-bold text-blue-100 hover:bg-blue-400/15" href="https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q" target="_blank" rel="noopener noreferrer">Join WhatsApp Channel ↗</a>
           </div>
         </div>
         <div className="mx-auto mt-7 flex max-w-7xl flex-col gap-2 border-t border-white/10 px-4 pt-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
