@@ -22,3 +22,12 @@
 - Administrative and API paths are not public content.
 
 This file is a concise factual site description. It does not grant permission to bypass access controls or reuse personal information.
+# Website Name
+
+> Brief description of the website.
+
+## About
+A short description of the website and its purpose.
+
+## Resources
+- [Homepage](https://arenagg.live/)
