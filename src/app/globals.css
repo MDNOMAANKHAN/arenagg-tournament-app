@@ -1305,239 +1305,133 @@ input:-webkit-autofill:focus {
 
 
 /* =========================================================
-   ARENAGG PUBLIC DESIGN SYSTEM — accessible, token-driven UI
-   Spacing follows a 4px rhythm; one electric-blue accent.
+   ARENAGG SIGNATURE FINISH — brighter, not a new template
+   Keep the original navy / electric-blue visual identity.
 ========================================================= */
 :root {
-  color-scheme: dark;
-  --arena-bg: #07101f;
-  --arena-surface-1: #101d31;
-  --arena-surface-2: #15243a;
-  --arena-surface-3: #1b2c45;
-  --arena-panel: var(--arena-surface-1);
-  --arena-border: rgba(148, 190, 240, 0.20);
-  --arena-border-strong: rgba(96, 165, 250, 0.48);
-  --arena-accent: #60a5fa;
-  --arena-accent-strong: #3b82f6;
-  --arena-blue: var(--arena-accent-strong);
-  --arena-cyan: var(--arena-accent);
-  --arena-text: #f5f8ff;
-  --arena-muted: #b1bfd3;
-  --arena-radius-card: 24px;
-  --arena-space-unit: 4px;
-  --arena-shadow-soft: 0 16px 48px rgba(0, 0, 0, 0.24);
+  --arena-bg: #081326;
+  --arena-panel: rgba(18, 39, 66, 0.88);
+  --arena-border: rgba(112, 190, 255, 0.25);
+  --arena-blue: #258cff;
+  --arena-cyan: #55e1ff;
+  --arena-text: #f7fbff;
+  --arena-muted: #b3c4dc;
 }
 
-html { scroll-padding-top: 96px; }
-
 body {
-  background: var(--arena-bg);
-  color: var(--arena-text);
-  font-size: 16px;
-  line-height: 1.5;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  background: #081326;
+  color: #f7fbff;
 }
 
 .arena-page {
   background:
-    radial-gradient(ellipse at 12% 0%, rgba(59, 130, 246, 0.13), transparent 36%),
-    linear-gradient(180deg, #0a1527 0%, var(--arena-bg) 52%);
+    radial-gradient(ellipse at 8% 0%, rgba(37, 140, 255, 0.22), transparent 34%),
+    radial-gradient(ellipse at 94% 22%, rgba(69, 215, 255, 0.11), transparent 30%),
+    linear-gradient(180deg, #0b1a31 0%, #081326 62%, #07101f 100%);
 }
 
-.arena-page p,
-.arena-page li,
-.arena-page td,
-.arena-page label,
-.arena-page input,
-.arena-page select,
-.arena-page textarea {
-  font-size: 16px;
-  line-height: 1.5;
+.arena-nav {
+  background: rgba(10, 25, 46, 0.94);
+  border-color: rgba(112, 190, 255, 0.24);
 }
 
-.arena-page p { max-width: 70ch; }
-.arena-page h1,
-.arena-page h2 {
-  text-wrap: balance;
-  letter-spacing: -0.035em;
-}
-.arena-page h1 {
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--arena-border-strong);
-  width: fit-content;
-  max-width: 100%;
-}
-.arena-page h2 {
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--arena-border);
-  width: fit-content;
-  max-width: 100%;
-}
-
-/* Lift dark surfaces instead of inverting them. */
 .arena-glass,
 .arena-tournament,
 .arena-premium-card,
 .card {
-  background: linear-gradient(160deg, rgba(24, 42, 66, 0.94), rgba(15, 29, 48, 0.96));
-  border-color: var(--arena-border);
-  box-shadow: var(--arena-shadow-soft);
-  backdrop-filter: blur(28px) saturate(135%);
-  -webkit-backdrop-filter: blur(28px) saturate(135%);
+  background: linear-gradient(145deg, rgba(24, 48, 78, 0.96), rgba(13, 30, 53, 0.98));
+  border-color: rgba(112, 190, 255, 0.24);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.26);
 }
+
 .arena-tournament,
 .arena-premium-card {
-  border-radius: var(--arena-radius-card);
-}
-.arena-tournament > .rounded-xl,
-.arena-premium-card > .rounded-xl {
-  border-radius: calc(var(--arena-radius-card) - 16px);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Navigation labels stay close to their destinations. */
-.public-nav-link {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  color: #d5e2f4;
-  font-size: 14px;
-  font-weight: 650;
-  transition: background .18s ease, border-color .18s ease, color .18s ease;
-}
-.public-nav-link:hover,
-.public-nav-link[aria-current="page"] {
-  color: #fff;
-  background: rgba(96, 165, 250, 0.12);
-  border-color: rgba(96, 165, 250, 0.28);
+.arena-tournament::before,
+.arena-premium-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 58px;
+  height: 3px;
+  border-radius: 0 0 5px 5px;
+  background: linear-gradient(90deg, #258cff, #55e1ff);
+  opacity: 0.9;
+  pointer-events: none;
 }
 
-/* One clear primary action; secondary actions remain outlined. */
-.arena-glass-button,
-.btn:not(.light):not(.ghost):not(.danger) {
-  min-height: 44px;
-  border-radius: 12px;
-  background: var(--arena-accent-strong);
-  border: 1px solid rgba(147, 197, 253, 0.45);
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.20);
+.arena-badge {
+  border-color: rgba(85, 225, 255, 0.38);
+  background: rgba(37, 140, 255, 0.19);
+  color: #8ceaff;
 }
-.arena-glass-secondary,
-.btn.light,
-.btn.ghost {
-  min-height: 44px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid var(--arena-border-strong);
-  color: #e6f0ff;
-  box-shadow: none;
-}
+
 .arena-filter {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border-radius: 12px;
-  border-color: var(--arena-border);
-  color: #d5e2f4;
+  background: rgba(34, 62, 94, 0.62);
+  border-color: rgba(112, 190, 255, 0.25);
+  color: #d8e8fb;
 }
-.arena-filter.active,
-.arena-filter[aria-current="page"] {
-  background: rgba(59, 130, 246, 0.18);
-  border-color: var(--arena-accent);
+
+.arena-filter:hover,
+.arena-filter.active {
+  background: rgba(37, 140, 255, 0.28);
+  border-color: #55caff;
   color: #fff;
 }
 
-/* Inputs: label and field are visually grouped; errors sit beside fields. */
-.arena-page label,
-.arena-page .l {
-  display: block;
-  margin-bottom: 4px;
-  color: #d3deed;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-transform: none;
+.arena-muted {
+  color: #b3c4dc;
 }
+
+.arena-page .text-slate-400 { color: #b3c4dc; }
+.arena-page .text-slate-500 { color: #91a9c7; }
+.arena-page .text-slate-300 { color: #d0dced; }
+
 .arena-page input,
 .arena-page select,
 .arena-page textarea,
 .input {
-  min-height: 44px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: var(--arena-surface-2);
-  border: 1px solid var(--arena-border);
-  color: var(--arena-text);
-  font-size: 16px;
-}
-.arena-page input:focus,
-.arena-page select:focus,
-.arena-page textarea:focus,
-.input:focus {
-  border-color: var(--arena-accent);
-  outline: 2px solid rgba(96, 165, 250, 0.22);
-  outline-offset: 1px;
-  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.12);
-}
-.field-error,
-[aria-invalid="true"] + .field-error,
-.form-error {
-  display: block;
-  margin-top: 4px;
-  color: #fca5a5;
-  font-size: 14px;
-  line-height: 1.45;
-}
-.form-success,
-.field-success {
-  color: #86efac;
-  font-size: 14px;
+  background: rgba(18, 39, 66, 0.96);
+  border-color: rgba(112, 190, 255, 0.30);
+  color: #f7fbff;
 }
 
-/* Distinct states remain recognizable without adding a second brand accent. */
-.st { min-height: 28px; align-items: center; }
-.st.ok { background: rgba(34, 197, 94, 0.12); color: #86efac; border-color: rgba(34,197,94,.35); }
-.st.wait { background: rgba(245, 158, 11, 0.12); color: #fcd34d; border-color: rgba(245,158,11,.35); }
-.st.bad { background: rgba(239, 68, 68, 0.12); color: #fca5a5; border-color: rgba(239,68,68,.35); }
-.st.info { background: rgba(96, 165, 250, 0.12); color: #bfdbfe; border-color: rgba(96,165,250,.35); }
-.st.gray { background: rgba(148, 163, 184, 0.10); color: #cbd5e1; border-color: rgba(148,163,184,.28); }
-
-/* Consistent keyboard focus on every interactive control, not links alone. */
-:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-  outline: 2px solid var(--arena-accent);
-  outline-offset: 3px;
-}
-:where(button, a, input, select, textarea) { scroll-margin: 8px; }
-button, [role="button"], a { -webkit-tap-highlight-color: rgba(96, 165, 250, 0.18); }
-.skip-link:focus-visible {
-  z-index: 1000;
-  position: fixed;
-  top: 12px;
-  left: 12px;
-  min-height: 44px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #1d4ed8;
-  color: white;
+.arena-page input::placeholder,
+.arena-page textarea::placeholder,
+.input::placeholder {
+  color: #9bb0cc;
 }
 
-/* Keep content readable on narrow screens and avoid overlong copy lines. */
-.arena-page .max-w-2xl { max-width: 70ch; }
-.arena-page .text-slate-400,
-.arena-page .text-slate-300 { color: #b8c6d9; }
-.arena-page .text-slate-500 { color: #9aacc4; }
-.arena-page .rounded-3xl { border-radius: 28px; }
-.arena-page .rounded-2xl { border-radius: 20px; }
+.public-nav-link {
+  color: #d7e8fc;
+}
 
-@media (max-width: 640px) {
-  .public-nav-link { padding-inline: 10px; }
-  .arena-page { padding-inline: 16px; }
-  .arena-hero { min-height: 400px; }
-  .arena-page h1 { font-size: clamp(2rem, 9vw, 3.25rem); }
+.public-nav-link:hover,
+.public-nav-link[aria-current="page"] {
+  background: rgba(37, 140, 255, 0.18);
+  color: #fff;
+}
+
+.arena-glass-button {
+  background: linear-gradient(115deg, #258cff, #0872db);
+  border-color: rgba(120, 215, 255, 0.55);
+}
+
+.arena-glass-secondary {
+  background: rgba(34, 62, 94, 0.55);
+  border-color: rgba(112, 190, 255, 0.32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arena-tournament,
+  .arena-premium-card,
+  .arena-game-freefire,
+  .arena-game-bgmi,
+  .arena-game-valorant {
+    transition: none !important;
+  }
 }
