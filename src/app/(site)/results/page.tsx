@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { supabaseServer } from '@/lib/supabase/server';
 import { gameColor } from '@/lib/format';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -84,10 +85,11 @@ export default async function Results() {
         <section className="arena-glass rounded-2xl py-14 text-center">
           <div className="text-3xl" aria-hidden="true">🏆</div>
           <h2 className="mt-3 text-lg font-bold text-white">No results published yet</h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mx-auto mt-2 max-w-xl text-sm text-slate-400">
             Completed tournament standings will appear here after they are
-            published by the organizer.
+            published by the organizer. Explore current competitions while you wait.
           </p>
+          <Link href="/tournaments" className="arena-glass-button mt-6">Browse tournaments →</Link>
         </section>
       ) : (
         <div className="grid gap-5">
