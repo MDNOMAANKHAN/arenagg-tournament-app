@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { supabaseServer } from '@/lib/supabase/server';
 import { gameColor } from '@/lib/format';
-import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,51 +54,49 @@ export default async function Results() {
   });
 
   return (
-    <main className="arena-page min-h-screen px-4 py-10 sm:px-8 sm:py-14">
-      <div className="mx-auto max-w-7xl">
-      <header className="mb-9 rounded-3xl border border-blue-300/15 bg-gradient-to-br from-[#102849] via-[#0b1930] to-[#070e1d] p-7 shadow-2xl shadow-blue-950/30 sm:p-10 lg:p-12">
-        <div className="text-xs font-black tracking-[0.24em] text-cyan-300">
+    <main className="wrap py-10 sm:py-14">
+      <header className="mb-8">
+        <div className="text-xs font-bold tracking-[0.2em] text-accd">
           OFFICIAL STANDINGS
         </div>
-        <h1 className="mt-3 text-4xl font-black tracking-tight text-white sm:text-5xl">
+        <h1 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
           Tournament Results
         </h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-          Follow the teams, placements, points and kills from published ARENAGG
-          community competitions. Results appear here after the organizer publishes them.
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-muted sm:text-base">
+          Published placements, points and kills from ARENAGG community
+          competitions.
         </p>
       </header>
 
       {error ? (
         <section
-          className="arena-glass rounded-2xl border border-amber-400/20 p-8 text-center"
+          className="card border border-amber-400/20 text-center"
           role="status"
           aria-live="polite"
         >
-          <h2 className="text-lg font-bold text-white">Results are temporarily unavailable</h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <h2 className="text-lg font-bold">Results are temporarily unavailable</h2>
+          <p className="mt-2 text-sm text-muted">
             Please try again in a little while.
           </p>
         </section>
       ) : groups.size === 0 ? (
-        <section className="arena-glass rounded-2xl py-14 text-center">
+        <section className="card py-12 text-center">
           <div className="text-3xl" aria-hidden="true">🏆</div>
-          <h2 className="mt-3 text-lg font-bold text-white">No results published yet</h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-slate-400">
+          <h2 className="mt-3 text-lg font-bold">No results published yet</h2>
+          <p className="mt-2 text-sm text-muted">
             Completed tournament standings will appear here after they are
-            published by the organizer. Explore current competitions while you wait.
+            published by the organizer.
           </p>
-          <Link href="/tournaments" className="arena-glass-button mt-6">Browse tournaments →</Link>
         </section>
       ) : (
         <div className="grid gap-5">
           {[...groups.entries()].map(([id, tournament]) => (
             <section
               key={id}
-              className="arena-tournament min-w-0 overflow-hidden rounded-2xl p-0"
+              className="card min-w-0 overflow-hidden p-0"
               aria-labelledby={`results-${id}`}
             >
-              <div className="border-b border-white/10 bg-white/[0.02] p-5 sm:p-6">
+              <div className="border-b border-white/10 p-5 sm:p-6">
                 <div
                   className="text-[11px] font-black tracking-[0.18em]"
                   style={{ color: gameColor(tournament.slug) }}
@@ -108,11 +105,11 @@ export default async function Results() {
                 </div>
                 <h2
                   id={`results-${id}`}
-                  className="mt-2 break-words text-xl font-black text-white sm:text-2xl"
+                  className="mt-2 break-words text-xl font-black sm:text-2xl"
                 >
                   {tournament.title}
                 </h2>
-                <p className="mt-1 text-xs text-slate-400">
+                <p className="mt-1 text-xs text-muted">
                   {tournament.rows.length} published result
                   {tournament.rows.length === 1 ? '' : 's'}
                 </p>
@@ -162,7 +159,6 @@ export default async function Results() {
           ))}
         </div>
       )}
-      </div>
     </main>
   );
 }
