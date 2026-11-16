@@ -33,10 +33,10 @@ export default function ContactPage() {
           </article>
 
           <article className="arena-premium-card rounded-2xl p-6 sm:p-8">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-emerald-300/20 bg-emerald-400/10 text-2xl" aria-hidden="true">✉</div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-300/20 bg-blue-400/10 text-2xl" aria-hidden="true">✉</div>
             <h2 className="mt-5 text-xl font-black text-white">Join our WhatsApp Channel</h2>
             <p className="mt-2 text-sm leading-6 text-slate-400">Get community announcements, tournament updates and important information from ArenaGG.</p>
-            <a href={channel} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex min-h-12 items-center rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-5 font-bold text-emerald-200 transition hover:bg-emerald-400/20">
+            <a href={channel} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex min-h-12 items-center rounded-xl border border-blue-300/30 bg-blue-400/10 px-5 font-bold text-blue-100 transition hover:bg-blue-400/20">
               Join WhatsApp Channel ↗
             </a>
           </article>
