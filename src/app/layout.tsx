@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     "Discover and join community esports tournaments for Free Fire MAX, BGMI and Valorant on ARENAGG. Explore competitions, tournament rules, schedules and results.",
   applicationName: "ARENAGG",
   icons: {
-    icon: "/arenagg-mark.svg",
-    shortcut: "/arenagg-mark.svg",
+    icon: [{ url: "/icon", type: "image/png", sizes: "96x96" }],
+    shortcut: "/icon",
     apple: "/arenagg-mark.svg",
   },
   alternates: {
