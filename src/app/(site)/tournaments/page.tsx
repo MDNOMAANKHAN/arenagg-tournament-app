@@ -79,7 +79,13 @@ export default async function TournamentsPage() {
             const s = slotInfo(t);
 
             return (
-              <article key={t.id} className="card">
+              <article key={t.id} className="card group relative overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
+                <Link
+                  href={`/tournaments/${t.id}`}
+                  aria-label={`View full details for ${t.title}`}
+                  className="absolute inset-0 z-0 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
+                />
+                <div className="pointer-events-none relative z-10">
                 <div className="flex flex-wrap items-center gap-2">
                   <span
                     className="text-xs font-black tracking-widest"
@@ -103,8 +109,8 @@ export default async function TournamentsPage() {
                   </span>
                 </div>
 
-                <h2 className="mt-2 text-xl font-black">
-                  <Link href={`/tournaments/${t.id}`}>{t.title}</Link>
+                <h2 className="mt-2 text-xl font-black text-white transition-colors group-hover:text-cyan-300">
+                  {t.title}
                 </h2>
 
                 <p className="mt-2 text-sm text-muted">
@@ -114,16 +120,17 @@ export default async function TournamentsPage() {
                   {t.entry_fee > 0 ? `₹${t.entry_fee} entry` : 'Free entry'}
                 </p>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Link href={`/tournaments/${t.id}`} className="btn light sm">
-                    Details &amp; rules
-                  </Link>
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-cyan-300">
+                    View tournament details →
+                  </span>
 
                   {s.canRegister && (
-                    <Link href={`/register/${t.id}`} className="btn sm">
+                    <Link href={`/register/${t.id}`} className="btn sm pointer-events-auto relative z-20">
                       Register now →
                     </Link>
                   )}
+                </div>
                 </div>
               </article>
             );
