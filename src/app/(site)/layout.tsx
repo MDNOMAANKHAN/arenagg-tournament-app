@@ -39,12 +39,11 @@ export default function SiteLayout({
             aria-label="Primary navigation"
             className="flex flex-wrap items-center gap-1 text-sm font-medium text-[#C7D2E8]"
           >
-            <Link href="/tournaments" className="public-nav-link">
-              Tournaments
-            </Link>
-            <Link href="/results" className="public-nav-link">
-              Results
-            </Link>
+            <Link href="/" className="public-nav-link">Home</Link>
+            <Link href="/tournaments" className="public-nav-link">Tournaments</Link>
+            <Link href="/results" className="public-nav-link">Results</Link>
+            <Link href="/about" className="public-nav-link">About</Link>
+            <Link href="/contact" className="public-nav-link">Contact</Link>
           </nav>
         </div>
       </header>
@@ -53,13 +52,34 @@ export default function SiteLayout({
         {children}
       </div>
 
-      <footer className="mt-auto shrink-0 border-t border-blue-200/10 py-6 text-xs text-slate-400">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <span className="inline-flex items-center gap-2 font-bold tracking-wide text-slate-300">
-            <Image src="/arenagg-mark.svg" alt="" width={20} height={20} />
-            ARENAGG
-          </span>
-          <span>© {new Date().getFullYear()} ARENAGG · Community esports. Not affiliated with game publishers.</span>
+      <footer className="mt-auto shrink-0 border-t border-blue-200/10 bg-[#071225]/70 py-8 text-xs text-slate-400">
+        <div className="mx-auto grid max-w-7xl gap-7 px-4 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-2 font-black tracking-wide text-white">
+              <Image src="/arenagg-mark.svg" alt="" width={24} height={24} />
+              ARENA<span className="text-[#60A5FA]">GG</span>
+            </Link>
+            <p className="mt-3 max-w-xs leading-6">Play. Compete. Rise. A community platform for discovering and joining esports tournaments.</p>
+          </div>
+          <div>
+            <h2 className="font-bold uppercase tracking-[0.16em] text-slate-200">Explore</h2>
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+              <Link href="/" className="hover:text-cyan-300">Home</Link>
+              <Link href="/tournaments" className="hover:text-cyan-300">Tournaments</Link>
+              <Link href="/results" className="hover:text-cyan-300">Results</Link>
+              <Link href="/about" className="hover:text-cyan-300">About</Link>
+              <Link href="/contact" className="hover:text-cyan-300">Contact</Link>
+            </div>
+          </div>
+          <div>
+            <h2 className="font-bold uppercase tracking-[0.16em] text-slate-200">Get in touch</h2>
+            <a className="mt-3 block hover:text-cyan-300" href="tel:7330804540">Call: 7330804540</a>
+            <a className="mt-2 inline-flex min-h-10 items-center rounded-lg border border-emerald-400/25 bg-emerald-400/10 px-3 font-bold text-emerald-200 hover:bg-emerald-400/15" href="https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q" target="_blank" rel="noopener noreferrer">Join WhatsApp Channel ↗</a>
+          </div>
+        </div>
+        <div className="mx-auto mt-7 flex max-w-7xl flex-col gap-2 border-t border-white/10 px-4 pt-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <span>© {new Date().getFullYear()} ARENAGG. All rights reserved.</span>
+          <span>Community esports · Not affiliated with game publishers.</span>
         </div>
       </footer>
     </div>
