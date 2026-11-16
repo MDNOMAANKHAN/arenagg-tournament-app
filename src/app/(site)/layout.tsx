@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function SiteLayout({
@@ -19,9 +20,19 @@ export default function SiteLayout({
           <Link
             href="/"
             aria-label="ARENAGG home"
-            className="inline-flex min-h-11 items-center rounded-lg text-[22px] font-extrabold tracking-tight transition-opacity duration-200 hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#45d7ff]"
+            className="inline-flex min-h-11 items-center gap-2.5 rounded-lg transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#45d7ff]"
           >
-            ARENA<span className="text-[#60A5FA]">GG</span>
+            <Image
+              src="/arenagg-mark.svg"
+              alt=""
+              width={42}
+              height={42}
+              priority
+              className="h-10 w-10 shrink-0 drop-shadow-[0_0_12px_rgba(37,140,255,0.28)]"
+            />
+            <span className="text-[22px] font-black tracking-[-0.055em]">
+              ARENA<span className="text-[#60A5FA]">GG</span>
+            </span>
           </Link>
 
           <nav
@@ -44,7 +55,10 @@ export default function SiteLayout({
 
       <footer className="mt-auto shrink-0 border-t border-blue-200/10 py-6 text-xs text-slate-400">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <span className="font-bold tracking-wide text-slate-300">ARENAGG</span>
+          <span className="inline-flex items-center gap-2 font-bold tracking-wide text-slate-300">
+            <Image src="/arenagg-mark.svg" alt="" width={20} height={20} />
+            ARENAGG
+          </span>
           <span>© {new Date().getFullYear()} ARENAGG · Community esports. Not affiliated with game publishers.</span>
         </div>
       </footer>
