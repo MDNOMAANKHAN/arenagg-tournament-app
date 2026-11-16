@@ -8,10 +8,7 @@ export default function SiteLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-[#050b18] text-white">
-      <a
-        href="#main-content"
-        className="skip-link"
-      >
+      <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
 
@@ -39,12 +36,11 @@ export default function SiteLayout({
             aria-label="Primary navigation"
             className="flex flex-wrap items-center gap-1 text-sm font-medium text-[#C7D2E8]"
           >
-            <Link href="/tournaments" className="public-nav-link">
-              Tournaments
-            </Link>
-            <Link href="/results" className="public-nav-link">
-              Results
-            </Link>
+            <Link href="/" className="public-nav-link">Home</Link>
+            <Link href="/about" className="public-nav-link">About</Link>
+            <Link href="/tournaments" className="public-nav-link">Tournaments</Link>
+            <Link href="/results" className="public-nav-link">Results</Link>
+            <Link href="/contact" className="public-nav-link">Contact Us</Link>
           </nav>
         </div>
       </header>
@@ -54,11 +50,17 @@ export default function SiteLayout({
       </div>
 
       <footer className="mt-auto shrink-0 border-t border-blue-200/10 py-6 text-xs text-slate-400">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <span className="inline-flex items-center gap-2 font-bold tracking-wide text-slate-300">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <Link href="/" className="inline-flex items-center gap-2 font-bold tracking-wide text-slate-300">
             <Image src="/arenagg-mark.svg" alt="" width={20} height={20} />
             ARENAGG
-          </span>
+          </Link>
+          <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-4 gap-y-2">
+            <Link href="/about" className="hover:text-cyan-300">About</Link>
+            <Link href="/tournaments" className="hover:text-cyan-300">Tournaments</Link>
+            <Link href="/results" className="hover:text-cyan-300">Results</Link>
+            <Link href="/contact" className="hover:text-cyan-300">Contact Us</Link>
+          </nav>
           <span>© {new Date().getFullYear()} ARENAGG · Community esports. Not affiliated with game publishers.</span>
         </div>
       </footer>
