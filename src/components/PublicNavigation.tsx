@@ -19,11 +19,11 @@ export default function PublicNavigation() {
   const indicatorIndex = Math.max(0, activeIndex);
 
   return (
-    <nav aria-label="Primary navigation" className="public-nav-slider relative isolate grid w-full grid-cols-5 items-stretch gap-0.5 rounded-xl border border-blue-200/10 bg-white/[0.025] p-1 text-center text-[11px] font-semibold text-[#C7D2E8] sm:w-auto sm:min-w-[440px] sm:text-sm">
+    <nav aria-label="Primary navigation" className="public-nav-slider relative isolate grid w-full grid-cols-5 items-stretch gap-0.5 rounded-xl border border-blue-200/10 bg-white/[0.025] p-1 text-center text-[10px] font-semibold text-[#C7D2E8] sm:w-auto sm:min-w-[440px] sm:text-sm">
       <span
         aria-hidden="true"
         className="public-nav-indicator pointer-events-none absolute bottom-1 top-1 left-1 rounded-lg border border-cyan-300/20 bg-gradient-to-b from-cyan-400/15 to-blue-500/10 shadow-[0_0_18px_rgba(69,215,255,0.09)]"
-        style={{ width: 'calc((100% - 8px) / 5)', transform: `translateX(${indicatorIndex * 100}%)` }}
+        style={{ width: 'calc((100% - 16px) / 5)', transform: `translateX(calc(${indicatorIndex * 100}% + ${indicatorIndex * 2}px))` }}
       />
       {items.map((item, index) => {
         const active = index === activeIndex;
