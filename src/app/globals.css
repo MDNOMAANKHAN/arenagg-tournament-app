@@ -1133,6 +1133,42 @@ input:-webkit-autofill:focus {
   }
 }
 
+/* INDETERMINATE TOURNAMENT REGISTRATION PROGRESS */
+.registration-progress-track {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.registration-progress-indicator {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 35%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #45d7ff, #258cff);
+  box-shadow: 0 0 12px rgba(69, 215, 255, 0.45);
+  animation: registration-progress-slide 1.35s ease-in-out infinite;
+}
+
+@keyframes registration-progress-slide {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(310%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .registration-progress-indicator {
+    animation-duration: 2.5s;
+  }
+}
+
 /* PREMIUM TOURNAMENT SUBMIT BUTTON */
 
 .arena-submit-button {
