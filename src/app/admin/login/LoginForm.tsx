@@ -2,7 +2,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { notifyAdmin } from '@/components/AdminToastProvider';
 import { useRouter } from 'next/navigation';
 import { supabaseBrowser } from '@/lib/supabase/client';
 
@@ -50,7 +49,6 @@ export default function LoginForm({ denied }: { denied: boolean }) {
         return;
       }
 
-      notifyAdmin('Signed in successfully. Welcome to the admin workspace.');
       r.replace('/admin');
       r.refresh();
     } catch {
