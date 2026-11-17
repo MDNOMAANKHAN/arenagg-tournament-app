@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminApi } from '@/lib/adminApi';
+import { notifyAdmin } from '@/components/AdminToastProvider';
 
 export default function RegActions({
   id,
@@ -45,8 +46,10 @@ export default function RegActions({
         status: newStatus,
       });
 
+      notifyAdmin(newStatus === 'approved' ? 'Registration approved.' : newStatus === 'rejected' ? 'Registration rejected.' : 'Registration status reset.', 'success');
       router.refresh();
     } catch (error: unknown) {
+      notifyAdmin(error instanceof Error ? error.message : 'Could not update registration.', 'error');
       setErr(
         error instanceof Error
           ? error.message
