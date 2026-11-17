@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import PublicNavigation from "@/components/PublicNavigation";
 
 export default function SiteLayout({
   children,
@@ -32,16 +33,7 @@ export default function SiteLayout({
             </span>
           </Link>
 
-          <nav
-            aria-label="Primary navigation"
-            className="flex flex-wrap items-center gap-1 text-sm font-medium text-[#C7D2E8]"
-          >
-            <Link href="/" className="public-nav-link">Home</Link>
-            <Link href="/about" className="public-nav-link">About</Link>
-            <Link href="/tournaments" className="public-nav-link">Tournaments</Link>
-            <Link href="/results" className="public-nav-link">Results</Link>
-            <Link href="/contact" className="public-nav-link">Contact Us</Link>
-          </nav>
+          <PublicNavigation />
         </div>
       </header>
 
