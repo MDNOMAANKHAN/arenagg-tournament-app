@@ -19,14 +19,16 @@ const privateHeaders = [
 
 module.exports = {
   output: 'standalone',
+  images: {
+    // Prefer modern formats when supported by the visitor's browser.
+    formats: ['image/avif', 'image/webp'],
+  },
   poweredByHeader: false,
   async headers() {
     return [
       { source: '/(.*)', headers: securityHeaders },
       { source: '/admin/:path*', headers: privateHeaders },
       { source: '/api/admin/:path*', headers: privateHeaders },
-      { source: '/tournaments', headers: noIndexHeaders },
-      { source: '/tournaments/:path*', headers: noIndexHeaders },
       { source: '/register/:path*', headers: privateHeaders },
     ];
   },
