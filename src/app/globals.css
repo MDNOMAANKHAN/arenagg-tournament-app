@@ -1365,3 +1365,189 @@ input:-webkit-autofill:focus {
   .arena-error-shake, .arena-toast-drop, .arena-tab-panel { animation:none !important; }
   *, *::before, *::after { scroll-behavior:auto !important; transition-duration:.01ms !important; }
 }
+
+
+/* ==========================================
+   iOS-INSPIRED GLASS MOTION
+   Visual-only polish: keeps existing layouts and actions intact.
+========================================== */
+
+:root {
+  --arena-glass-fill: rgba(255, 255, 255, 0.055);
+  --arena-glass-edge: rgba(190, 225, 255, 0.19);
+  --arena-glass-shine: rgba(255, 255, 255, 0.13);
+  --arena-glass-blur: 24px;
+}
+
+/* A softly layered frosted surface with a fine inner highlight. */
+.arena-glass,
+.arena-nav,
+.admin-glass,
+.admin-topbar,
+.admin-sidebar,
+.arena-tournament,
+.arena-premium-card {
+  background-color: var(--arena-glass-fill);
+  border-color: var(--arena-glass-edge);
+  backdrop-filter: blur(var(--arena-glass-blur)) saturate(175%);
+  -webkit-backdrop-filter: blur(var(--arena-glass-blur)) saturate(175%);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+/* Public navigation: a glass capsule and a spring-like moving lens. */
+.public-nav-slider {
+  overflow: hidden;
+  border-color: rgba(170, 215, 255, 0.2);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.025)),
+    rgba(7, 17, 34, .56);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, .18),
+    inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter: blur(28px) saturate(185%);
+  -webkit-backdrop-filter: blur(28px) saturate(185%);
+}
+
+.public-nav-indicator {
+  overflow: hidden;
+  border-color: rgba(125, 220, 255, .38) !important;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.2), rgba(76,185,255,.11) 48%, rgba(20,105,220,.13)) !important;
+  box-shadow:
+    0 5px 18px rgba(0, 145, 255, .14),
+    inset 0 1px 0 rgba(255,255,255,.25),
+    inset 0 -1px 0 rgba(120,210,255,.12) !important;
+  backdrop-filter: blur(18px) saturate(190%);
+  -webkit-backdrop-filter: blur(18px) saturate(190%);
+  transition:
+    transform .58s cubic-bezier(.22, 1, .36, 1),
+    background .25s ease,
+    box-shadow .3s ease;
+  will-change: transform;
+}
+
+.public-nav-indicator::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 15%, rgba(255,255,255,.2) 48%, transparent 78%);
+  transform: translateX(-130%);
+  animation: arenaGlassSweep 5.5s ease-in-out infinite;
+}
+
+.public-nav-link {
+  transition:
+    color .25s ease,
+    background-color .25s ease,
+    transform .35s cubic-bezier(.2,.8,.2,1);
+}
+
+.public-nav-link:active {
+  transform: scale(.96);
+}
+
+/* Admin segmented tabs use the same floating glass lens language. */
+[role="tablist"] {
+  border-color: rgba(190, 225, 255, .16) !important;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.018)),
+    rgba(5, 15, 30, .5) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+}
+
+[role="tablist"] > span {
+  border: 1px solid rgba(140, 220, 255, .25);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.16), rgba(69,215,255,.09) 55%, rgba(37,140,255,.1)) !important;
+  box-shadow:
+    0 5px 16px rgba(0, 125, 255, .12),
+    inset 0 1px 0 rgba(255,255,255,.2);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  transition: transform .55s cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Toasts arrive like a translucent system notification. */
+.arena-toast-drop {
+  border-color: rgba(190, 225, 255, .2) !important;
+  background: linear-gradient(145deg, rgba(27, 48, 75, .84), rgba(8, 20, 39, .78)) !important;
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.32),
+    inset 0 1px 0 rgba(255,255,255,.13) !important;
+  backdrop-filter: blur(30px) saturate(185%);
+  -webkit-backdrop-filter: blur(30px) saturate(185%);
+  animation: arenaToastDrop .48s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+/* Smooth, quiet card response instead of a hard jump. */
+.arena-tournament,
+.arena-premium-card,
+.arena-glass-button,
+.arena-glass-secondary,
+.admin-nav-item,
+.arena-password-toggle {
+  transition-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+
+.arena-tournament:hover,
+.arena-premium-card:hover {
+  box-shadow:
+    0 18px 44px rgba(0, 90, 190, .16),
+    inset 0 1px 0 rgba(255,255,255,.1);
+}
+
+.arena-progress-ring {
+  position: relative;
+  box-shadow: 0 0 22px rgba(69, 215, 255, .1);
+  transition: filter .35s ease, transform .45s cubic-bezier(.2,.8,.2,1);
+}
+
+.arena-progress-ring::before {
+  background: linear-gradient(145deg, #12243b, #091426) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.arena-progress-ring:hover {
+  filter: drop-shadow(0 0 8px rgba(69, 215, 255, .2));
+  transform: scale(1.035);
+}
+
+@keyframes arenaGlassSweep {
+  0%, 65% { transform: translateX(-130%); opacity: 0; }
+  78% { opacity: .8; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+
+@keyframes arenaToastDrop {
+  0% { opacity: 0; transform: translate3d(0, -18px, 0) scale(.96); }
+  70% { opacity: 1; transform: translate3d(0, 2px, 0) scale(1.005); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@media (max-width: 640px) {
+  .public-nav-slider {
+    border-radius: 15px;
+  }
+  .public-nav-link {
+    padding-inline: 3px;
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-nav-indicator,
+  [role="tablist"] > span,
+  .public-nav-link,
+  .arena-progress-ring {
+    transition: none !important;
+  }
+  .public-nav-indicator::after {
+    animation: none !important;
+  }
+}
