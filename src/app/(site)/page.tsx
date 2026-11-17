@@ -79,7 +79,8 @@ export default async function HomePage({ searchParams }: HomeProps) {
             alt=""
             fill
             priority
-            quality={75}
+            fetchPriority="high"
+            quality={60}
             sizes="100vw"
             className="arena-hero-image"
           />
