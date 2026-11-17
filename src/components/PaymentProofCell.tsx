@@ -129,7 +129,7 @@ export default function PaymentProofCell({
         )}
       </div>
 
-      {err && <p className="text-[11px] text-red-300">{err}</p>}
+      {err && <p role="alert" className="arena-error-shake text-[11px] text-red-300">{err}</p>}
 
       {open && (
         <div
