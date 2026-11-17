@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description:
     'View community tournament schedules and game information on ARENAGG.',
   alternates: { canonical: '/tournaments' },
-  robots: { index: false, follow: true },
+  robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     title: 'Community Tournament Information | ARENAGG',
@@ -26,10 +26,6 @@ export const metadata: Metadata = {
   },
 };
 
-/**
- * Tournament listings are kept accessible to visitors but are not indexed.
- * This avoids treating event/registration listings as evergreen search content.
- */
 export default async function TournamentsPage() {
   const sb = supabaseServer();
 
