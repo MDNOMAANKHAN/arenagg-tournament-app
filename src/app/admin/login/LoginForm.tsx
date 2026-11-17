@@ -127,7 +127,7 @@ export default function LoginForm({ denied }: { denied: boolean }) {
       </div>
 
       {/* PASSWORD */}
-      <div className="mb-6">
+      <div className="relative mb-6">
         <label
           htmlFor="admin-password"
           className="mb-2 block text-sm font-semibold text-slate-300"
