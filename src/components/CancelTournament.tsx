@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminApi } from '@/lib/adminApi';
+import { notifyAdmin } from '@/components/AdminToastProvider';
 
 /**
  * Cancel a tournament from the admin dashboard.
@@ -39,9 +40,10 @@ export default function CancelTournament({
     setBusy(true);
     try {
       await adminApi('tournaments', 'PATCH', { id, status: 'cancelled' });
+      notifyAdmin('Tournament cancelled. Existing registrations have been kept.', 'success');
       r.refresh();
     } catch (e: any) {
-      alert(e?.message || 'Could not cancel this tournament.');
+      notifyAdmin(e?.message || 'Could not cancel this tournament.', 'error');
     } finally {
       setBusy(false);
     }

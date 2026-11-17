@@ -13,6 +13,13 @@ export default function LoginForm({ denied }: { denied: boolean }) {
   );
 
   const [busy, setBusy] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [shake, setShake] = useState(false);
+  const triggerError = (message: string) => {
+    setErr(message);
+    setShake(false);
+    requestAnimationFrame(() => setShake(true));
+  };
 
   useEffect(() => {
     if (denied) {
@@ -38,14 +45,14 @@ export default function LoginForm({ denied }: { denied: boolean }) {
       });
 
       if (error) {
-        setErr('Invalid email or password.');
+        triggerError('Invalid email or password.');
         return;
       }
 
       r.replace('/admin');
       r.refresh();
     } catch {
-      setErr('Something went wrong. Please try again.');
+      triggerError('Something went wrong. Please try again.');
     } finally {
       setBusy(false);
     }
@@ -54,7 +61,7 @@ export default function LoginForm({ denied }: { denied: boolean }) {
   return (
     <form
       onSubmit={submit}
-      className="card relative w-full overflow-hidden border border-cyan-400/20 bg-slate-950/95 p-6 shadow-[0_0_60px_rgba(6,182,212,0.12)] backdrop-blur-2xl sm:p-9"
+      className={`card relative w-full overflow-hidden border border-cyan-400/20 bg-slate-950/95 p-6 shadow-[0_0_60px_rgba(6,182,212,0.12)] backdrop-blur-2xl sm:p-9 ${shake ? "arena-error-shake" : ""}`}
     >
 
       {/* TOP ACCENT */}
@@ -118,7 +125,7 @@ export default function LoginForm({ denied }: { denied: boolean }) {
       </div>
 
       {/* PASSWORD */}
-      <div className="mb-6">
+      <div className="relative mb-6">
         <label
           htmlFor="admin-password"
           className="mb-2 block text-sm font-semibold text-slate-300"
@@ -129,19 +136,22 @@ export default function LoginForm({ denied }: { denied: boolean }) {
         <input
           id="admin-password"
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
           autoComplete="current-password"
           placeholder="Enter your password"
-          className="input w-full min-w-0 border border-white/10 bg-white/[0.04] text-white placeholder:text-slate-500 transition-all duration-300 hover:border-cyan-400/30 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+          className="input w-full min-w-0 border border-white/10 bg-white/[0.04] pr-20 text-white placeholder:text-slate-500 transition-all duration-300 hover:border-cyan-400/30 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
         />
+        <button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Hide password" : "Show password"} aria-pressed={showPassword} className="arena-password-toggle">
+          {showPassword ? "Hide" : "Show"}
+        </button>
       </div>
 
       {/* ERROR */}
       {err && (
         <div
           role="alert"
-          className="mb-5 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm leading-6 text-red-300"
+          className="arena-toast-drop mb-5 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm leading-6 text-red-300"
         >
           {err}
         </div>

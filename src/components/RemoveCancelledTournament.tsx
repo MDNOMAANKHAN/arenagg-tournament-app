@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminApi } from '@/lib/adminApi';
+import { notifyAdmin } from '@/components/AdminToastProvider';
 
 /** Permanently remove a cancelled tournament and its dependent records. */
 export default function RemoveCancelledTournament({ id, title }: { id: string; title: string }) {
@@ -18,9 +19,10 @@ export default function RemoveCancelledTournament({ id, title }: { id: string; t
     setBusy(true);
     try {
       await adminApi('tournaments', 'DELETE', undefined, `?id=${id}`);
+      notifyAdmin('Cancelled tournament removed.', 'success');
       router.refresh();
     } catch (error: any) {
-      window.alert(error?.message || 'Could not remove this tournament.');
+      notifyAdmin(error?.message || 'Could not remove this tournament.', 'error');
     } finally {
       setBusy(false);
     }
