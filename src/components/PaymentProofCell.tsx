@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminApi } from '@/lib/adminApi';
+import { notifyAdmin } from '@/components/AdminToastProvider';
 
 const TONE: Record<string, string> = {
   pending: 'wait',
@@ -42,9 +43,11 @@ export default function PaymentProofCell({
         id: registrationId,
         payment_status: next,
       });
+      notifyAdmin(next === 'paid' ? 'Payment marked as paid.' : next === 'rejected' ? 'Payment marked as rejected.' : 'Payment status reset.', 'success');
       r.refresh();
     } catch (e: any) {
       setErr(e?.message || 'Could not update the payment status.');
+      notifyAdmin(e?.message || 'Could not update the payment status.', 'error');
     } finally {
       setBusy(false);
     }
