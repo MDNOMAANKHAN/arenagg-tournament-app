@@ -14,15 +14,21 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Community Tournament Information',
   description:
-    'View community tournament schedules and game information on ARENAGG.',
+    'Explore active Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG. Check event dates, team sizes, entry details and registration availability.',
   alternates: { canonical: '/tournaments' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     title: 'Community Tournament Information | ARENAGG',
     description:
-      'View community tournament schedules and game information on ARENAGG.',
+      'Explore active Free Fire MAX, BGMI and Valorant community tournaments. Check event dates, team sizes, entry details and registration availability.',
     url: '/tournaments',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Esports Tournaments | ARENAGG',
+    description:
+      'Explore Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG.',
   },
 };
 
@@ -39,8 +45,38 @@ export default async function TournamentsPage() {
 
   const ts = (data ?? []) as PublicTournament[];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Community Esports Tournaments | ARENAGG",
+    url: "https://arenagg.live/tournaments",
+    description:
+      "Browse active Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG.",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "ARENAGG",
+      url: "https://arenagg.live",
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: ts.map((t, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: `https://arenagg.live/tournaments/${t.id}`,
+        name: t.title,
+      })),
+    },
+  };
+
   return (
-    <main className="wrap py-10">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
+      <main className="wrap py-10">
       <div className="text-xs font-bold tracking-widest text-accd">
         COMMUNITY COMPETITIONS
       </div>
@@ -136,6 +172,7 @@ export default async function TournamentsPage() {
           No upcoming or live tournaments are available right now. Check the Results page for completed competitions.
         </div>
       )}
-    </main>
+      </main>
+    </>
   );
 }
