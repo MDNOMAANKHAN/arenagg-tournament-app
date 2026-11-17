@@ -30,10 +30,25 @@ type PublicResult = {
 };
 
 export default async function Results() {
-  const { data, error } = await supabaseServer()
-    .from('results_public')
-    .select('*')
-    .order('placement');
+  const sb = supabaseServer();
+  const { data: completed, error: completedError } = await sb
+    .from('tournament_public')
+    .select('id')
+    .eq('status', 'completed');
+
+  let data: PublicResult[] = [];
+  let error = completedError;
+  const completedIds = (completed ?? []).map((t) => t.id);
+
+  if (!error && completedIds.length > 0) {
+    const resultQuery = await sb
+      .from('results_public')
+      .select('*')
+      .in('tournament_id', completedIds)
+      .order('placement');
+    data = (resultQuery.data ?? []) as PublicResult[];
+    error = resultQuery.error;
+  }
 
   const groups = new Map<
     string,
