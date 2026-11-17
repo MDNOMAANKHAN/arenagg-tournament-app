@@ -4,12 +4,12 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About ARENAGG",
   description:
-    "Learn about ARENAGG, India's community esports platform for players who love Free Fire MAX, BGMI and Valorant.",
+    "Learn about ARENAGG and its community information for players interested in Free Fire MAX, BGMI and Valorant.",
   alternates: { canonical: "/about" },
   openGraph: {
     type: "website",
     title: "About ARENAGG",
-    description: "Meet the community esports platform built for players to play, compete and rise.",
+    description: "Learn about ARENAGG, its community and the games featured on the website.",
     url: "/about",
   },
 };

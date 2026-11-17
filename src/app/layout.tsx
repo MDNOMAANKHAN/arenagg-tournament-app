@@ -26,7 +26,7 @@ const structuredData = {
       "@type": "WebPage",
       "@id": `${siteUrl}/#webpage`,
       url: siteUrl,
-      name: "ARENAGG | Esports Tournaments & Community Gaming",
+      name: "ARENAGG | Gaming Community & Game Updates",
       isPartOf: { "@id": `${siteUrl}/#website` },
       about: { "@id": `${siteUrl}/#organization` },
       inLanguage: "en-IN",
@@ -37,11 +37,11 @@ const structuredData = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "ARENAGG | Esports Tournaments & Community Gaming",
+    default: "ARENAGG | Gaming Community & Game Updates",
     template: "%s | ARENAGG",
   },
   description:
-    "Discover the ARENAGG gaming community, featuring Free Fire MAX, BGMI and Valorant. Explore community information, tournament updates and published results.",
+    "Explore ARENAGG community information for players interested in Free Fire MAX, BGMI and Valorant, including game updates and published community results.",
   applicationName: "ARENAGG",
   alternates: {
     canonical: "/",
@@ -50,16 +50,16 @@ export const metadata: Metadata = {
     type: "website",
     url: siteUrl,
     siteName: "ARENAGG",
-    title: "ARENAGG | Esports Tournaments & Community Gaming",
+    title: "ARENAGG | Gaming Community & Game Updates",
     description:
-      "Explore the ARENAGG gaming community, game information and published competition results.",
+      "Explore ARENAGG community information, game updates and published results.",
     locale: "en_IN",
   },
   twitter: {
     card: "summary",
-    title: "ARENAGG | Esports Tournaments & Community Gaming",
+    title: "ARENAGG | Gaming Community & Game Updates",
     description:
-      "Explore the ARENAGG gaming community, game information and published results.",
+      "Explore ARENAGG community information, game updates and published results.",
   },
   robots: {
     index: true,
