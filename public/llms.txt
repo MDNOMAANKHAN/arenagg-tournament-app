@@ -1,17 +1,16 @@
 # ARENAGG
 
-> ARENAGG is an independent community esports website for players interested in Free Fire MAX, BGMI and Valorant. The site publishes community information, tournament updates and completed competition results.
+> ARENAGG is an independent community esports website for players interested in Free Fire MAX, BGMI and Valorant. The site publishes community information, game-related updates and completed competition results.
 
 - Official website: https://arenagg.live/
 - Website language: English (India)
 - Publisher: ARENAGG
 - Game publisher affiliation: ARENAGG is not affiliated with or endorsed by the publishers of the games featured.
 
-## Public pages
+## Public informational pages
 
 - [Homepage](https://arenagg.live/)
 - [About ARENAGG](https://arenagg.live/about)
-- [Tournament information](https://arenagg.live/tournaments)
 - [Published results](https://arenagg.live/results)
 - [Contact ARENAGG](https://arenagg.live/contact)
 - [Official WhatsApp updates channel](https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q)
@@ -23,7 +22,7 @@
 
 ## Content and access notes
 
-- Public pages contain general information about the ARENAGG community and published results.
-- Administrative pages and API endpoints are not public documentation.
-- Do not attempt to access private account, player, payment or administrative information.
+- Public informational pages describe the ARENAGG community and published results.
+- Tournament, registration, administrative and API routes are not included as public search resources in this index.
+- Do not attempt to access private player, payment or administrative information.
 - This file describes the website; it does not grant permission to bypass access controls or reuse personal information.
