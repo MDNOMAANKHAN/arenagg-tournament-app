@@ -334,7 +334,7 @@ export default function RegisterForm({
         {err && (
           <div
             role="alert"
-            className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300"
+            className="arena-error-shake rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300"
           >
             {err}
           </div>
