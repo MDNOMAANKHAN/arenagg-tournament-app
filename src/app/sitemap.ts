@@ -1,46 +1,39 @@
-import type { MetadataRoute } from 'next';
-import { supabaseServer } from '@/lib/supabase/server';
+import type { MetadataRoute } from "next";
+import { supabaseServer } from "@/lib/supabase/server";
 
-const siteUrl = 'https://arenagg.live';
+const siteUrl = "https://arenagg.live";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-
+  // Include stable public pages. Avoid assigning a fresh lastModified date
+  // on every request because that would misrepresent when static pages changed.
   const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: siteUrl,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${siteUrl}/tournaments`,
-      lastModified: now,
-      changeFrequency: 'hourly',
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/results`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
+    { url: siteUrl, changeFrequency: "daily", priority: 1 },
+    { url: `${siteUrl}/about`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${siteUrl}/contact`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${siteUrl}/tournaments`, changeFrequency: "hourly", priority: 0.8 },
+    { url: `${siteUrl}/results`, changeFrequency: "daily", priority: 0.8 },
   ];
 
-  const { data, error } = await supabaseServer()
-    .from('tournament_public')
-    .select('id,starts_at,status')
-    .in('status', ['open', 'closed', 'live', 'completed']);
+  try {
+    const { data, error } = await supabaseServer()
+      .from("tournament_public")
+      .select("id,status")
+      .in("status", ["open", "closed", "live", "completed"]);
 
-  if (error || !data?.length) return staticRoutes;
+    if (error || !data?.length) return staticRoutes;
 
-  const tournamentRoutes: MetadataRoute.Sitemap = data.map((t) => ({
-    url: `${siteUrl}/tournaments/${t.id}`,
-    changeFrequency: 'daily',
-    priority: t.status === 'open' ? 0.9 : 0.7,
-  }));
+    const tournamentRoutes: MetadataRoute.Sitemap = data.map((t) => ({
+      url: `${siteUrl}/tournaments/${t.id}`,
+      changeFrequency: "weekly",
+      priority: t.status === "open" || t.status === "live" ? 0.7 : 0.5,
+    }));
 
-  return [...staticRoutes, ...tournamentRoutes];
+    return [...staticRoutes, ...tournamentRoutes];
+  } catch {
+    // Keep the sitemap available even if the public database view is
+    // temporarily unavailable.
+    return staticRoutes;
+  }
 }
