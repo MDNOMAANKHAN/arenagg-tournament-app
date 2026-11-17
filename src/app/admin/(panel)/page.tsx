@@ -287,22 +287,20 @@ export default async function Dashboard() {
                     </div>
 
                     {/* REGISTRATION PROGRESS */}
-                    <div className="mt-5 max-w-lg">
-
-                      <div className="mb-2 flex items-center justify-between text-xs">
-                        <span className="text-white/40">Team capacity</span>
-                        <span className="font-bold text-white/70">
-                          {t.active} / {t.max_teams}
-                        </span>
+                    <div className="mt-5 flex flex-wrap items-center gap-4">
+                      <div className="arena-progress-ring shrink-0" style={{ ['--progress' as any]: `${percentage}%` }} role="img" aria-label={`${percentage}% of team capacity filled`}>
+                        <span>{percentage}%</span>
                       </div>
-
-                      <div className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
-                        <div
-                          className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-1000"
-                          style={{ width: `${percentage}%` }}
-                        />
+                      <div className="min-w-[180px] flex-1">
+                        <div className="mb-2 flex items-center justify-between text-xs">
+                          <span className="text-white/40">Team capacity</span>
+                          <span className="font-bold text-white/70">{t.active} / {t.max_teams}</span>
+                        </div>
+                        <div className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
+                          <div className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-1000" style={{ width: `${percentage}%` }} />
+                        </div>
+                        <p className="mt-2 text-[11px] text-white/35">{Math.max(0, t.max_teams - t.active)} team slots remaining</p>
                       </div>
-
                     </div>
 
                   </div>
