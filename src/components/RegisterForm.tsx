@@ -351,6 +351,24 @@ export default function RegisterForm({
           </span>
         </button>
 
+        {busy && (
+          <div
+            role="status"
+            aria-live="polite"
+            aria-label={registrationCode ? 'Uploading payment screenshot' : 'Submitting tournament registration'}
+            className="registration-progress mt-[-0.75rem] grid gap-2"
+          >
+            <div className="registration-progress-track" aria-hidden="true">
+              <span className="registration-progress-indicator" />
+            </div>
+            <p className="text-center text-xs text-slate-400">
+              {registrationCode
+                ? 'Uploading your payment screenshot. Please wait...'
+                : 'Submitting your registration. Please wait...'}
+            </p>
+          </div>
+        )}
+
       </form>
     </div>
   );
