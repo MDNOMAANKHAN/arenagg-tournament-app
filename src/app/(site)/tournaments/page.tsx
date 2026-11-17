@@ -39,7 +39,7 @@ export default async function TournamentsPage() {
   const { data } = await sb
     .from('tournament_public')
     .select('*')
-    .in('status', ['open', 'closed', 'live', 'completed'])
+    .in('status', ['open', 'closed', 'live'])
     .order('starts_at');
 
   const ts = (data ?? []) as PublicTournament[];
@@ -138,7 +138,7 @@ export default async function TournamentsPage() {
         </div>
       ) : (
         <div className="card text-center text-muted">
-          No tournaments are open right now. Check back soon.
+          No upcoming or live tournaments are available right now. Check the Results page for completed competitions.
         </div>
       )}
     </main>
