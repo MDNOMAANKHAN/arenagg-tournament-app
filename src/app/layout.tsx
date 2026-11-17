@@ -22,15 +22,6 @@ const structuredData = {
       publisher: { "@id": `${siteUrl}/#organization` },
       inLanguage: "en-IN",
     },
-    {
-      "@type": "WebPage",
-      "@id": `${siteUrl}/#webpage`,
-      url: siteUrl,
-      name: "ARENAGG | Gaming Community & Game Updates",
-      isPartOf: { "@id": `${siteUrl}/#website` },
-      about: { "@id": `${siteUrl}/#organization` },
-      inLanguage: "en-IN",
-    },
   ],
 };
 
