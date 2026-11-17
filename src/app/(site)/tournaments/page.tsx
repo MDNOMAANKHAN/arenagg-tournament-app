@@ -12,24 +12,23 @@ import {
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Esports Tournaments | Free Fire MAX, BGMI & Valorant',
+  title: 'Community Tournament Information',
   description:
-    'Explore community esports tournaments on ARENAGG. Find Free Fire MAX, BGMI and Valorant competitions, check schedules and rules, and register your team.',
+    'View community tournament schedules and game information on ARENAGG.',
   alternates: { canonical: '/tournaments' },
+  robots: { index: false, follow: true },
   openGraph: {
     type: 'website',
-    title: 'Esports Tournaments | ARENAGG',
+    title: 'Community Tournament Information | ARENAGG',
     description:
-      'Explore Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG.',
+      'View community tournament schedules and game information on ARENAGG.',
     url: '/tournaments',
   },
 };
 
 /**
- * All tournaments list.
- *
- * This route used to be a copy of the detail page that read `params.id`
- * (undefined at /tournaments) and called notFound() — so the URL always 404'd.
+ * Tournament listings are kept accessible to visitors but are not indexed.
+ * This avoids treating event/registration listings as evergreen search content.
  */
 export default async function TournamentsPage() {
   const sb = supabaseServer();
@@ -47,10 +46,10 @@ export default async function TournamentsPage() {
   return (
     <main className="wrap py-10">
       <div className="text-xs font-bold tracking-widest text-accd">
-        ALL COMPETITIONS
+        COMMUNITY COMPETITIONS
       </div>
 
-      <h1 className="mb-2 mt-1 text-4xl font-black">Tournaments</h1>
+      <h1 className="mb-2 mt-1 text-4xl font-black">Tournament Information</h1>
 
       <p className="mb-6 text-sm text-muted">
         {ts.length} tournament{ts.length === 1 ? '' : 's'} across{' '}
