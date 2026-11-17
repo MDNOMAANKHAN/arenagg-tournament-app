@@ -1,33 +1,29 @@
 # ARENAGG
 
-> ARENAGG is a community esports website.
+> ARENAGG is an independent community esports website for players interested in Free Fire MAX, BGMI and Valorant. The site publishes community information, tournament updates and completed competition results.
 
 - Official website: https://arenagg.live/
-- Website name: ARENAGG
-- Primary language: English (India)
-- Public sections: homepage, tournaments, and results.
-- Publisher identity: ARENAGG.
-- The website is not affiliated with game publishers.
+- Website language: English (India)
+- Publisher: ARENAGG
+- Game publisher affiliation: ARENAGG is not affiliated with or endorsed by the publishers of the games featured.
 
-## Public website locations
+## Public pages
 
-- Homepage: https://arenagg.live/
-- Tournaments section: https://arenagg.live/tournaments
-- Results section: https://arenagg.live/results
-
-## Crawler notes
-
-- XML sitemap: https://arenagg.live/sitemap.xml
-- Crawler access rules: https://arenagg.live/robots.txt
-- Administrative and API paths are not public content.
-
-This file is a concise factual site description. It does not grant permission to bypass access controls or reuse personal information.
-# Website Name
-
-> Brief description of the website.
-
-## About
-A short description of the website and its purpose.
-
-## Resources
 - [Homepage](https://arenagg.live/)
+- [About ARENAGG](https://arenagg.live/about)
+- [Tournament information](https://arenagg.live/tournaments)
+- [Published results](https://arenagg.live/results)
+- [Contact ARENAGG](https://arenagg.live/contact)
+- [Official WhatsApp updates channel](https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q)
+
+## Technical resources
+
+- [XML sitemap](https://arenagg.live/sitemap.xml)
+- [Crawler access rules](https://arenagg.live/robots.txt)
+
+## Content and access notes
+
+- Public pages contain general information about the ARENAGG community and published results.
+- Administrative pages and API endpoints are not public documentation.
+- Do not attempt to access private account, player, payment or administrative information.
+- This file describes the website; it does not grant permission to bypass access controls or reuse personal information.
