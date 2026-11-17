@@ -50,7 +50,8 @@ export default function GameShowcase() {
               src={game.imageSrc}
               alt=""
               fill
-              quality={75}
+              quality={65}
+              loading="lazy"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="arena-game-image"
             />
