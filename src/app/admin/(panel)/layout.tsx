@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getAdmin } from '@/lib/auth';
 import SignOut from '@/components/SignOut';
+import AdminToastProvider from '@/components/AdminToastProvider';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +16,7 @@ export default async function PanelLayout({
   if (!a) redirect('/admin/login?denied=1');
 
   return (
+    <AdminToastProvider>
     <div className="admin-shell min-h-screen text-white lg:flex">
       <a href="#admin-main" className="skip-link">
         Skip to admin content
@@ -116,5 +118,6 @@ export default async function PanelLayout({
         </div>
       </main>
     </div>
+    </AdminToastProvider>
   );
 }
