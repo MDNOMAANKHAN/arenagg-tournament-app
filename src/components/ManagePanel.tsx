@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminApi } from '@/lib/adminApi';
+import { notifyAdmin } from '@/components/AdminToastProvider';
 import { fmt, istInputToIso } from '@/lib/format';
 type Row = { placement: string; points: string; kills: string };
 export default function ManagePanel({ tid, matches, teams, results }: { tid: string; matches: any[]; teams: { id: string; team_name: string }[]; results: any[] }) {
@@ -12,7 +13,7 @@ export default function ManagePanel({ tid, matches, teams, results }: { tid: str
   teams.forEach((t) => { const x = results.find((q) => q.registration_id === t.id); init[t.id] = { placement: x ? String(x.placement) : '', points: x ? String(x.points) : '0', kills: x ? String(x.kills) : '0' }; });
   const [rows, setRows] = useState(init);
   const [pub, setPub] = useState(results.some((x) => x.published));
-  const run = async (fn: () => Promise<unknown>, ok = 'Saved') => { setBusy(true); setMsg(''); try { await fn(); setMsg(ok); r.refresh(); } catch (x: any) { setMsg('Error: ' + x.message); } setBusy(false); };
+  const run = async (fn: () => Promise<unknown>, ok = 'Saved') => { setBusy(true); setMsg(''); try { await fn(); setMsg(ok); notifyAdmin(ok, 'success'); r.refresh(); } catch (x: any) { setMsg('Error: ' + x.message); notifyAdmin(x?.message || 'Could not complete that action.', 'error'); } setBusy(false); };
   const addMatch = (e: React.FormEvent<HTMLFormElement>) => { e.preventDefault(); const form = e.currentTarget; const f = new FormData(form); const g = (k: string) => String(f.get(k) ?? '');
     run(async () => { await adminApi('matches', 'POST', { tournament_id: tid, round_label: g('round_label'), match_no: Number(g('match_no')), scheduled_at: g('scheduled_at') ? istInputToIso(g('scheduled_at')) : null, status: g('status') }); form.reset(); }, 'Match added'); };
   const saveResults = () => run(async () => {
