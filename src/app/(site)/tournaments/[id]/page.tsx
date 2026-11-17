@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -45,26 +44,13 @@ export async function generateMetadata({
   const title = `${data.title} – ${data.game_name} Tournament`;
   const description =
     data.description?.trim() ||
-    `View ${data.title}, a ${data.game_name} community esports tournament on ARENAGG. Check the schedule, rules, team status and registration availability.`;
-  const url = `/tournaments/${data.id}`;
+    `View information about ${data.title}, a ${data.game_name} community event on ARENAGG.`;
 
   return {
     title,
     description,
-    alternates: { canonical: url },
-    openGraph: {
-      type: 'website',
-      url,
-      title,
-      description,
-      siteName: 'ARENAGG',
-    },
-    twitter: {
-      card: 'summary',
-      title,
-      description,
-    },
-    robots: { index: true, follow: true },
+    alternates: { canonical: `/tournaments/${data.id}` },
+    robots: { index: false, follow: true },
   };
 }
 

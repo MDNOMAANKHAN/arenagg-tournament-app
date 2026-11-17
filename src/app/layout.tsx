@@ -3,27 +3,35 @@ import "./globals.css";
 
 const siteUrl = "https://arenagg.live";
 
-// Factual identifiers for search engines and structured-data consumers.
-// Only verified brand and website details are included.
+// Keep structured data limited to verified information about the website.
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
-      "name": "ARENAGG",
-      "url": siteUrl,
-      "description": "ARENAGG is a community esports website."
+      name: "ARENAGG",
+      url: siteUrl,
+      description: "ARENAGG is an independent community esports website.",
     },
     {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
-      "name": "ARENAGG",
-      "url": siteUrl,
-      "publisher": { "@id": `${siteUrl}/#organization` },
-      "inLanguage": "en-IN"
-    }
-  ]
+      name: "ARENAGG",
+      url: siteUrl,
+      publisher: { "@id": `${siteUrl}/#organization` },
+      inLanguage: "en-IN",
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${siteUrl}/#webpage`,
+      url: siteUrl,
+      name: "ARENAGG | Esports Tournaments & Community Gaming",
+      isPartOf: { "@id": `${siteUrl}/#website` },
+      about: { "@id": `${siteUrl}/#organization` },
+      inLanguage: "en-IN",
+    },
+  ],
 };
 
 export const metadata: Metadata = {
@@ -33,7 +41,7 @@ export const metadata: Metadata = {
     template: "%s | ARENAGG",
   },
   description:
-    "Discover and join community esports tournaments for Free Fire MAX, BGMI and Valorant on ARENAGG. Explore competitions, tournament rules, schedules and results.",
+    "Discover the ARENAGG gaming community, featuring Free Fire MAX, BGMI and Valorant. Explore community information, tournament updates and published results.",
   applicationName: "ARENAGG",
   alternates: {
     canonical: "/",
@@ -44,14 +52,14 @@ export const metadata: Metadata = {
     siteName: "ARENAGG",
     title: "ARENAGG | Esports Tournaments & Community Gaming",
     description:
-      "Find community tournaments for Free Fire MAX, BGMI and Valorant. Compete with your team on ARENAGG.",
+      "Explore the ARENAGG gaming community, game information and published competition results.",
     locale: "en_IN",
   },
   twitter: {
     card: "summary",
     title: "ARENAGG | Esports Tournaments & Community Gaming",
     description:
-      "Discover community esports tournaments for Free Fire MAX, BGMI and Valorant.",
+      "Explore the ARENAGG gaming community, game information and published results.",
   },
   robots: {
     index: true,
@@ -72,7 +80,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <body className="min-h-screen bg-[#050b18] text-white">
         <script
           type="application/ld+json"
