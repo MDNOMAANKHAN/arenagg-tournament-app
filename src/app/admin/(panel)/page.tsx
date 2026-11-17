@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAdmin } from '@/lib/auth';
 import { fmt } from '@/lib/format';
 import CancelTournament from '@/components/CancelTournament';
+import RemoveCancelledTournament from '@/components/RemoveCancelledTournament';
 
 const TONE: Record<string, string> = {
   draft: 'gray',
@@ -332,6 +333,10 @@ export default async function Dashboard() {
                       title={t.title}
                       cancelled={t.status === 'cancelled'}
                     />
+
+                    {t.status === 'cancelled' && (
+                      <RemoveCancelledTournament id={t.id} title={t.title} />
+                    )}
 
                   </div>
 
