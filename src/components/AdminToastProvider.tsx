@@ -32,7 +32,7 @@ export default function AdminToastProvider({ children }: { children: React.React
     <>
       {children}
       {toast && (
-        <div className="pointer-events-none fixed right-4 top-4 z-[100] w-[min( calc(100vw - 2rem), 380px)]" aria-live="polite" aria-atomic="true">
+        <div className="pointer-events-none fixed right-4 top-4 z-[100] w-full max-w-[380px]" style={{ width: "min(380px, calc(100vw - 2rem))" }} aria-live="polite" aria-atomic="true">
           <div key={toast.id} className={`arena-toast-drop flex items-start gap-3 rounded-xl border px-4 py-3 shadow-2xl backdrop-blur-xl ${
             toast.type === 'error'
               ? 'border-red-400/30 bg-[#24121a]/95 text-red-200'
