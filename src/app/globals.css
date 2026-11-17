@@ -1337,3 +1337,31 @@ input:-webkit-autofill:focus {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* ArenaGG interaction polish: restrained motion with reduced-motion support. */
+@keyframes arenaErrorShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+@keyframes arenaToastDrop {
+  from { opacity: 0; transform: translate3d(0, -14px, 0) scale(.98); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes arenaTabFade {
+  from { opacity: .65; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.arena-error-shake { animation: arenaErrorShake .38s ease-in-out; }
+.arena-toast-drop { animation: arenaToastDrop .24s cubic-bezier(.2,.8,.2,1) both; }
+.arena-tab-panel { animation: arenaTabFade .2s ease both; }
+.arena-password-toggle { position:absolute; right:10px; top:50%; transform:translateY(-50%); border:1px solid rgba(148,163,184,.2); border-radius:8px; padding:5px 9px; color:#a9bdd5; font-size:11px; font-weight:700; }
+.arena-password-toggle:hover { color:#67e8f9; border-color:rgba(34,211,238,.4); }
+.arena-progress-ring { display:grid; place-items:center; width:66px; height:66px; border-radius:50%; background:conic-gradient(#45d7ff var(--progress), rgba(255,255,255,.09) 0); }
+.arena-progress-ring::before { content:""; grid-area:1/1; width:52px; height:52px; border-radius:50%; background:#0b1424; }
+.arena-progress-ring > span { grid-area:1/1; z-index:1; font-size:12px; font-weight:800; color:#eaf7ff; font-variant-numeric:tabular-nums; }
+@media (prefers-reduced-motion: reduce) {
+  .arena-error-shake, .arena-toast-drop, .arena-tab-panel { animation:none !important; }
+  *, *::before, *::after { scroll-behavior:auto !important; transition-duration:.01ms !important; }
+}
