@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAdmin } from '@/lib/auth';
 import { fmt } from '@/lib/format';
 import CancelTournament from '@/components/CancelTournament';
+import RemoveCancelledTournament from '@/components/RemoveCancelledTournament';
 
 const TONE: Record<string, string> = {
   draft: 'gray',
@@ -36,6 +37,9 @@ export default async function Dashboard() {
       ).length,
     };
   });
+
+  const completedRows = rows.filter((t: any) => t.status === 'completed');
+  const managementRows = rows.filter((t: any) => t.status !== 'completed');
 
   const totalTeams = rows.reduce(
     (n: number, t: any) => n + t.active,
@@ -225,14 +229,14 @@ export default async function Dashboard() {
           </div>
 
           <span className="w-fit rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold text-white/50">
-            {rows.length} TOTAL
+            {managementRows.length} ACTIVE / CANCELLED
           </span>
 
         </div>
 
         <div className="grid gap-4 p-4 sm:p-6">
 
-          {rows.map((t: any, index: number) => {
+          {managementRows.map((t: any, index: number) => {
             const percentage =
               t.max_teams > 0
                 ? Math.min(
@@ -333,6 +337,10 @@ export default async function Dashboard() {
                       cancelled={t.status === 'cancelled'}
                     />
 
+                    {t.status === 'cancelled' && (
+                      <RemoveCancelledTournament id={t.id} title={t.title} />
+                    )}
+
                   </div>
 
                 </div>
@@ -342,7 +350,7 @@ export default async function Dashboard() {
           })}
 
           {/* EMPTY STATE */}
-          {!rows.length && (
+          {!managementRows.length && (
             <div className="rounded-2xl border border-dashed border-white/15 px-5 py-16 text-center">
 
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/5 text-4xl">
@@ -370,6 +378,61 @@ export default async function Dashboard() {
 
         </div>
 
+      </section>
+
+
+      {/* COMPLETED TOURNAMENTS */}
+      <section id="completed-tournaments" className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+        <div className="flex flex-col justify-between gap-3 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:p-6">
+          <div>
+            <div className="text-[10px] font-black tracking-[0.25em] text-emerald-400">
+              TOURNAMENT ARCHIVE
+            </div>
+            <h2 className="mt-2 text-xl font-black sm:text-2xl">
+              Completed Tournaments
+            </h2>
+            <p className="mt-1 text-sm text-white/40">
+              Finished competitions are kept here separately from active tournament management.
+            </p>
+          </div>
+          <span className="w-fit rounded-lg border border-emerald-400/20 bg-emerald-400/[0.06] px-3 py-2 text-xs font-bold text-emerald-300">
+            {completedRows.length} COMPLETED
+          </span>
+        </div>
+
+        <div className="grid gap-3 p-4 sm:p-6">
+          {completedRows.map((t: any) => (
+            <article key={t.id} className="flex flex-col gap-4 rounded-xl border border-white/10 bg-[#0b1424]/70 p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <span className="st gray">completed</span>
+                <h3 className="mt-2 break-words font-bold text-white">{t.title}</h3>
+                <p className="mt-1 text-xs text-white/45">
+                  {t.games?.name || 'Gaming Tournament'} · {fmt(t.starts_at)} · {t.active} teams
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link
+                  href={`/admin/tournaments/${t.id}`}
+                  className="inline-flex min-h-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] px-4 text-xs font-bold text-white/70 transition hover:border-cyan-400/30 hover:text-cyan-300"
+                >
+                  View tournament
+                </Link>
+                <Link
+                  href={`/admin/tournaments/${t.id}/manage`}
+                  className="inline-flex min-h-10 items-center justify-center rounded-lg border border-purple-400/20 bg-purple-400/[0.04] px-4 text-xs font-bold text-purple-300 transition hover:bg-purple-400/10"
+                >
+                  Matches & results
+                </Link>
+              </div>
+            </article>
+          ))}
+
+          {!completedRows.length && (
+            <div className="rounded-xl border border-dashed border-white/15 px-5 py-8 text-center text-sm text-white/40">
+              Completed tournaments will appear here after you mark them as completed.
+            </div>
+          )}
+        </div>
       </section>
 
       {/* FOOTER */}

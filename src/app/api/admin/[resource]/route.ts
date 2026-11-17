@@ -5,7 +5,7 @@ import { tournamentSchema, matchSchema, resultSchema, regStatusSchema } from '@/
 
 type Cfg = { table: string; create?: z.ZodTypeAny; update?: z.ZodTypeAny; remove?: boolean; conflict?: string };
 const R: Record<string, Cfg> = {
-  tournaments: { table: 'tournaments', create: tournamentSchema, update: tournamentSchema.partial() },
+  tournaments: { table: 'tournaments', create: tournamentSchema, update: tournamentSchema.partial(), remove: true },
   registrations: { table: 'registrations', update: regStatusSchema },
   matches: { table: 'matches', create: matchSchema, update: matchSchema.partial(), remove: true },
   results: { table: 'tournament_results', create: resultSchema, conflict: 'tournament_id,registration_id', remove: true },
@@ -34,6 +34,15 @@ async function handle(req: NextRequest, resource: string, op: 'create' | 'update
   if (op === 'remove') {
     const id = uuid.safeParse(req.nextUrl.searchParams.get('id'));
     if (!id.success) return bad('Invalid id');
+    if (resource === 'tournaments') {
+      const { data: tournament, error: lookupError } = await admin.sb
+        .from('tournaments')
+        .select('status')
+        .eq('id', id.data)
+        .maybeSingle();
+      if (lookupError || !tournament) return bad('Tournament not found or could not be checked.', 404);
+      if (tournament.status !== 'cancelled') return bad('Only cancelled tournaments can be removed.', 409);
+    }
     const { data, error } = await admin.sb.from(cfg.table).delete().eq('id', id.data).select('id');
     if (error) { console.error('Admin delete failed', resource, error.message); return bad('Could not complete this action. Please try again.'); }
     return data?.length ? NextResponse.json({ ok: true }) : bad('Not found or not permitted', 404);
