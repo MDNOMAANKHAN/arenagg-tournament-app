@@ -35,9 +35,9 @@ export const metadata: Metadata = {
     "Explore ARENAGG community information for players interested in Free Fire MAX, BGMI and Valorant, including game updates and published community results.",
   applicationName: "ARENAGG",
   icons: {
-    icon: [{ url: "/favicon.png", type: "image/png", sizes: "96x96" }],
-    shortcut: "/favicon.png",
-    apple: [{ url: "/favicon.png", type: "image/png", sizes: "96x96" }],
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+    apple: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
   alternates: {
     canonical: "/",
@@ -78,7 +78,7 @@ export default function RootLayout({
   return (
     <html lang="en-IN">
       <head>
-        <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96" />
+        <link rel="icon" href="/favicon.svg" type="image/png" sizes="96x96" />
       </head>
       <body className="min-h-screen bg-[#050b18] text-white">
         <script
