@@ -15,6 +15,11 @@ export default function TournamentCard({
   const registered = t.registered ?? 0;
   const maxTeams = t.max_teams ?? 12;
   const isFull = registered >= maxTeams;
+  const startTime = t.starts_at ? new Date(t.starts_at).getTime() : Number.NaN;
+  const now = Date.now();
+  const isStartingSoon = Number.isFinite(startTime) && startTime > now && startTime - now <= 24 * 60 * 60 * 1000;
+  const availabilityLabel = isFull ? 'Tournament full' : s.canRegister ? 'Registration open' : s.label;
+  const progressValue = Math.min(Math.max(registered, 0), maxTeams);
 
   return (
     <article
@@ -34,28 +39,23 @@ export default function TournamentCard({
         style={{ background: c }}
       />
 
-      {/* GAME AND STATUS */}
-      <div className="relative flex flex-wrap items-center justify-between gap-3 pt-1">
-
+      {/* GAME, AVAILABILITY, AND START TIME */}
+      <div className="relative flex flex-wrap items-center gap-2 pt-1">
         <span
           className="rounded-full border px-3 py-1.5 text-[11px] font-black tracking-widest"
-          style={{
-            color: c,
-            borderColor: `${c}55`,
-            backgroundColor: `${c}15`,
-          }}
+          style={{ color: c, borderColor: `${c}55`, backgroundColor: `${c}15` }}
         >
-          {t.game_name.toUpperCase()}
+          🎮 {t.game_name}
         </span>
-
-        <span
-          className={`st ${
-            s.canRegister ? 'ok' : t.status === 'live' ? 'info' : 'gray'
-          }`}
-        >
-          {s.label}
+        <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-[11px] font-bold ${isFull ? 'border-amber-300/25 bg-amber-300/10 text-amber-200' : s.canRegister ? 'border-emerald-300/25 bg-emerald-300/10 text-emerald-200' : 'border-white/10 bg-white/[0.04] text-slate-300'}`}>
+          <span className={`h-1.5 w-1.5 rounded-full ${isFull ? 'bg-amber-300' : s.canRegister ? 'bg-emerald-300' : 'bg-slate-400'}`} />
+          {availabilityLabel}
         </span>
-
+        {isStartingSoon && !isFull && (
+          <span className="inline-flex items-center rounded-full border border-cyan-300/25 bg-cyan-300/10 px-2.5 py-1.5 text-[11px] font-bold text-cyan-200">
+            ⏱ Starts within 24h
+          </span>
+        )}
       </div>
 
       {/* TOURNAMENT INFORMATION */}
@@ -120,7 +120,7 @@ export default function TournamentCard({
           className="h-2.5 w-full overflow-hidden rounded-full border border-white/5 bg-white/10"
           role="progressbar"
           aria-label="Tournament team registration"
-          aria-valuenow={registered}
+          aria-valuenow={progressValue}
           aria-valuemin={0}
           aria-valuemax={maxTeams}
         >
