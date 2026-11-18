@@ -1,6 +1,4 @@
-const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL
-  ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin
-  : 'https://*.supabase.co';
+let supabaseOrigin = 'https://*.supabase.co';\ntry {\n  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {\n    supabaseOrigin = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin;\n  }\n} catch {\n  // Keep a safe default if the build environment has no valid Supabase URL.\n}
 const supabaseRealtimeOrigin = supabaseOrigin.replace(/^https:/, 'wss:');
 
 const securityHeaders = [
