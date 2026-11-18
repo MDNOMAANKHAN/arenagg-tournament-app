@@ -44,7 +44,12 @@ export default async function PanelLayout({
             Tournaments
           </Link>
 
-          <Link href="/admin/privacy-requests" className="admin-nav-item">\n            <span className="nav-icon" aria-hidden="true">⌁</span>\n            Privacy Requests\n          </Link>\n\n          <Link href="/admin/activity" className="admin-nav-item">
+          <Link href="/admin/privacy-requests" className="admin-nav-item">
+            <span className="nav-icon" aria-hidden="true">⌁</span>
+            Privacy Requests
+          </Link>
+
+          <Link href="/admin/activity" className="admin-nav-item">
             <span className="nav-icon" aria-hidden="true">◷</span>
             Activity History
           </Link>
