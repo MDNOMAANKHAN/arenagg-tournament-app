@@ -35,7 +35,7 @@ create or replace function public.log_admin_activity()
 returns trigger
 language plpgsql
 security definer
-set search_path = public
+set search_path = pg_catalog, public
 as $
 declare
   row_data jsonb;
@@ -64,7 +64,7 @@ begin
   if TG_OP = 'DELETE' then return OLD; end if;
   return NEW;
 end;
-$;
+$$;
 
 create or replace function public.touch_privacy_request_updated_at()
 returns trigger language plpgsql set search_path = pg_catalog
