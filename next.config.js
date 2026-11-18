@@ -1,3 +1,8 @@
+const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin
+  : 'https://*.supabase.co';
+const supabaseRealtimeOrigin = supabaseOrigin.replace(/^https:/, 'wss:');
+
 const securityHeaders = [
   { key: 'X-Frame-Options', value: 'DENY' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -13,12 +18,12 @@ const securityHeaders = [
       "base-uri 'self'",
       "object-src 'none'",
       "frame-ancestors 'none'",
-      "form-action 'self' https:",
+      "form-action 'self'",
       "script-src 'self' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https:",
-      "connect-src 'self' https: wss:",
+      `connect-src 'self' ${supabaseOrigin} ${supabaseRealtimeOrigin}`,
       "upgrade-insecure-requests",
     ].join('; '),
   },
