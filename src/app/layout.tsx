@@ -34,6 +34,11 @@ export const metadata: Metadata = {
   description:
     "Explore ARENAGG community information for players interested in Free Fire MAX, BGMI and Valorant, including game updates and published community results.",
   applicationName: "ARENAGG",
+  icons: {
+    icon: [{ url: "/icon", type: "image/png", sizes: "96x96" }],
+    shortcut: "/icon",
+    apple: [{ url: "/icon", type: "image/png", sizes: "96x96" }],
+  },
   alternates: {
     canonical: "/",
   },
