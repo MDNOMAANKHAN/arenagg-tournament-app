@@ -8,8 +8,9 @@ export default function PrivacyRequestPage() {
   const [reference, setReference] = useState('');
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setBusy(true); setError(''); setReference('');
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(formElement);
     const body = Object.fromEntries(form.entries());
     try {
       const response = await fetch('/api/privacy-requests', {
@@ -18,7 +19,7 @@ export default function PrivacyRequestPage() {
       const result = await response.json().catch(() => ({}));
       if (!response.ok) { setError(result.error || 'Could not submit your request.'); return; }
       setReference(result.reference || 'Submitted');
-      event.currentTarget.reset();
+      formElement.reset();
     } catch {
       setError('Could not submit your request. Please check your connection.');
     } finally { setBusy(false); }
