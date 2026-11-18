@@ -5,7 +5,7 @@ This document is an operational checklist, not a security certification or legal
 ## Admin authentication and MFA
 
 - Admin routes require a valid Supabase session and a matching row in `public.admins`.
-- Admin access now requires a verified TOTP factor and an AAL2 session. New administrators are sent to `/admin/mfa` to enrol; existing administrators must enter a current authenticator code.
+- Admin access now requires a verified TOTP factor and an AAL2 session. New administrators are sent to `/admin/mfa` to enrol; existing administrators must enter a current authenticator code. The CSP currently permits inline scripts/styles for Next.js compatibility; tighten this further with nonce-based scripts after validating all app components.
 - Enable TOTP enrollment and verification in the deployed Supabase Auth configuration. Deploy the updated `supabase/config.toml` with the Supabase CLI, or enable TOTP in the hosted Auth settings.
 - Keep public sign-ups disabled in the hosted project. Create admin identities manually and grant access through `public.admins`.
 - Test a fresh admin login, an enrolled admin login, an ordinary non-admin login, and an admin API call without AAL2 before production rollout.
@@ -24,7 +24,7 @@ This document is an operational checklist, not a security certification or legal
 
 ## Privacy requests and retention
 
-- Verify the requester’s identity and their authority to act for the data subject before disclosing, correcting or deleting information.
+- The public `/privacy-request` form creates a restricted request record; administrators can review and update its status from the admin workspace. This is an intake/review queue, not an automatic deletion engine.\n- Verify the requester’s identity and their authority to act for the data subject before disclosing, correcting or deleting information.
 - Record the request, date received, identity-check outcome, data systems searched, action taken, exceptions/retention reason and completion date in a restricted case log.
 - Proposed operational retention schedule (confirm with an Indian privacy/legal professional before adopting):
   - Unsuccessful or abandoned upload files: remove within 30 days.
