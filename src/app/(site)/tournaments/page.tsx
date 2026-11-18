@@ -47,7 +47,6 @@ export default async function TournamentsPage() {
   const ts = (data ?? []) as PublicTournament[];
   const liveCount = ts.filter((t) => t.status === 'live').length;
   const openCount = ts.filter((t) => slotInfo(t).canRegister).length;
-  const upcomingCount = ts.length - liveCount;
 
   const structuredData = {
     '@context': 'https://schema.org',
