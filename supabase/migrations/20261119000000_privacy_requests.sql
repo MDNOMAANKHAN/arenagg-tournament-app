@@ -36,7 +36,7 @@ returns trigger
 language plpgsql
 security definer
 set search_path = pg_catalog, public
-as $
+as $func$
 declare
   row_data jsonb;
   entity text;
