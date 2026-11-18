@@ -44,6 +44,11 @@ export default async function PanelLayout({
             Tournaments
           </Link>
 
+          <Link href="/admin/activity" className="admin-nav-item">
+            <span className="nav-icon" aria-hidden="true">◷</span>
+            Activity History
+          </Link>
+
           <Link href="/admin/tournaments/new" className="admin-nav-item admin-nav-create">
             <span className="nav-icon" aria-hidden="true">＋</span>
             Create Tournament
