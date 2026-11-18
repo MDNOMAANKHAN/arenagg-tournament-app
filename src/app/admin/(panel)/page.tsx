@@ -20,7 +20,7 @@ export default async function Dashboard() {
   const { data } = await a.sb
     .from('tournaments')
     .select(
-      'id,title,status,starts_at,max_teams,games(name),registrations(status)'
+      'id,title,status,starts_at,max_teams,games(name),registrations(id,status,team_name,captain_name,reg_code,created_at)'
     )
     .order('starts_at', { ascending: false });
 
@@ -206,6 +206,43 @@ export default async function Dashboard() {
             </div>
           ))}
 
+        </div>
+      </section>
+
+      {/* GLOBAL PENDING REGISTRATION QUEUE */}
+      <section id="pending-review" className="overflow-hidden rounded-2xl border border-amber-400/20 bg-amber-400/[0.035]">
+        <div className="flex flex-col justify-between gap-3 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:p-6">
+          <div>
+            <div className="text-[10px] font-black tracking-[0.2em] text-amber-300">ACTION REQUIRED</div>
+            <h2 className="mt-2 text-xl font-black sm:text-2xl">Pending registration review</h2>
+            <p className="mt-1 text-sm text-white/45">Review new teams from every tournament in one place.</p>
+          </div>
+          <span className="w-fit rounded-full border border-amber-400/25 bg-amber-400/10 px-3 py-2 text-xs font-bold text-amber-200">{totalPending} waiting</span>
+        </div>
+        <div className="grid gap-3 p-4 sm:p-5">
+          {rows.flatMap((t: any) => (t.registrations ?? [])
+            .filter((r: any) => r.status === 'pending')
+            .map((r: any) => ({ ...r, tournamentId: t.id, tournamentTitle: t.title, gameName: t.games?.name || 'Gaming Tournament' })))
+            .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+            .slice(0, 8)
+            .map((r: any) => (
+              <article key={r.id} className="flex flex-col gap-3 rounded-xl border border-white/10 bg-[#0b1424]/80 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-2 py-1 text-[10px] font-bold uppercase text-amber-200">Pending</span>
+                    <span className="text-[11px] text-white/40">{r.gameName}</span>
+                    <span className="font-mono text-[10px] text-white/30">{r.reg_code}</span>
+                  </div>
+                  <h3 className="mt-2 break-words text-sm font-bold text-white">{r.team_name}</h3>
+                  <p className="mt-1 text-xs text-white/45">{r.captain_name} · {r.tournamentTitle}</p>
+                </div>
+                <Link href={`/admin/tournaments/${r.tournamentId}/registrations?status=pending`} className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg border border-amber-400/25 bg-amber-400/[0.07] px-4 text-xs font-bold text-amber-200 transition hover:bg-amber-400/15">
+                  Review tournament
+                </Link>
+              </article>
+            ))}
+          {!totalPending && <div className="rounded-xl border border-dashed border-white/15 px-5 py-8 text-center"><p className="font-semibold text-white">All caught up</p><p className="mt-1 text-sm text-white/40">There are no pending registrations to review.</p></div>}
+          {totalPending > 8 && <p className="text-center text-xs text-white/40">Showing the 8 most recent requests. Open a tournament to review the remaining {totalPending - 8}.</p>}
         </div>
       </section>
 
