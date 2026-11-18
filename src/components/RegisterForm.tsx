@@ -24,12 +24,17 @@ export default function RegisterForm({
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
   const [paymentUtr, setPaymentUtr] = useState('');
   const [registrationCode, setRegistrationCode] = useState('');
+  const [legalAccepted, setLegalAccepted] = useState(false);
 
   const entryFee = t.entry_fee ?? 0;
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErr('');
+    if (!legalAccepted) {
+      setErr('Please accept the Terms & Conditions and Privacy Policy before registering.');
+      return;
+    }
     if (entryFee > 0 && !paymentFile) {
       setErr('Please upload your payment screenshot before submitting.');
       return;
@@ -65,6 +70,9 @@ export default function RegisterForm({
             }
           : null,
       website: g('website'),
+      terms_accepted: legalAccepted,
+      terms_version: '1.0',
+      privacy_version: '1.0',
       t: loaded.current,
     };
 
@@ -330,6 +338,28 @@ export default function RegisterForm({
           </section>
         )}
 
+        {/* LEGAL CONSENT — required before registration */}
+        <section className="rounded-xl border border-cyan-300/20 bg-cyan-300/[0.04] p-4 sm:p-5">
+          <label htmlFor="legal-acceptance" className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-slate-300">
+            <input
+              id="legal-acceptance"
+              type="checkbox"
+              checked={legalAccepted}
+              onChange={(event) => setLegalAccepted(event.currentTarget.checked)}
+              required
+              className="mt-1 h-4 w-4 shrink-0 accent-cyan-400"
+            />
+            <span>
+              I have read and agree to the{' '}
+              <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-cyan-300 underline underline-offset-4 hover:text-white">Terms & Conditions</a>
+              {' '}and acknowledge the{' '}
+              <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-cyan-300 underline underline-offset-4 hover:text-white">Privacy Policy</a>.
+              I confirm that the information submitted is accurate and, if I am under 18, that my parent or legal guardian has reviewed and approved my participation.
+            </span>
+          </label>
+          <p className="mt-3 pl-7 text-xs leading-5 text-slate-500">Your acceptance is recorded with your registration, including the policy versions and acceptance time.</p>
+        </section>
+
         {/* ERROR */}
         {err && (
           <div
@@ -343,7 +373,7 @@ export default function RegisterForm({
         {/* SUBMIT */}
         <button
           type="submit"
-          disabled={busy}
+          disabled={busy || !legalAccepted}
           className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 font-black uppercase tracking-wider text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <span className="relative z-10">

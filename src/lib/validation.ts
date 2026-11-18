@@ -44,6 +44,9 @@ export const registerSchema = z
     substitute: player.nullable(),
 
     website: z.string().optional(),
+    terms_accepted: z.literal(true),
+    terms_version: z.literal('1.0'),
+    privacy_version: z.literal('1.0'),
 
     t: z.number().finite().positive(),
   })

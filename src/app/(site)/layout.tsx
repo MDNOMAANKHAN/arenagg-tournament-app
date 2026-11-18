@@ -59,6 +59,8 @@ export default function SiteLayout({
               <Link href="/about" className="transition-colors hover:text-cyan-300">About</Link>
               <Link href="/tournaments" className="transition-colors hover:text-cyan-300">Tournaments</Link>
               <Link href="/results" className="transition-colors hover:text-cyan-300">Results</Link>
+              <Link href="/terms" className="transition-colors hover:text-cyan-300">Terms & Conditions</Link>
+              <Link href="/privacy" className="transition-colors hover:text-cyan-300">Privacy Policy</Link>
             </nav>
           </div>
 

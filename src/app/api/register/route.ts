@@ -10,6 +10,7 @@ const MSG: Record<string, [number, string]> = {
   DUPLICATE_TEAM: [409, 'A team with this name is already registered.'],
   DUPLICATE_ID: [409, 'One or more gaming IDs are already registered in this tournament.'],
   INVALID_REGISTRATION: [422, 'Please complete all required registration details.'],
+  LEGAL_ACCEPTANCE_REQUIRED: [422, 'Please accept the current Terms & Conditions and Privacy Policy before registering.'],
 };
 function normalizeHost(value: string | null | undefined): string | null {
   if (!value) return null;
