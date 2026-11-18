@@ -140,6 +140,24 @@ export default async function HomePage({ searchParams }: HomeProps) {
           </div>
         </section>
 
+        {/* PLAYER EXPERIENCE: QUICK START */}
+        <section className="arena-premium-card relative mt-12 overflow-hidden rounded-3xl border border-cyan-300/20 bg-gradient-to-br from-[#10203a]/90 to-[#081221]/90 p-6 shadow-xl shadow-blue-950/20 backdrop-blur-xl sm:p-8">
+          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-cyan-400/10 blur-3xl" />
+          <div className="relative grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="text-xs font-black tracking-[0.3em] text-cyan-300">PLAYER GUIDE</p>
+              <h2 className="mt-3 text-2xl font-black tracking-tight text-white sm:text-3xl">New to ARENAGG?</h2>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">Start here: find a tournament for your game, check the details and rules, then follow the joining instructions. Save your registration ID and check updates before match day.</p>
+            </div>
+            <div className="relative flex flex-wrap gap-3">
+              <Link href="#tournaments" className="arena-glass-button group transition hover:-translate-y-1">Find a tournament <span className="ml-2 transition group-hover:translate-x-1">→</span></Link>
+              <Link href="/results" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">View results</Link>
+              <Link href="/about" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">How ARENAGG works</Link>
+            </div>
+          </div>
+        </section>
+
+
         {/* GAME SHOWCASE */}
         <section className="mt-12">
           <GameShowcase />
