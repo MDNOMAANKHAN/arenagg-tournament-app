@@ -17,7 +17,7 @@ function sameOrigin(req: NextRequest) {
   if (!origin) return true;
   try {
     const originHost = new URL(origin).host.toLowerCase();
-    const host = (req.headers.get('x-forwarded-host') || req.headers.get('host') || req.nextUrl.host).split(',')[0].trim().toLowerCase();
+    const host = req.nextUrl.host.toLowerCase();
     return originHost === host;
   } catch {
     return false;
