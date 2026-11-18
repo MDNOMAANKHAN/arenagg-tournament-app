@@ -29,6 +29,18 @@ export async function middleware(req: NextRequest) {
   const isLoginPage = p === '/admin/login';
   const isMfaPage = p === '/admin/mfa';
 
+  // Admin mutations are same-origin only to reduce cookie-based CSRF risk.
+  if (p.startsWith('/api/admin/') && !['GET', 'HEAD', 'OPTIONS'].includes(req.method.toUpperCase())) {
+    const origin = req.headers.get('origin');
+    try {
+      if (!origin || new URL(origin).host.toLowerCase() !== req.nextUrl.host.toLowerCase()) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      }
+    } catch {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+  }
+
   const {
     data: { user },
   } = await sb.auth.getUser();
