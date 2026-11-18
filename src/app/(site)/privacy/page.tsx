@@ -42,7 +42,8 @@ export default function PrivacyPage() {
       <p className="mt-10 border-t border-white/10 pt-6 text-sm leading-6 text-slate-400">
         This is a general privacy-policy draft based on the features currently described for ARENAGG. Confirm the actual data flows, service providers, retention practices and legal requirements with a qualified privacy professional before publication.
       </p>
-      <Link href="/privacy-request" className="mt-5 inline-flex font-semibold text-cyan-300 hover:text-white">Submit a Privacy Request →</Link>\n      <Link href="/terms" className="mt-5 inline-flex font-semibold text-cyan-300 hover:text-white">Read the Terms & Conditions →</Link>
+      <Link href="/privacy-request" className="mt-5 inline-flex font-semibold text-cyan-300 hover:text-white">Submit a Privacy Request →</Link>
+      <Link href="/terms" className="mt-5 inline-flex font-semibold text-cyan-300 hover:text-white">Read the Terms & Conditions →</Link>
     </main>
   );
 }
