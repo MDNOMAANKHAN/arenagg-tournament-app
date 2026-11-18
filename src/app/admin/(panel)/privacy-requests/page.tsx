@@ -1,5 +1,6 @@
 import { getAdmin } from '@/lib/auth';
 import { fmt } from '@/lib/format';
+import PrivacyRequestActions from './PrivacyRequestActions';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,12 +19,12 @@ export default async function PrivacyRequestsAdminPage() {
             <p className="mt-2 break-all text-sm text-slate-300">{item.contact}</p>
             {item.registration_code && <p className="mt-1 font-mono text-xs text-slate-500">{item.registration_code}</p>}
             <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">{item.details}</p>
-            {item.admin_notes && <p className="mt-3 text-xs text-slate-400">Admin notes: {item.admin_notes}</p>}
-            <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-500"><span>Received: {fmt(item.created_at)}</span>{item.reviewed_at && <span>Reviewed: {fmt(item.reviewed_at)}</span>}<span className="font-mono">Ref: {item.id}</span></div>
+            <div className="mt-3 flex flex-wrap gap-3 text-xs text-slate-500"><span>Received: {fmt(item.created_at)}</span>{item.reviewed_at && <span>Reviewed: {fmt(item.reviewed_at)}</span>}<span className="font-mono">Ref: {item.id}</span></div>
+            <PrivacyRequestActions id={item.id} status={item.status} notes={item.admin_notes} />
           </article>
         ))}</div>
       )}
-      <p className="rounded-xl border border-amber-300/15 bg-amber-300/[0.04] p-4 text-xs leading-6 text-amber-100/80">This is an intake queue. Verify the requester through the registered contact channel, document the verification and retention assessment, then complete the request in the authorised data systems. Do not delete records while a legal hold, payment dispute or statutory retention duty applies.</p>
+      <p className="rounded-xl border border-amber-300/15 bg-amber-300/[0.04] p-4 text-xs leading-6 text-amber-100/80">Before completing a request, verify the requester through the registered contact channel and record the verification method and retention assessment in internal notes. Do not delete records while a legal hold, payment dispute or statutory retention duty applies.</p>
     </div>
   );
 }
