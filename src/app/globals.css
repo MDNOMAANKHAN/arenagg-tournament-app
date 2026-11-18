@@ -1592,3 +1592,181 @@ body:has(#main-content) footer{background:linear-gradient(145deg,rgba(255,255,25
 .public-nav-link:active{transform:scale(.96)}
 @media(max-width:640px){.public-nav-slider{backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%)}.public-nav-indicator::after{animation-duration:8s}}
 @media(prefers-reduced-motion:reduce){.public-nav-indicator,.public-nav-indicator::after,.public-nav-link{transition:none!important;animation:none!important}}
+
+
+/* ==========================================
+   ARENAGG — REFINED LIQUID GLASS SYSTEM
+   Clearer optical depth, softer reflections and
+   translucent surfaces. Inputs remain solid for legibility.
+========================================== */
+:root {
+  --arena-glass-tint: rgba(12, 27, 49, 0.48);
+  --arena-glass-tint-strong: rgba(8, 20, 39, 0.62);
+  --arena-glass-line: rgba(190, 225, 255, 0.2);
+  --arena-glass-highlight: rgba(255, 255, 255, 0.2);
+  --arena-glass-shadow: 0 20px 55px rgba(0, 0, 0, 0.28);
+  --arena-glass-specular:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(94, 184, 255, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+/* Give the background enough tonal variation for the lens blur to read. */
+.arena-page,
+.admin-shell {
+  background-color: #050b18;
+  background-image:
+    radial-gradient(ellipse at 14% 8%, rgba(31, 126, 255, 0.2), transparent 34%),
+    radial-gradient(ellipse at 86% 28%, rgba(0, 194, 255, 0.105), transparent 32%),
+    radial-gradient(ellipse at 52% 100%, rgba(28, 83, 180, 0.12), transparent 42%),
+    linear-gradient(145deg, #050b18 0%, #08152a 48%, #050b18 100%);
+}
+
+/* Translucent surfaces: avoid the muddy, nearly-opaque blue slab effect. */
+.arena-page .arena-glass,
+.arena-page .arena-nav,
+.arena-page .arena-tournament,
+.arena-page .arena-premium-card,
+.admin-shell .admin-glass,
+.admin-shell .sidebar-create-card,
+.admin-shell .admin-profile {
+  position: relative;
+  border: 1px solid var(--arena-glass-line);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.105), rgba(255,255,255,.018) 46%, rgba(70,160,255,.035)),
+    var(--arena-glass-tint);
+  -webkit-backdrop-filter: blur(30px) saturate(185%) contrast(108%);
+  backdrop-filter: blur(30px) saturate(185%) contrast(108%);
+  box-shadow: var(--arena-glass-shadow), var(--arena-glass-specular);
+}
+
+/* A crisp top rim and subtle blue refraction make the surface feel like glass. */
+.arena-page .arena-glass,
+.arena-page .arena-tournament,
+.arena-page .arena-premium-card,
+.admin-shell .admin-glass,
+.admin-shell .sidebar-create-card,
+.admin-shell .admin-profile {
+  overflow: hidden;
+}
+
+.arena-page .arena-glass::after,
+.arena-page .arena-tournament::after,
+.arena-page .arena-premium-card::after,
+.admin-shell .admin-glass::after,
+.admin-shell .sidebar-create-card::after,
+.admin-shell .admin-profile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255,255,255,.13), transparent 38%),
+    linear-gradient(115deg, transparent 22%, rgba(255,255,255,.045) 48%, transparent 76%);
+  opacity: .9;
+}
+
+/* Keep card content above the optical highlight layer. */
+.arena-page .arena-glass > *,
+.arena-page .arena-tournament > *,
+.arena-page .arena-premium-card > *,
+.admin-shell .admin-glass > *,
+.admin-shell .sidebar-create-card > *,
+.admin-shell .admin-profile > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Floating system bars should be noticeably translucent, not opaque. */
+.admin-sidebar {
+  background:
+    linear-gradient(155deg, rgba(255,255,255,.065), transparent 34%),
+    rgba(7, 18, 36, .58);
+  border-color: rgba(185, 222, 255, .17);
+  -webkit-backdrop-filter: blur(34px) saturate(185%);
+  backdrop-filter: blur(34px) saturate(185%);
+  box-shadow: 12px 0 42px rgba(0,0,0,.16), inset -1px 0 0 rgba(255,255,255,.055);
+}
+
+.admin-topbar,
+body:has(#main-content) > header {
+  background:
+    linear-gradient(110deg, rgba(255,255,255,.075), transparent 55%),
+    rgba(6, 17, 35, .52) !important;
+  border-color: rgba(190, 225, 255, .17) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  backdrop-filter: blur(32px) saturate(190%);
+  box-shadow: 0 12px 36px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.1);
+}
+
+body:has(#main-content) footer {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.045), transparent 52%),
+    rgba(5, 14, 29, .58) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(175%);
+  backdrop-filter: blur(28px) saturate(175%);
+}
+
+/* Buttons get a glass rim without sacrificing strong action contrast. */
+.arena-page .arena-glass-secondary,
+.admin-shell .admin-nav-item:not(.admin-nav-create) {
+  border-color: rgba(190, 225, 255, .16);
+  background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.018));
+  -webkit-backdrop-filter: blur(18px) saturate(165%);
+  backdrop-filter: blur(18px) saturate(165%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09);
+}
+
+.arena-page .arena-glass-secondary:hover,
+.admin-shell .admin-nav-item:not(.admin-nav-create):hover {
+  border-color: rgba(112, 205, 255, .42);
+  background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(30,130,255,.1));
+  box-shadow: 0 10px 28px rgba(0,100,220,.14), inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+.arena-page .arena-tournament,
+.arena-page .arena-premium-card,
+.admin-shell .admin-glass,
+.admin-shell .admin-nav-item,
+.arena-page .arena-glass-secondary {
+  transition:
+    transform .45s cubic-bezier(.2,.8,.2,1),
+    border-color .35s ease,
+    box-shadow .45s cubic-bezier(.2,.8,.2,1),
+    background .35s ease;
+}
+
+@media (max-width: 640px) {
+  .arena-page .arena-glass,
+  .arena-page .arena-tournament,
+  .arena-page .arena-premium-card,
+  .admin-shell .admin-glass,
+  .admin-shell .admin-sidebar,
+  .admin-shell .admin-topbar {
+    -webkit-backdrop-filter: blur(22px) saturate(165%);
+    backdrop-filter: blur(22px) saturate(165%);
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .arena-page .arena-glass,
+  .arena-page .arena-tournament,
+  .arena-page .arena-premium-card,
+  .admin-shell .admin-glass {
+    background: rgba(12, 27, 49, .94);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arena-page,
+  .arena-page .arena-glass,
+  .arena-page .arena-tournament,
+  .arena-page .arena-premium-card,
+  .admin-shell .admin-glass,
+  .admin-shell .admin-nav-item {
+    animation: none !important;
+    transition: none !important;
+  }
+}
