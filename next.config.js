@@ -6,10 +6,22 @@ const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
   { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
-];
-
-const noIndexHeaders = [
-  { key: 'X-Robots-Tag', value: 'noindex, follow' },
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self' https:",
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data: https:",
+      "connect-src 'self' https: wss:",
+      "upgrade-insecure-requests",
+    ].join('; '),
+  },
 ];
 
 const privateHeaders = [
@@ -19,10 +31,7 @@ const privateHeaders = [
 
 module.exports = {
   output: 'standalone',
-  images: {
-    // Prefer modern formats when supported by the visitor's browser.
-    formats: ['image/avif', 'image/webp'],
-  },
+  images: { formats: ['image/avif', 'image/webp'] },
   poweredByHeader: false,
   async headers() {
     return [
