@@ -193,12 +193,18 @@ export default function RegisterForm({
           </h2>
 
           <p className="mt-2 text-center text-sm leading-6 text-slate-400">
-            Enter your squad details and get ready to compete.
+            Complete the details below to reserve your team's place. Your registration ID will be shown after submission.
           </p>
 
         </div>
 
         {/* TEAM AND CAPTAIN */}
+        <div className="grid grid-cols-2 gap-3 rounded-xl border border-cyan-300/15 bg-cyan-300/[0.04] p-3 text-center sm:grid-cols-3 sm:p-4">
+          <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Team size</p><p className="mt-1 text-sm font-extrabold text-white">{t.team_size === 1 ? 'Solo player' : `${t.team_size} players`}</p></div>
+          <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Entry fee</p><p className="mt-1 text-sm font-extrabold text-white">{entryFee > 0 ? `₹${entryFee}` : 'Free'}</p></div>
+          <div className="col-span-2 sm:col-span-1"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Registration</p><p className="mt-1 text-sm font-extrabold text-emerald-200">{entryFee > 0 ? 'Payment required' : 'No payment'}</p></div>
+        </div>
+
         <section className="grid min-w-0 gap-4">
 
           <h2 className="flex items-center gap-3 text-xl font-bold text-white">
@@ -220,7 +226,7 @@ export default function RegisterForm({
           <section className="grid min-w-0 gap-4">
 
             <h2 className="flex items-center gap-3 text-xl font-bold text-white">
-              <span className="h-7 w-1 rounded-full bg-violet-400" />
+              <span className="h-7 w-1 rounded-full bg-cyan-400" />
               Teammates
             </h2>
 
@@ -228,9 +234,9 @@ export default function RegisterForm({
               {Array.from({ length: t.team_size - 1 }, (_, i) => (
                 <div
                   key={i}
-                  className="group grid min-w-0 gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40 hover:bg-violet-400/[0.06] hover:shadow-[0_0_25px_rgba(167,139,250,0.08)]"
+                  className="group grid min-w-0 gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/35 hover:bg-cyan-400/[0.05] hover:shadow-[0_0_25px_rgba(34,211,238,0.08)]"
                 >
-                  <h3 className="font-semibold text-violet-300">
+                  <h3 className="font-semibold text-cyan-200">
                     Player {i + 2}
                   </h3>
 
@@ -247,11 +253,11 @@ export default function RegisterForm({
         <section className="grid min-w-0 gap-4">
 
           <h2 className="flex items-center gap-3 text-xl font-bold text-white">
-            <span className="h-7 w-1 rounded-full bg-fuchsia-400" />
+            <span className="h-7 w-1 rounded-full bg-blue-400" />
             Substitute Player (Optional)
           </h2>
 
-          <div className="grid min-w-0 grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition duration-300 hover:border-fuchsia-400/20 sm:grid-cols-2">
+          <div className="grid min-w-0 grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition duration-300 hover:border-blue-400/25 sm:grid-cols-2">
             {I('sn', 'Substitute Name', 'Full name', false)}
             {I('sg', 'Substitute Gaming ID', 'Gaming ID', false)}
           </div>
