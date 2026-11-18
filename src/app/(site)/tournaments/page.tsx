@@ -242,15 +242,18 @@ export default async function TournamentsPage() {
                           </div>
                         </div>
 
-                        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] pt-4">
-                          <span className="text-xs font-bold text-cyan-200">
-                            View event information <span aria-hidden="true">→</span>
-                          </span>
+                        <div className="mt-5 grid grid-cols-1 gap-2 border-t border-white/[0.07] pt-4 sm:grid-cols-2">
                           <Link
                             href={`/tournaments/${t.id}`}
-                            className="inline-flex min-h-10 items-center justify-center rounded-xl border border-cyan-300/25 bg-cyan-300/[0.08] px-4 py-2 text-xs font-black text-cyan-100 transition hover:border-cyan-200/50 hover:bg-cyan-300/[0.14] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-cyan-300"
+                            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-cyan-300/30 bg-cyan-400/10 px-4 py-2.5 text-sm font-black text-cyan-100 transition duration-200 hover:border-cyan-200/60 hover:bg-cyan-400/20 hover:shadow-lg hover:shadow-cyan-950/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-cyan-300"
                           >
-                            View details
+                            Tournament Details <span aria-hidden="true">→</span>
+                          </Link>
+                          <Link
+                            href="/results"
+                            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-4 py-2.5 text-sm font-bold text-slate-200 transition duration-200 hover:border-blue-300/30 hover:bg-blue-300/[0.08] hover:text-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-blue-300"
+                          >
+                            View Results <span aria-hidden="true">↗</span>
                           </Link>
                         </div>
                       </div>
