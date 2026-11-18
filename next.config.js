@@ -1,3 +1,13 @@
+let supabaseOrigin = 'https://*.supabase.co';
+try {
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    supabaseOrigin = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin;
+  }
+} catch {
+  // Keep a safe default if the build environment has no valid Supabase URL.
+}
+const supabaseRealtimeOrigin = supabaseOrigin.replace(/^https:/, 'wss:');
+
 const securityHeaders = [
   { key: 'X-Frame-Options', value: 'DENY' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -6,10 +16,22 @@ const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
   { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
-];
-
-const noIndexHeaders = [
-  { key: 'X-Robots-Tag', value: 'noindex, follow' },
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self'",
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data: https:",
+      `connect-src 'self' ${supabaseOrigin} ${supabaseRealtimeOrigin}`,
+      "upgrade-insecure-requests",
+    ].join('; '),
+  },
 ];
 
 const privateHeaders = [
@@ -19,10 +41,7 @@ const privateHeaders = [
 
 module.exports = {
   output: 'standalone',
-  images: {
-    // Prefer modern formats when supported by the visitor's browser.
-    formats: ['image/avif', 'image/webp'],
-  },
+  images: { formats: ['image/avif', 'image/webp'] },
   poweredByHeader: false,
   async headers() {
     return [

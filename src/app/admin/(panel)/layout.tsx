@@ -44,6 +44,11 @@ export default async function PanelLayout({
             Tournaments
           </Link>
 
+          <Link href="/admin/privacy-requests" className="admin-nav-item">
+            <span className="nav-icon" aria-hidden="true">⌁</span>
+            Privacy Requests
+          </Link>
+
           <Link href="/admin/activity" className="admin-nav-item">
             <span className="nav-icon" aria-hidden="true">◷</span>
             Activity History
@@ -75,14 +80,14 @@ export default async function PanelLayout({
         <div className="admin-profile mt-5 lg:mt-auto">
           <div className="flex min-w-0 items-center gap-3">
             <div className="admin-avatar" aria-hidden="true">
-              {(a.user.email?.[0] || 'A').toUpperCase()}
+              A
             </div>
             <div className="min-w-0">
               <div className="text-[10px] font-bold tracking-widest text-slate-500">
                 ADMINISTRATOR
               </div>
               <div className="mt-1 truncate text-sm font-semibold text-white">
-                {a.user.email}
+                Administrator
               </div>
             </div>
           </div>
