@@ -42,6 +42,7 @@ export default async function RegisterPage({
 
         {/* TOURNAMENT HEADER */}
         <header className="rise mb-8 flex w-full flex-col items-center text-center">
+          <Link href={`/tournaments/${t.id}`} className="mb-5 inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.035] px-4 text-xs font-bold text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-200">← Tournament details</Link>
 
           <div
             className="text-xs font-bold tracking-[0.2em]"
@@ -58,6 +59,11 @@ export default async function RegisterPage({
             {fmt(t.starts_at)} · {s.label} ·{' '}
             {t.entry_fee > 0 ? `Entry ₹${t.entry_fee}` : 'Free entry'}
           </p>
+          <div className="mt-5 grid w-full max-w-xl grid-cols-3 gap-2 rounded-2xl border border-cyan-300/15 bg-white/[0.025] p-3 text-center sm:gap-4 sm:p-4">
+            <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Format</p><p className="mt-1 text-xs font-extrabold text-white sm:text-sm">{t.team_size === 1 ? 'Solo' : `${t.team_size} players`}</p></div>
+            <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Entry</p><p className="mt-1 text-xs font-extrabold text-white sm:text-sm">{t.entry_fee > 0 ? `₹${t.entry_fee}` : 'Free'}</p></div>
+            <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Slots</p><p className="mt-1 text-xs font-extrabold text-white sm:text-sm">{Math.max(0, t.max_teams - t.registered)} left</p></div>
+          </div>
 
         </header>
 
