@@ -5,7 +5,7 @@ import MfaSetup from './MfaSetup';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminMfaPage() {
-  const admin = await getAdmin();
+  const admin = await getAdmin({ requireMfa: false });
   if (!admin) redirect('/admin/login');
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink px-4 py-10">
