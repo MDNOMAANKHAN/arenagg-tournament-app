@@ -19,7 +19,7 @@ const sections = [
   ["9. Children and guardian approval", "If you are under 18, you must obtain parent or legal guardian review and approval before submitting personal information or participating. A parent or guardian may contact us with a privacy request concerning a minor."],
   ["10. Third-party services and links", "The platform may link to WhatsApp, payment apps, game services or other third-party websites. Their privacy practices are governed by their own policies; please review them before sharing information."],
   ["11. Changes to this policy", "We may update this policy as our services or legal obligations change. The current version and effective date will be displayed on this page. Where required, we will take additional steps to notify affected users."],
-  ["12. Contact", "For privacy questions or requests, use the Contact & Support page or call 7330804540. Please avoid sending passwords, OTPs, UPI PINs or other authentication secrets in support messages."],
+  ["12. Contact", "For access, correction or deletion requests, submit the Privacy Request form at /privacy-request or call 7330804540. We will verify identity and review legal retention requirements before taking action. Please avoid sending passwords, OTPs, UPI PINs or other authentication secrets in support messages."],
 ];
 
 export default function PrivacyPage() {
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
       <p className="mt-10 border-t border-white/10 pt-6 text-sm leading-6 text-slate-400">
         This is a general privacy-policy draft based on the features currently described for ARENAGG. Confirm the actual data flows, service providers, retention practices and legal requirements with a qualified privacy professional before publication.
       </p>
-      <Link href="/terms" className="mt-5 inline-flex font-semibold text-cyan-300 hover:text-white">Read the Terms & Conditions →</Link>
+      <Link href="/privacy-request" className="mt-5 inline-flex font-semibold text-cyan-300 hover:text-white">Submit a Privacy Request →</Link>\n      <Link href="/terms" className="mt-5 inline-flex font-semibold text-cyan-300 hover:text-white">Read the Terms & Conditions →</Link>
     </main>
   );
 }
