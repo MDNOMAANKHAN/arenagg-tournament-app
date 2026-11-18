@@ -68,7 +68,7 @@ export default async function Dashboard() {
       value: totalTeams,
       description: 'Active registrations',
       icon: '👥',
-      color: 'purple',
+      color: 'blue',
     },
     {
       title: 'PENDING APPROVAL',
@@ -178,8 +178,8 @@ export default async function Dashboard() {
                 className={`pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl transition duration-500 group-hover:opacity-100 ${
                   stat.color === 'cyan'
                     ? 'bg-cyan-400/10'
-                    : stat.color === 'purple'
-                    ? 'bg-purple-400/10'
+                    : stat.color === 'blue'
+                    ? 'bg-blue-400/10'
                     : stat.color === 'amber'
                     ? 'bg-amber-400/10'
                     : 'bg-emerald-400/10'
@@ -361,7 +361,7 @@ export default async function Dashboard() {
 
                     <Link
                       href={`/admin/tournaments/${t.id}/manage`}
-                      className="inline-flex min-h-10 items-center justify-center rounded-lg border border-purple-400/20 bg-purple-400/[0.04] px-3 text-xs font-bold text-purple-300 transition hover:bg-purple-400/10"
+                      className="inline-flex min-h-10 items-center justify-center rounded-lg border border-purple-400/20 bg-purple-400/[0.04] px-3 text-xs font-bold text-purple-300 transition hover:bg-blue-400/10"
                     >
                       Matches
                     </Link>
@@ -454,7 +454,7 @@ export default async function Dashboard() {
                 </Link>
                 <Link
                   href={`/admin/tournaments/${t.id}/manage`}
-                  className="inline-flex min-h-10 items-center justify-center rounded-lg border border-purple-400/20 bg-purple-400/[0.04] px-4 text-xs font-bold text-purple-300 transition hover:bg-purple-400/10"
+                  className="inline-flex min-h-10 items-center justify-center rounded-lg border border-purple-400/20 bg-purple-400/[0.04] px-4 text-xs font-bold text-purple-300 transition hover:bg-blue-400/10"
                 >
                   Matches & results
                 </Link>
