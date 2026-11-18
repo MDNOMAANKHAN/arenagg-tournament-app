@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 import { createHash } from 'crypto';
 import { supabaseService } from '@/lib/supabase/service';
 import { fmt } from '@/lib/format';
+import PaymentProofUpload from '@/components/PaymentProofUpload';
 
 export const dynamic = 'force-dynamic';
 
@@ -176,7 +177,7 @@ export default async function Confirmation({
                 <div className="h-7 w-1 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/40" />
 
                 <h2 className="text-lg font-black text-white">
-                  Payment screenshot required
+                  Payment & verification
                 </h2>
               </div>
 
@@ -213,7 +214,10 @@ export default async function Confirmation({
               </div>
 
 
-
+              <div className="mt-5 rounded-2xl border border-cyan-300/15 bg-[#061326]/55 p-4 sm:p-5">
+                <p className="mb-4 text-sm leading-6 text-slate-400">Upload or replace your payment screenshot here. The organiser will verify it before approving your team.</p>
+                <PaymentProofUpload code={params.code} alreadyUploaded={Boolean(r.has_payment_proof)} rejected={r.status === 'rejected'} />
+              </div>
             </div>
           )}
 
