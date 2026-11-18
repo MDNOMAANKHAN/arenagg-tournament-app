@@ -7,6 +7,7 @@ const LABEL: Record<string, string> = {
   registration: 'Registration',
   match: 'Match',
   result: 'Result',
+  privacy_request: 'Privacy request',
 };
 
 export default async function AdminActivityPage() {
