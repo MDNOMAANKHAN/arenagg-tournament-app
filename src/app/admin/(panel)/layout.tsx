@@ -24,14 +24,14 @@ export default async function PanelLayout({
 
       <aside className="admin-sidebar flex w-full flex-col p-4 sm:p-5 lg:sticky lg:top-0 lg:h-screen lg:w-[280px] lg:shrink-0">
         <Link href="/admin" className="admin-brand">
-          <span className="brand-icon">A</span>
+          <span className="brand-icon" aria-hidden="true">A</span>
           <span>
             ARENA<span className="text-cyan-400">GG</span>
             <small>ESPORTS MANAGEMENT</small>
           </span>
         </Link>
 
-        <div className="sidebar-section-label">WORKSPACE</div>
+        <div className="sidebar-section-label">MANAGEMENT WORKSPACE</div>
 
         <nav aria-label="Admin navigation" className="admin-nav mt-3 grid gap-2">
           <Link href="/admin" className="admin-nav-item">
@@ -110,9 +110,11 @@ export default async function PanelLayout({
               ARENAGG <span className="text-cyan-400">/</span> ADMIN
             </div>
             <div className="mt-1 text-[11px] text-slate-500">
-              Admin workspace
+              Tournament operations · Player management
             </div>
           </div>
+
+          <Link href="/" target="_blank" rel="noopener noreferrer" className="mr-auto ml-4 hidden min-h-10 items-center rounded-xl border border-white/10 bg-white/[0.035] px-3 text-xs font-bold text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-200 md:inline-flex">View public site ↗</Link>
 
           <Link href="/admin/tournaments/new" className="admin-top-create">
             <span className="text-lg" aria-hidden="true">＋</span>
