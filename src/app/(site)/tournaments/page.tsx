@@ -176,10 +176,10 @@ export default async function TournamentsPage() {
               <div className="mt-5 grid gap-4 lg:grid-cols-2">
                 {ts.map((t) => {
                   const s = slotInfo(t);
-                  const color = gameColor(t.game_slug);
+                  const color = t.game_slug === 'valorant' ? '#60A5FA' : gameColor(t.game_slug);
                   const statusClass =
                     t.status === 'live'
-                      ? 'border-rose-300/25 bg-rose-300/10 text-rose-200'
+                      ? 'border-cyan-300/25 bg-cyan-300/10 text-cyan-100'
                       : s.canRegister
                         ? 'border-emerald-300/25 bg-emerald-300/10 text-emerald-200'
                         : 'border-white/10 bg-white/[0.055] text-slate-300';
