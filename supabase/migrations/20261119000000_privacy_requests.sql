@@ -31,6 +31,41 @@ alter table public.admin_activity
   add constraint admin_activity_entity_type_check
   check (entity_type in ('tournament','registration','match','result','privacy_request'));
 
+create or replace function public.log_admin_activity()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $
+declare
+  row_data jsonb;
+  entity text;
+  summary_text text;
+begin
+  row_data := case when TG_OP = 'DELETE' then to_jsonb(OLD) else to_jsonb(NEW) end;
+  entity := case TG_TABLE_NAME
+    when 'tournaments' then 'tournament'
+    when 'registrations' then 'registration'
+    when 'matches' then 'match'
+    when 'tournament_results' then 'result'
+    when 'privacy_requests' then 'privacy_request'
+    else TG_TABLE_NAME
+  end;
+  summary_text := coalesce(
+    row_data->>'title',
+    row_data->>'team_name',
+    row_data->>'request_type',
+    row_data->>'round_label',
+    case when row_data ? 'registration_id' then 'Tournament result' end,
+    initcap(entity)
+  );
+  insert into public.admin_activity(actor_id, action, entity_type, entity_id, summary)
+  values (auth.uid(), TG_OP, entity, nullif(row_data->>'id', '')::uuid, summary_text);
+  if TG_OP = 'DELETE' then return OLD; end if;
+  return NEW;
+end;
+$;
+
 create or replace function public.touch_privacy_request_updated_at()
 returns trigger language plpgsql set search_path = pg_catalog
 as $$
