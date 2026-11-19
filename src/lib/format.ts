@@ -8,15 +8,19 @@ export const GAME_COLOR: Record<string, string> = {
 export const gameColor = (slug: string) =>
   GAME_COLOR[slug] ?? '#2563EB';
 
-export const fmt = (d: string) =>
-  new Intl.DateTimeFormat('en-IN', {
+export const fmt = (d: string) => {
+  const date = new Date(d);
+  if (Number.isNaN(date.getTime())) return 'Schedule unavailable';
+
+  return new Intl.DateTimeFormat('en-IN', {
     timeZone: 'Asia/Kolkata',
     weekday: 'short',
     day: 'numeric',
     month: 'short',
     hour: 'numeric',
     minute: '2-digit',
-  }).format(new Date(d)) + ' IST';
+  }).format(date) + ' IST';
+};
 
 // Display and interpret datetime-local fields in India Standard Time.
 export const toLocalInput = (iso?: string | null) => {
@@ -74,8 +78,10 @@ export function slotInfo(t: PublicTournament) {
   const left = Math.max(t.max_teams - t.registered, 0);
 
   const startsAt = new Date(t.starts_at);
-  const hasStarted = Number.isFinite(startsAt.getTime()) && startsAt <= new Date();
-  const canRegister = t.status === 'open' && left > 0 && !hasStarted;
+  const hasValidStartTime = Number.isFinite(startsAt.getTime());
+  const hasStarted = hasValidStartTime && startsAt <= new Date();
+  // Fail closed: a missing or invalid schedule must never expose registration.
+  const canRegister = t.status === 'open' && left > 0 && hasValidStartTime && !hasStarted;
   const label =
     t.status === 'cancelled'
       ? 'Cancelled'
@@ -85,6 +91,8 @@ export function slotInfo(t: PublicTournament) {
       ? 'Completed'
       : t.status === 'open' && left <= 0
       ? 'Full'
+      : t.status === 'open' && !hasValidStartTime
+      ? 'Schedule unavailable'
       : t.status === 'open' && hasStarted
       ? 'Event date passed'
       : canRegister
