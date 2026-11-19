@@ -76,47 +76,43 @@ export default async function TournamentsPage() {
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
       />
-      <main className="wrap py-10">
-      <div className="text-xs font-bold tracking-widest text-accd">
-        COMMUNITY COMPETITIONS
-      </div>
+      <main className="arena-tournaments-page arena-page-backdrop wrap py-10 sm:py-14">
+      <section className="arena-tournaments-hero mb-8 overflow-hidden rounded-3xl border border-cyan-300/15 p-6 sm:p-9">
+        <p className="text-xs font-black tracking-[0.25em] text-cyan-300">COMMUNITY COMPETITIONS</p>
+        <h1 className="mb-2 mt-3 text-4xl font-black tracking-tight sm:text-5xl">Find your next arena.</h1>
+        <p className="mb-6 max-w-2xl text-sm leading-7 text-muted sm:text-base">
+          Browse tournaments, choose your game, and bring your squad. {ts.length} event{ts.length === 1 ? '' : 's'} currently listed.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Link className="arena-game-filter" href="/">All games</Link>
+          {(games ?? []).map((g) => (
+            <Link key={g.slug} className="arena-game-filter" href={`/?game=${g.slug}#tournaments`}>{g.name}</Link>
+          ))}
+          <Link className="arena-game-filter arena-filter-secondary" href="/results">View results ↗</Link>
+        </div>
+      </section>
 
-      <h1 className="mb-2 mt-1 text-4xl font-black">Tournament Information</h1>
-
-      <p className="mb-6 text-sm text-muted">
-        {ts.length} tournament{ts.length === 1 ? '' : 's'} across{' '}
-        {(games ?? []).length} games.
-      </p>
-
-      <div className="mb-8 flex flex-wrap gap-2">
-        <Link className="btn light sm" href="/">
-          ← Back to home
-        </Link>
-
-        {(games ?? []).map((g) => (
-          <Link
-            key={g.slug}
-            className="btn light sm"
-            href={`/?game=${g.slug}#tournaments`}
-          >
-            {g.name}
-          </Link>
-        ))}
+      <div className="arena-tournament-list-heading mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-black tracking-[0.25em] text-cyan-300">READY TO COMPETE</p>
+          <h2 className="mt-1 text-2xl font-black">Available tournaments</h2>
+        </div>
+        <span className="arena-tournament-count rounded-full border border-cyan-300/15 px-3 py-1.5 text-xs font-bold text-cyan-200">{ts.length} events</span>
       </div>
 
       {ts.length ? (
-        <div className="grid gap-4">
+        <div className="arena-tournament-grid grid gap-4 lg:grid-cols-2">
           {ts.map((t) => {
             const s = slotInfo(t);
 
             return (
-              <article key={t.id} className="card group relative overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
+              <article key={t.id} className="arena-tournament-card card group relative overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
                 <Link
                   href={`/tournaments/${t.id}`}
                   aria-label={`View full details for ${t.title}`}
                   className="absolute inset-0 z-0 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
                 />
-                <div className="pointer-events-none relative z-10">
+                <div className="arena-tournament-card-content pointer-events-none relative z-10">
                 <div className="flex flex-wrap items-center gap-2">
                   <span
                     className="text-xs font-black tracking-widest"
@@ -140,7 +136,7 @@ export default async function TournamentsPage() {
                   </span>
                 </div>
 
-                <h2 className="mt-2 text-xl font-black text-white transition-colors group-hover:text-cyan-300">
+                <h2 className="mt-2 text-xl font-black text-white transition-colors group-hover:text-cyan-300 sm:text-2xl">
                   {t.title}
                 </h2>
 
@@ -151,7 +147,7 @@ export default async function TournamentsPage() {
                   {t.entry_fee > 0 ? `₹${t.entry_fee} entry` : 'Free entry'}
                 </p>
 
-                <div className="mt-4 flex flex-wrap items-center gap-2">
+                <div className="arena-tournament-actions mt-5 flex flex-wrap items-center gap-2">
                   <span className="text-xs font-bold text-cyan-300">
                     View tournament details →
                   </span>
@@ -168,7 +164,7 @@ export default async function TournamentsPage() {
           })}
         </div>
       ) : (
-        <div className="card text-center text-muted">
+        <div className="arena-tournaments-empty card text-center text-muted">
           No upcoming or live tournaments are available right now. Check the Results page for completed competitions.
         </div>
       )}

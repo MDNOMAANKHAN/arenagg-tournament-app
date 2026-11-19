@@ -26,7 +26,7 @@ export default function ContactPage() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl">
-        <header className="mb-8">
+        <header className="arena-contact-header mb-8">
           <p className="text-xs font-black tracking-[0.3em] text-cyan-300">WE'RE HERE TO HELP</p>
           <h1 className="mt-3 text-4xl font-black tracking-tight text-white sm:text-6xl">
             Contact Us
@@ -37,9 +37,9 @@ export default function ContactPage() {
           </p>
         </header>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <section className="arena-premium-card rounded-2xl border border-blue-300/15 bg-[#0b1424]/85 p-6 sm:p-8">
-            <div className="text-3xl" aria-hidden="true">📞</div>
+        <div className="arena-contact-grid grid gap-5 sm:grid-cols-2">
+          <section className="arena-contact-glass arena-premium-card rounded-2xl border border-blue-300/15 p-6 sm:p-8">
+            <div className="arena-contact-icon" aria-hidden="true">📞</div>
             <h2 className="mt-4 text-xl font-black text-white">Call us</h2>
             <p className="mt-2 text-sm leading-7 text-slate-400">
               Contact us by phone for assistance with ARENAGG.
@@ -54,7 +54,7 @@ export default function ContactPage() {
           </section>
 
           <section className="arena-premium-card rounded-2xl border border-blue-300/15 bg-[#0b1424]/85 p-6 sm:p-8">
-            <div className="text-3xl" aria-hidden="true">💬</div>
+            <div className="arena-contact-icon" aria-hidden="true">💬</div>
             <h2 className="mt-4 text-xl font-black text-white">WhatsApp Channel</h2>
             <p className="mt-2 text-sm leading-7 text-slate-400">
               Join our channel for official community announcements and
@@ -71,7 +71,7 @@ export default function ContactPage() {
           </section>
         </div>
 
-        <p className="mt-8 rounded-xl border border-amber-300/15 bg-amber-300/[0.05] p-4 text-xs leading-6 text-slate-400">
+        <p className="arena-contact-note mt-8 rounded-xl border border-amber-300/15 p-4 text-xs leading-6 text-slate-400">
           For your safety, use only the official contact details published on
           this website. Do not send payments to other users or unverified
           numbers.

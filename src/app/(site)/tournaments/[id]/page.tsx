@@ -124,7 +124,7 @@ export default async function TournamentPage({
       : 0;
 
   return (
-    <main className="min-h-screen w-full py-10 sm:py-14">
+    <main className="arena-user-panel arena-tournament-detail min-h-screen w-full py-10 sm:py-14">
       <div className="mx-auto grid w-full max-w-7xl min-w-0 grid-cols-1 gap-7 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_330px] lg:px-8">
 
         {/* MAIN CONTENT */}
@@ -132,7 +132,7 @@ export default async function TournamentPage({
 
           {/* TOURNAMENT HEADER */}
           <section
-            className="relative overflow-hidden rounded-2xl border border-cyan-400/15 bg-gradient-to-br from-[#101e36]/95 via-[#0b1426]/95 to-[#080e1c]/95 p-6 shadow-xl shadow-blue-950/20 sm:p-8"
+            className="arena-user-feature relative overflow-hidden rounded-2xl border border-cyan-400/15 p-6 sm:p-8"
             style={{ animation: 'fadeInUp .55s ease-out both' }}
           >
             <div
@@ -180,7 +180,7 @@ export default async function TournamentPage({
 
           {/* TEAM STATUS */}
           <section
-            className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#101a2d]/95 to-[#080f1d]/95 p-5 shadow-xl shadow-black/20 sm:p-7"
+            className="arena-user-surface rounded-2xl border border-white/10 p-5 sm:p-7"
             style={{ animation: 'fadeInUp .65s ease-out both' }}
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -373,7 +373,7 @@ export default async function TournamentPage({
 
           {/* RULES */}
           <section
-            className="rounded-2xl border border-white/10 bg-[#0b1425]/90 p-5 sm:p-7"
+            className="arena-user-surface rounded-2xl border border-white/10 p-5 sm:p-7"
             style={{ animation: 'fadeInUp .7s ease-out both' }}
           >
             <div className="mb-4 flex items-center gap-3">
@@ -459,7 +459,7 @@ export default async function TournamentPage({
           className="h-fit space-y-5 lg:sticky lg:top-6"
           style={{ animation: 'fadeInUp .65s ease-out both' }}
         >
-          <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-br from-[#101e36] to-[#080f1d] p-5 shadow-xl shadow-blue-950/20 sm:p-6">
+          <section className="arena-user-feature rounded-2xl border border-cyan-400/20 p-5 sm:p-6">
             <div className="mb-5 text-xs font-black tracking-[0.2em] text-cyan-300">
               TOURNAMENT INFORMATION
             </div>
@@ -517,7 +517,7 @@ export default async function TournamentPage({
             </p>
           </section>
 
-          <section className="rounded-2xl border border-white/10 bg-[#0b1425]/90 p-5">
+          <section className="arena-user-surface rounded-2xl border border-white/10 p-5">
             <div className="text-xs font-black tracking-widest text-slate-400">
               TOURNAMENT STATUS
             </div>

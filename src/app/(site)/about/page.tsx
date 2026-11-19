@@ -23,7 +23,7 @@ export default function AboutPage() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-5xl">
-        <section className="arena-premium-card rounded-3xl border border-blue-300/15 bg-[#0b1424]/80 p-7 shadow-xl shadow-blue-950/20 backdrop-blur-xl sm:p-12">
+        <section className="arena-about-glass arena-premium-card rounded-3xl border border-blue-300/15 p-7 sm:p-12">
           <p className="text-xs font-black tracking-[0.3em] text-cyan-300">WHO WE ARE</p>
           <h1 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-6xl">
             About <span className="arena-gradient-text">ARENAGG</span>
@@ -45,7 +45,7 @@ export default function AboutPage() {
             ["🏆", "Compete together", "Discover tournaments, review the details and register your team."],
             ["📊", "Follow the journey", "Keep up with tournament schedules and published results."],
           ].map(([icon, heading, description]) => (
-            <article key={heading} className="arena-premium-card rounded-2xl border border-blue-300/15 bg-[#0b1424]/80 p-6">
+            <article key={heading} className="arena-about-glass arena-about-feature rounded-2xl border border-blue-300/15 p-6">
               <div className="text-3xl" aria-hidden="true">{icon}</div>
               <h2 className="mt-4 text-lg font-extrabold text-white">{heading}</h2>
               <p className="mt-2 text-sm leading-7 text-slate-400">{description}</p>
@@ -53,7 +53,7 @@ export default function AboutPage() {
           ))}
         </section>
 
-        <section className="mt-8 rounded-2xl border border-cyan-300/15 bg-cyan-400/[0.05] p-6 sm:p-8">
+        <section className="arena-about-glass arena-about-callout mt-8 rounded-2xl border border-cyan-300/15 p-6 sm:p-8">
           <h2 className="text-xl font-black text-white">Games and competitions</h2>
           <p className="mt-3 text-sm leading-7 text-slate-300">
             ARENAGG features community tournament experiences for Free Fire MAX,
