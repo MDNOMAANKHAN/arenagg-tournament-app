@@ -1835,3 +1835,48 @@ body:has(#main-content) footer{background:linear-gradient(145deg,rgba(255,255,25
 @media(max-width:1023px){.admin-sidebar{position:relative!important;height:auto!important;width:100%!important;border-radius:0 0 22px 22px!important}.admin-profile{margin-top:18px!important}}
 @media(max-width:640px){.admin-sidebar{padding:13px!important}.admin-workspace-content{padding:14px!important}.admin-topbar{min-height:64px!important;padding-inline:14px!important}.arena-user-form{border-radius:19px!important;padding:16px!important}.arena-registration-summary{border-radius:16px!important}}
 @media(prefers-reduced-motion:reduce){.admin-nav-item,.sidebar-create-button{transition:none!important}}
+
+/* DASHBOARD FIX: remove stretched empty surfaces and restore content-first sizing */
+.admin-workspace-content .admin-stat-compact{
+  height:156px!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:block!important;
+  flex:none!important;
+  padding:18px!important;
+}
+.admin-workspace-content .admin-stat-compact > div,
+.admin-workspace-content .admin-stat-compact > p{
+  position:relative!important;
+  z-index:2!important;
+}
+.admin-workspace-content .admin-stat-compact > div:first-of-type{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  min-height:40px!important;
+}
+.admin-workspace-content .admin-stat-compact > div:nth-of-type(2){
+  margin-top:12px!important;
+  line-height:1!important;
+}
+.admin-workspace-content .admin-stat-compact > p:last-child{
+  margin-top:7px!important;
+}
+.admin-workspace-content #pending-review .grid{
+  gap:10px!important;
+}
+.admin-workspace-content #pending-review .rounded-xl.border-dashed{
+  padding:22px 16px!important;
+}
+.admin-workspace-content #tournaments,
+.admin-workspace-content #completed-tournaments{
+  background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(0,80,180,.02)),rgba(4,10,20,.72)!important;
+}
+.admin-workspace-content .admin-liquid-surface::before{
+  opacity:.22!important;
+}
+@media(max-width:640px){
+  .admin-workspace-content .admin-stat-compact{height:145px!important;padding:15px!important}
+  .admin-workspace-content .admin-stat-compact > div:nth-of-type(2){margin-top:9px!important;font-size:34px!important}
+}
