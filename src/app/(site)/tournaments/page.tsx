@@ -77,31 +77,27 @@ export default async function TournamentsPage() {
         }}
       />
       <main className="arena-tournaments-page arena-page-backdrop wrap py-10 sm:py-14">
-      <div className="text-xs font-bold tracking-widest text-accd">
-        COMMUNITY COMPETITIONS
-      </div>
+      <section className="arena-tournaments-hero mb-8 overflow-hidden rounded-3xl border border-cyan-300/15 p-6 sm:p-9">
+        <p className="text-xs font-black tracking-[0.25em] text-cyan-300">COMMUNITY COMPETITIONS</p>
+        <h1 className="mb-2 mt-3 text-4xl font-black tracking-tight sm:text-5xl">Find your next arena.</h1>
+        <p className="mb-6 max-w-2xl text-sm leading-7 text-muted sm:text-base">
+          Browse tournaments, choose your game, and bring your squad. {ts.length} event{ts.length === 1 ? '' : 's'} currently listed.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Link className="arena-game-filter" href="/">All games</Link>
+          {(games ?? []).map((g) => (
+            <Link key={g.slug} className="arena-game-filter" href={`/?game=${g.slug}#tournaments`}>{g.name}</Link>
+          ))}
+          <Link className="arena-game-filter arena-filter-secondary" href="/results">View results ↗</Link>
+        </div>
+      </section>
 
-      <h1 className="mb-2 mt-1 text-4xl font-black">Tournament Information</h1>
-
-      <p className="mb-6 max-w-2xl text-sm leading-7 text-muted sm:text-base">
-        {ts.length} tournament{ts.length === 1 ? '' : 's'} across{' '}
-        {(games ?? []).length} games.
-      </p>
-
-      <div className="mb-8 flex flex-wrap gap-2">
-        <Link className="btn light sm" href="/">
-          ← Back to home
-        </Link>
-
-        {(games ?? []).map((g) => (
-          <Link
-            key={g.slug}
-            className="btn light sm"
-            href={`/?game=${g.slug}#tournaments`}
-          >
-            {g.name}
-          </Link>
-        ))}
+      <div className="arena-tournament-list-heading mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-black tracking-[0.25em] text-cyan-300">READY TO COMPETE</p>
+          <h2 className="mt-1 text-2xl font-black">Available tournaments</h2>
+        </div>
+        <span className="arena-tournament-count rounded-full border border-cyan-300/15 px-3 py-1.5 text-xs font-bold text-cyan-200">{ts.length} events</span>
       </div>
 
       {ts.length ? (
