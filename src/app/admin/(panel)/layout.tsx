@@ -17,7 +17,7 @@ export default async function PanelLayout({
 
   return (
     <AdminToastProvider>
-    <div className="admin-shell min-h-screen text-white lg:flex">
+    <div className="admin-shell admin-workspace min-h-screen text-white lg:flex">
       <a href="#admin-main" className="skip-link">
         Skip to admin content
       </a>
@@ -123,7 +123,7 @@ export default async function PanelLayout({
           </Link>
         </header>
 
-        <div className="admin-content mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-9">
+        <div className="admin-content admin-workspace-content mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-9">
           <div className="min-w-0 animate-[arenaFadeUp_500ms_ease_both]">
             {children}
           </div>
