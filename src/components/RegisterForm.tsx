@@ -165,7 +165,7 @@ export default function RegisterForm({
 
       <form
         onSubmit={submit}
-        className="card rise grid w-full min-w-0 max-w-none gap-6 overflow-hidden border border-cyan-400/25 bg-slate-950/95 p-5 shadow-[0_0_55px_rgba(6,182,212,0.12)] backdrop-blur-xl sm:gap-8 sm:p-8 lg:p-10"
+        className="arena-user-form card rise grid w-full min-w-0 max-w-none gap-6 overflow-hidden p-5 sm:gap-8 sm:p-8 lg:p-10"
       >
 
         {/* SPAM PROTECTION */}
@@ -234,7 +234,7 @@ export default function RegisterForm({
               {Array.from({ length: t.team_size - 1 }, (_, i) => (
                 <div
                   key={i}
-                  className="group grid min-w-0 gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/35 hover:bg-cyan-400/[0.05] hover:shadow-[0_0_25px_rgba(34,211,238,0.08)]"
+                  className="arena-player-field group grid min-w-0 gap-3 rounded-xl border border-white/10 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/35 hover:shadow-[0_0_25px_rgba(34,211,238,0.08)]"
                 >
                   <h3 className="font-semibold text-cyan-200">
                     Player {i + 2}
@@ -257,7 +257,7 @@ export default function RegisterForm({
             Substitute Player (Optional)
           </h2>
 
-          <div className="grid min-w-0 grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition duration-300 hover:border-blue-400/25 sm:grid-cols-2">
+          <div className="arena-substitute-field grid min-w-0 grid-cols-1 gap-4 rounded-xl border border-white/10 p-4 transition duration-300 hover:border-blue-400/25 sm:grid-cols-2">
             {I('sn', 'Substitute Name', 'Full name', false)}
             {I('sg', 'Substitute Gaming ID', 'Gaming ID', false)}
           </div>
