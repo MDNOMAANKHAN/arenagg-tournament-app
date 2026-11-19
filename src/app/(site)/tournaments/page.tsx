@@ -110,7 +110,7 @@ export default async function TournamentsPage() {
             const s = slotInfo(t);
 
             return (
-              <article key={t.id} className="card group relative overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
+              <article key={t.id} className="arena-liquid-surface card group relative overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
                 <Link
                   href={`/tournaments/${t.id}`}
                   aria-label={`View full details for ${t.title}`}
