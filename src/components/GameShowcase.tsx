@@ -1,71 +1,36 @@
-
 import Image from "next/image";
 
 const games = [
-  {
-    name: 'Free Fire MAX',
-    subtitle: 'Battle Royale',
-    imageClass: 'arena-game-freefire',
-    imageSrc: '/games/freefire.jpg',
-    href: '/?game=free-fire-max#tournaments',
-  },
-  {
-    name: 'BGMI',
-    subtitle: 'Survival Battle',
-    imageClass: 'arena-game-bgmi',
-    imageSrc: '/games/bgmi.jpg',
-    href: '/?game=bgmi#tournaments',
-  },
-  {
-    name: 'Valorant',
-    subtitle: 'Tactical 5v5',
-    imageClass: 'arena-game-valorant',
-    imageSrc: '/games/valorant.jpg',
-    href: '/?game=valorant#tournaments',
-  },
+  {name:"Free Fire MAX",subtitle:"BATTLE ROYALE",tag:"01 / MAIN STAGE",imageSrc:"/games/freefire.jpg",href:"/?game=free-fire-max#tournaments",featured:true},
+  {name:"BGMI",subtitle:"SURVIVAL BATTLE",tag:"02 / SQUAD",imageSrc:"/games/bgmi.jpg",href:"/?game=bgmi#tournaments"},
+  {name:"Valorant",subtitle:"TACTICAL 5V5",tag:"03 / TACTICAL",imageSrc:"/games/valorant.jpg",href:"/?game=valorant#tournaments"},
 ];
 
 export default function GameShowcase() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mb-10 text-center">
-        <span className="arena-badge">Choose your battlefield</span>
-        <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-          Explore Games
-        </h2>
-        <p className="mt-3 text-white/60">
-          Find your game. Join your tournament. Become a champion.
-        </p>
+    <section className="arena-games-section mt-10 sm:mt-14">
+      <div className="arena-section-heading mb-5 sm:mb-7">
+        <div>
+          <p className="arena-eyebrow">SELECT YOUR MODE</p>
+          <h2>Choose your <span>battlefield.</span></h2>
+          <p>Three games. Three ways to make your mark.</p>
+        </div>
+        <span className="arena-section-index">GAMES / 03</span>
       </div>
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {games.map((game, index) => (
-          <a
-            key={game.name}
-            href={game.href}
-            className={`arena-game-card ${game.imageClass} arena-animate group`}
-            style={{ animationDelay: `${index * 120}ms` }}
-          >
-            <Image
-              src={game.imageSrc}
-              alt=""
-              fill
-              quality={65}
-              loading="lazy"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="arena-game-image"
-            />
-            <div className="relative z-10 flex h-full min-h-[260px] flex-col justify-end p-6">
-              <span className="arena-badge w-fit">{game.subtitle}</span>
-
-              <h3 className="mt-3 text-2xl font-black text-white">
-                {game.name}
-              </h3>
-
-              <p className="mt-2 font-semibold text-white/80 transition group-hover:text-white">
-                Explore tournaments →
-              </p>
+      <div className="arena-games-grid">
+        {games.map((game) => (
+          <a key={game.name} href={game.href} className={`arena-game-tile ${game.featured ? "arena-game-featured" : ""}`}>
+            <Image src={game.imageSrc} alt="" fill quality={70} loading="lazy" sizes={game.featured ? "(max-width: 768px) 100vw, 58vw" : "(max-width: 768px) 100vw, 42vw"} className="arena-game-tile-art" />
+            <div className="arena-game-tile-shade" />
+            <div className="arena-game-tile-content">
+              <span className="arena-game-tag">{game.tag}</span>
+              <div>
+                <p className="arena-game-subtitle">{game.subtitle}</p>
+                <h3>{game.name}</h3>
+                <span className="arena-game-enter">VIEW TOURNAMENTS <b>↗</b></span>
+              </div>
             </div>
+            <span className="arena-game-tile-corner" aria-hidden="true">+</span>
           </a>
         ))}
       </div>
