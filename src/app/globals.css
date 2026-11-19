@@ -1768,3 +1768,70 @@ body:has(#main-content) footer{background:linear-gradient(145deg,rgba(255,255,25
 @media(max-width:768px){.arena-home-hero{min-height:490px}.arena-home-hero-art{object-position:66% center}.arena-home-hero-shade{background:linear-gradient(90deg,rgba(3,7,16,.93),rgba(4,9,20,.58) 72%,rgba(4,9,20,.24)),linear-gradient(0deg,rgba(2,6,14,.88),transparent 45%)}.arena-hero-footer{font-size:8px}.arena-scroll-cue{display:none}.arena-games-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:10px}.arena-game-featured{grid-column:span 2;grid-row:auto;min-height:310px}.arena-game-tile:not(.arena-game-featured){min-height:205px}.arena-game-tile-content{padding:13px}.arena-game-tag{font-size:8px;padding:6px 7px}.arena-game-tile h3{font-size:18px}.arena-game-featured h3{font-size:26px}.arena-join-strip{grid-template-columns:1fr;gap:18px;padding:19px}.arena-join-steps{grid-template-columns:1fr;gap:8px}.arena-join-step{border-left:0;border-top:1px solid rgba(130,200,245,.12);padding:12px 0 4px}.arena-section-heading{align-items:flex-start}.arena-section-index{display:none}}
 @media(max-width:420px){.arena-home{padding-inline:12px}.arena-home-hero-content{padding:21px}.arena-home-hero{min-height:470px;border-radius:23px}.arena-hero-footer{letter-spacing:.1em}.arena-game-featured{min-height:270px}.arena-game-tile:not(.arena-game-featured){min-height:170px}.arena-game-tile h3{font-size:16px}.arena-game-enter{font-size:8px}.arena-game-tile-content{padding:10px}.arena-home-primary,.arena-home-ghost{min-height:43px;padding-inline:14px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){.arena-game-tile,.arena-game-tile-art,.arena-home-primary,.arena-home-ghost{transition:none!important}}
+
+
+/* =========================================
+   ADMIN + PLAYER PANELS / NIGHT ARENA UI
+   Avoid bright/flat white surfaces; keep
+   operational content crisp, with glass used
+   selectively for navigation and focal cards.
+========================================= */
+.admin-workspace{background-color:#030712!important;background-image:radial-gradient(ellipse 48% 35% at 4% 0%,rgba(0,125,255,.16),transparent 72%),radial-gradient(ellipse 42% 32% at 92% 14%,rgba(0,190,220,.09),transparent 70%),linear-gradient(150deg,#040915,#050b17 50%,#030711)!important}
+.admin-workspace-content{max-width:1680px}
+.admin-sidebar{background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(0,120,255,.035) 44%,rgba(0,0,0,.16)),rgba(4,10,20,.68)!important;border:1px solid rgba(155,215,255,.14)!important;backdrop-filter:blur(30px) saturate(175%);-webkit-backdrop-filter:blur(30px) saturate(175%);box-shadow:0 20px 65px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.085)!important}
+.admin-brand{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid rgba(160,215,255,.12);border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(0,130,255,.04));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.admin-brand .brand-icon{display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(75,215,255,.25);border-radius:12px;background:linear-gradient(145deg,rgba(0,190,255,.15),rgba(0,80,255,.08));color:#66e5ff;font-weight:950;box-shadow:0 0 20px rgba(0,140,255,.12)}
+.admin-brand small{display:block;margin-top:3px;color:#66819f;font-size:9px;font-weight:800;letter-spacing:.16em}
+.sidebar-section-label{margin:26px 8px 0;color:#5f7897;font-size:9px;font-weight:900;letter-spacing:.19em}
+.admin-nav-item{min-height:43px;display:flex;align-items:center;gap:12px;border:1px solid transparent;border-radius:12px;padding:10px 12px;color:#8ea4bf;font-size:12px;font-weight:750;transition:background .22s,border-color .22s,color .22s,transform .22s}
+.admin-nav-item .nav-icon{width:23px;display:grid;place-items:center;color:#7395ba;font-size:15px}
+.admin-nav-item:hover{background:rgba(255,255,255,.035);border-color:rgba(130,195,245,.12);color:#dcecff;transform:translateX(2px)}
+.admin-nav-item.active,.admin-nav-item[aria-current=page]{border-color:rgba(65,210,255,.23);background:linear-gradient(100deg,rgba(0,145,255,.12),rgba(0,200,225,.04));color:#e4f8ff;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.admin-nav-create{color:#9eeaff!important;background:rgba(0,145,255,.055);border-color:rgba(70,195,255,.14)}
+.sidebar-create-card{border:1px solid rgba(95,195,255,.14);border-radius:18px;padding:16px;background:linear-gradient(140deg,rgba(0,125,255,.085),rgba(0,190,220,.035) 65%),rgba(5,12,24,.58);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.sidebar-create-button{display:flex;min-height:40px;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(75,215,255,.28);border-radius:10px;background:linear-gradient(110deg,rgba(0,145,225,.2),rgba(0,85,200,.15));color:#bdeeff;font-size:11px;font-weight:850;transition:.22s}
+.sidebar-create-button:hover{border-color:rgba(75,215,255,.5);background:rgba(0,145,255,.23);transform:translateY(-1px)}
+.admin-profile{border:1px solid rgba(155,210,255,.12);border-radius:16px;padding:14px;background:linear-gradient(140deg,rgba(255,255,255,.045),rgba(0,90,255,.025)),rgba(4,10,20,.5)}
+.admin-avatar{display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(70,210,255,.2);border-radius:12px;background:rgba(0,145,255,.09);color:#7be7ff;font-weight:900}
+.admin-topbar{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.008)),rgba(3,9,19,.66)!important;border-bottom:1px solid rgba(145,205,255,.13)!important;backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);box-shadow:0 12px 35px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important}
+.admin-workspace-content .card,.admin-workspace-content section:not(#pending-review):not(#tournaments):not(#completed-tournaments){background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(0,90,180,.025) 48%),rgba(5,12,24,.64)!important;border-color:rgba(150,210,255,.13)!important;box-shadow:0 16px 45px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.06)!important}
+.admin-workspace-content article{background:linear-gradient(140deg,rgba(255,255,255,.035),rgba(0,100,200,.025)),rgba(5,12,24,.62)!important;border-color:rgba(140,200,255,.12)!important}
+.admin-workspace-content [class*="bg-white/"],.admin-workspace-content [class*="bg-slate-950/"]{background-color:rgba(5,12,24,.55)!important}
+.admin-workspace-content [class*="border-white/"]{border-color:rgba(150,205,255,.12)!important}
+.admin-workspace-content .input,.admin-workspace-content input:not([type=checkbox]):not([type=radio]):not([type=file]),.admin-workspace-content select,.admin-workspace-content textarea{background:rgba(3,9,20,.76)!important;border-color:rgba(145,205,255,.16)!important;color:#e7f2ff!important}
+.admin-workspace-content option{background:#081326;color:#e7f2ff}
+.admin-workspace-content table thead{background:rgba(0,130,255,.045)!important}
+.admin-workspace-content table tbody tr:hover{background:rgba(0,180,255,.025)!important}
+.admin-workspace-content .btn.light{background:rgba(5,15,30,.52)!important}
+.admin-workspace-content .admin-feature-glass{background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(0,120,255,.07) 45%,rgba(0,200,220,.04)),rgba(5,12,24,.55)!important}
+.admin-workspace-content .admin-stat-surface{background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(0,80,180,.025)),rgba(5,12,24,.65)!important}
+.admin-workspace-content .admin-liquid-surface{background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(0,110,200,.035)),rgba(5,12,24,.58)!important}
+.admin-workspace-content .admin-stat-surface:hover{border-color:rgba(80,210,255,.24)!important}
+.admin-workspace-content h1,.admin-workspace-content h2,.admin-workspace-content h3{letter-spacing:-.025em}
+.admin-workspace-content .arena-progress-ring{filter:drop-shadow(0 0 9px rgba(0,155,255,.12))}
+.admin-workspace-content .admin-liquid-surface::before,.admin-workspace-content .arena-liquid-surface::before{opacity:.55}
+
+/* Public player panel — deep glass instead of pale card layers */
+.arena-user-panel{background:radial-gradient(ellipse 50% 30% at 50% 0%,rgba(0,120,255,.1),transparent 70%),transparent}
+.arena-user-surface,.arena-user-panel .card{background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(0,100,200,.035) 50%),rgba(5,12,24,.74)!important;border-color:rgba(145,205,255,.14)!important;box-shadow:0 18px 45px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.055)!important}
+.arena-user-feature{background:linear-gradient(130deg,rgba(255,255,255,.08),rgba(0,130,255,.07) 45%,rgba(0,190,220,.035)),rgba(5,12,24,.68)!important;box-shadow:0 24px 58px rgba(0,45,135,.2),inset 0 1px 0 rgba(255,255,255,.11)!important;backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%)}
+.arena-registration-header h1{line-height:1.02;letter-spacing:-.055em}
+.arena-registration-summary{background:linear-gradient(140deg,rgba(0,140,255,.06),rgba(0,190,220,.025)),rgba(5,12,24,.62)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.arena-user-form{position:relative;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(0,100,200,.045) 42%,rgba(0,190,220,.025)),rgba(4,10,22,.8)!important;border-color:rgba(65,205,255,.2)!important;box-shadow:0 28px 75px rgba(0,45,145,.2),inset 0 1px 0 rgba(255,255,255,.09)!important;backdrop-filter:blur(26px) saturate(165%);-webkit-backdrop-filter:blur(26px) saturate(165%)}
+.arena-user-form>section,.arena-user-form>div:not(.arena-error-shake){background:transparent}
+.arena-user-form .arena-player-field,.arena-user-form .arena-substitute-field{background:rgba(4,12,25,.54)!important;border-color:rgba(145,205,255,.13)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.arena-user-form [class*="bg-white/"],.arena-user-form [class*="bg-slate-950/"]{background-color:rgba(4,12,25,.48)!important}
+.arena-user-form .input,.arena-user-form input:not([type=checkbox]):not([type=file]){background:rgba(2,8,18,.78)!important;border-color:rgba(145,205,255,.18)!important;color:#e7f4ff!important}
+.arena-user-form input[type=file]{background:rgba(3,9,20,.72)!important;border-color:rgba(145,205,255,.16)!important;color:#b4c8df!important}
+.arena-user-form input[type=file]::file-selector-button{border:1px solid rgba(65,205,255,.22);background:rgba(0,145,255,.1);color:#9eeaff}
+.arena-user-form option{background:#081326;color:#e7f2ff}
+.arena-user-form label{color:#9eb3ce}
+.arena-user-form h2,.arena-user-form h3{letter-spacing:-.02em}
+.arena-registration-page .arena-back-link{background:rgba(5,12,24,.55)!important;backdrop-filter:blur(12px)}
+.arena-tournament-detail .arena-user-feature h1{letter-spacing:-.055em;line-height:1.05}
+.arena-tournament-detail .arena-user-surface .rounded-xl,.arena-tournament-detail .arena-user-surface .rounded-lg{background-color:rgba(3,10,22,.5)}
+.arena-tournament-detail .arena-user-surface table{border-color:rgba(145,205,255,.1)}
+.arena-tournament-detail .arena-user-surface .st{backdrop-filter:blur(10px)}
+@media(max-width:1023px){.admin-sidebar{position:relative!important;height:auto!important;width:100%!important;border-radius:0 0 22px 22px!important}.admin-profile{margin-top:18px!important}}
+@media(max-width:640px){.admin-sidebar{padding:13px!important}.admin-workspace-content{padding:14px!important}.admin-topbar{min-height:64px!important;padding-inline:14px!important}.arena-user-form{border-radius:19px!important;padding:16px!important}.arena-registration-summary{border-radius:16px!important}}
+@media(prefers-reduced-motion:reduce){.admin-nav-item,.sidebar-create-button{transition:none!important}}
