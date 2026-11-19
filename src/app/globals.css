@@ -1880,3 +1880,39 @@ body:has(#main-content) footer{background:linear-gradient(145deg,rgba(255,255,25
   .admin-workspace-content .admin-stat-compact{height:145px!important;padding:15px!important}
   .admin-workspace-content .admin-stat-compact > div:nth-of-type(2){margin-top:9px!important;font-size:34px!important}
 }
+
+/* ABOUT: intentional glass highlight / reflection */
+.arena-about-glass,.arena-contact-glass{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.025) 34%,rgba(0,125,255,.07) 62%,rgba(0,190,220,.035)),rgba(7,15,30,.68)!important;backdrop-filter:blur(24px) saturate(165%);-webkit-backdrop-filter:blur(24px) saturate(165%);box-shadow:0 24px 65px rgba(0,20,70,.28),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -1px 0 rgba(70,185,255,.08)!important}
+.arena-about-glass::before,.arena-contact-glass::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse 65% 45% at 0% 0%,rgba(255,255,255,.13),transparent 72%),linear-gradient(115deg,rgba(255,255,255,.055),transparent 28%,transparent 70%,rgba(80,190,255,.045);opacity:.9}
+.arena-about-glass::after,.arena-contact-glass::after{content:"";position:absolute;pointer-events:none;left:8%;right:8%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(210,245,255,.45),rgba(90,205,255,.2),transparent)}
+.arena-about-glass>* ,.arena-contact-glass>*{position:relative;z-index:1}
+.arena-about-feature{transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease}
+.arena-about-feature:hover{transform:translateY(-3px);border-color:rgba(100,210,255,.25);box-shadow:0 26px 65px rgba(0,20,70,.35),inset 0 1px 0 rgba(255,255,255,.15)!important}
+.arena-about-callout{background:linear-gradient(135deg,rgba(0,170,255,.095),rgba(255,255,255,.035) 50%,rgba(0,220,220,.045)),rgba(4,12,25,.66)!important}
+.arena-contact-header{position:relative}
+.arena-contact-grid{align-items:stretch}
+.arena-contact-glass{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.arena-contact-glass:hover{transform:translateY(-3px);border-color:rgba(80,205,255,.27);box-shadow:0 25px 70px rgba(0,20,75,.34),inset 0 1px 0 rgba(255,255,255,.15)!important}
+.arena-contact-icon{display:grid;place-items:center;width:56px;height:56px;border-radius:17px;border:1px solid rgba(90,205,255,.2);background:linear-gradient(145deg,rgba(0,170,255,.16),rgba(0,80,200,.08));box-shadow:0 0 28px rgba(0,140,255,.12),inset 0 1px 0 rgba(255,255,255,.12);font-size:26px}
+.arena-contact-note{background:rgba(15,22,34,.48);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+
+/* Tournament listing: homepage-inspired framing, NO sheen on event cards */
+.arena-tournaments-page{position:relative}
+.arena-tournaments-hero{position:relative;background:radial-gradient(ellipse 45% 70% at 100% 0%,rgba(0,130,255,.16),transparent 75%),linear-gradient(120deg,rgba(8,20,38,.98),rgba(5,13,27,.96) 58%,rgba(5,25,39,.98));box-shadow:0 20px 55px rgba(0,20,70,.22);overflow:hidden}
+.arena-tournaments-hero::after{content:"";position:absolute;right:-8%;top:-38%;width:44%;height:180%;pointer-events:none;background:linear-gradient(115deg,transparent,rgba(0,190,255,.045),transparent);transform:rotate(12deg)}
+.arena-tournaments-hero>*{position:relative;z-index:1}
+.arena-game-filter{display:inline-flex;min-height:40px;align-items:center;justify-content:center;border:1px solid rgba(125,190,255,.16);border-radius:12px;background:rgba(8,17,32,.85);padding:9px 15px;color:#c4d5eb;font-size:12px;font-weight:800;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.arena-game-filter:hover{background:rgba(0,135,255,.12);border-color:rgba(65,205,255,.35);color:#e6faff;transform:translateY(-1px)}
+.arena-filter-secondary{color:#7ce6ff;border-color:rgba(0,200,255,.2)}
+.arena-tournament-count{background:rgba(0,125,255,.055)}
+.arena-tournament-grid{align-items:stretch}
+.arena-tournament-card{background:linear-gradient(145deg,rgba(13,25,44,.98),rgba(5,12,24,.98) 70%,rgba(5,18,30,.98))!important;border:1px solid rgba(115,165,220,.14)!important;box-shadow:0 14px 35px rgba(0,0,0,.22)!important;transition:transform .2s,border-color .2s,background .2s!important}
+.arena-tournament-card::before,.arena-tournament-card::after{display:none!important;content:none!important}
+.arena-tournament-card:hover{border-color:rgba(70,205,255,.28)!important;background:linear-gradient(145deg,rgba(14,29,50,.99),rgba(5,12,24,.99) 70%,rgba(5,20,32,.99))!important;box-shadow:0 20px 42px rgba(0,35,100,.18)!important}
+.arena-tournament-card-content{padding:3px}
+.arena-tournament-actions{position:relative;z-index:2}
+.arena-details-button{display:inline-flex;min-height:38px;align-items:center;justify-content:center;gap:7px;border:1px solid rgba(120,185,255,.16);border-radius:10px;background:rgba(8,18,34,.92);padding:8px 13px;color:#c8d9ef;font-size:12px;font-weight:850;transition:background .2s,border-color .2s,color .2s}
+.arena-details-button:hover{border-color:rgba(65,205,255,.28);background:rgba(0,130,255,.09);color:#e7fbff}
+.arena-tournaments-empty{background:linear-gradient(145deg,rgba(10,20,37,.98),rgba(4,10,20,.98))!important;border:1px solid rgba(110,170,225,.13)!important;box-shadow:none!important}
+@media(max-width:640px){.arena-tournaments-hero{padding:20px!important;border-radius:22px!important}.arena-tournament-card{padding:17px!important}.arena-game-filter{min-height:38px;padding:8px 12px}}
+@media(prefers-reduced-motion:reduce){.arena-about-feature,.arena-contact-glass,.arena-game-filter,.arena-tournament-card,.arena-details-button{transition:none!important}.arena-about-feature:hover,.arena-contact-glass:hover,.arena-game-filter:hover,.arena-tournament-card:hover{transform:none!important}}
