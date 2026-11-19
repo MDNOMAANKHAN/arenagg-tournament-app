@@ -73,10 +73,9 @@ export interface PublicTournament {
 export function slotInfo(t: PublicTournament) {
   const left = Math.max(t.max_teams - t.registered, 0);
 
-  const canRegister =
-    t.status === 'open' &&
-    left > 0 &&
-    new Date(t.starts_at) > new Date();
+  const startsAt = new Date(t.starts_at);
+  const hasStarted = Number.isFinite(startsAt.getTime()) && startsAt <= new Date();
+  const canRegister = t.status === 'open' && left > 0 && !hasStarted;
   const label =
     t.status === 'cancelled'
       ? 'Cancelled'
@@ -86,8 +85,8 @@ export function slotInfo(t: PublicTournament) {
       ? 'Completed'
       : t.status === 'open' && left <= 0
       ? 'Full'
-      : t.status === 'open' && new Date(t.starts_at) <= new Date()
-      ? 'Registration closed'
+      : t.status === 'open' && hasStarted
+      ? 'Event date passed'
       : canRegister
       ? `${left} slot${left === 1 ? '' : 's'} left`
       : 'Registration closed';
