@@ -75,6 +75,7 @@ export default async function TournamentPage({
 
   const t = data as PublicTournament;
   const s = slotInfo(t);
+  const publicStatusLabel = t.status === 'open' ? (s.canRegister ? 'Registration open' : s.label) : t.status;
   const c = gameColor(t.game_slug);
 
   const [
@@ -153,7 +154,7 @@ export default async function TournamentPage({
                 </span>
 
                 <span className="st info">
-                  {t.status.toUpperCase()}
+                  {publicStatusLabel.toUpperCase()}
                 </span>
               </div>
 
@@ -527,7 +528,9 @@ export default async function TournamentPage({
               </span>
             </div>
             <p className="mt-2 text-xs leading-5 text-slate-500">
-              Check this page for tournament updates and team approvals.
+              {t.status === 'open' && !s.canRegister && s.label === 'Event date passed'
+                ? 'The scheduled start time has passed. Registration is closed; check this page for match results and updates.'
+                : 'Check this page for tournament updates and team approvals.'}
             </p>
           </section>
         </aside>
