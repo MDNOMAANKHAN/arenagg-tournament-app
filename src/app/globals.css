@@ -1883,7 +1883,7 @@ body:has(#main-content) footer{background:linear-gradient(145deg,rgba(255,255,25
 
 /* ABOUT: intentional glass highlight / reflection */
 .arena-about-glass,.arena-contact-glass{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.025) 34%,rgba(0,125,255,.07) 62%,rgba(0,190,220,.035)),rgba(7,15,30,.68)!important;backdrop-filter:blur(24px) saturate(165%);-webkit-backdrop-filter:blur(24px) saturate(165%);box-shadow:0 24px 65px rgba(0,20,70,.28),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -1px 0 rgba(70,185,255,.08)!important}
-.arena-about-glass::before,.arena-contact-glass::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse 65% 45% at 0% 0%,rgba(255,255,255,.13),transparent 72%),linear-gradient(115deg,rgba(255,255,255,.055),transparent 28%,transparent 70%,rgba(80,190,255,.045);opacity:.9}
+.arena-about-glass::before,.arena-contact-glass::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse 65% 45% at 0% 0%,rgba(255,255,255,.13),transparent 72%),linear-gradient(115deg,rgba(255,255,255,.055),transparent 28%,transparent 70%,rgba(80,190,255,.045));opacity:.9}
 .arena-about-glass::after,.arena-contact-glass::after{content:"";position:absolute;pointer-events:none;left:8%;right:8%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(210,245,255,.45),rgba(90,205,255,.2),transparent)}
 .arena-about-glass>* ,.arena-contact-glass>*{position:relative;z-index:1}
 .arena-about-feature{transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease}
