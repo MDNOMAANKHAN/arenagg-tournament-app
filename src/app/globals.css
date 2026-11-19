@@ -1711,7 +1711,7 @@ body:has(#main-content) footer{background:linear-gradient(145deg,rgba(255,255,25
 ========================================= */
 .arena-home{position:relative;background:#030712;color:#f4f8ff}
 .arena-home-ambient{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 58% 30% at 50% 0%,rgba(0,115,255,.14),transparent 72%),radial-gradient(ellipse 40% 36% at 94% 42%,rgba(0,190,220,.08),transparent 70%);opacity:.9}
-.arena-home-hero{min-height:520px;border:1px solid rgba(130,205,255,.18);background:#060c19;box-shadow:0 32px 85px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08}
+.arena-home-hero{min-height:520px;border:1px solid rgba(130,205,255,.18);background:#060c19;box-shadow:0 32px 85px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08)}
 .arena-home-hero-art{object-fit:cover;object-position:60% center;filter:saturate(.88) contrast(1.04);transform:scale(1.015)}
 .arena-home-hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,7,16,.97) 0%,rgba(4,9,20,.86) 28%,rgba(4,9,20,.44) 58%,rgba(4,9,20,.16) 100%),linear-gradient(0deg,rgba(2,6,14,.86),transparent 42%),radial-gradient(ellipse at 20% 0%,rgba(0,155,255,.12),transparent 55%)}
 .arena-home-hero-content{min-height:inherit}
