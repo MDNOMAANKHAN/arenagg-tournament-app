@@ -75,7 +75,7 @@ export default async function TournamentPage({
 
   const t = data as PublicTournament;
   const s = slotInfo(t);
-  const publicStatusLabel = t.status === 'open' ? (s.canRegister ? 'Registration open' : s.label) : t.status;
+  const publicStatusLabel = s.canRegister ? 'Registration open' : s.label;
   const c = gameColor(t.game_slug);
 
   const [
@@ -524,12 +524,14 @@ export default async function TournamentPage({
             <div className="mt-3 flex items-center gap-2">
               <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-cyan-400" />
               <span className="font-bold text-white">
-                {t.status.toUpperCase()}
+                {publicStatusLabel.toUpperCase()}
               </span>
             </div>
             <p className="mt-2 text-xs leading-5 text-slate-500">
-              {t.status === 'open' && !s.canRegister && s.label === 'Event date passed'
+              {s.label === 'Event date passed'
                 ? 'The scheduled start time has passed. Registration is closed; check this page for match results and updates.'
+                : s.label === 'Schedule unavailable'
+                ? 'The event schedule is unavailable. Registration is disabled until the organizer confirms the date and time.'
                 : 'Check this page for tournament updates and team approvals.'}
             </p>
           </section>
