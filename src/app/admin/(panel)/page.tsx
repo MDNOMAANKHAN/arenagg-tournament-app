@@ -126,7 +126,7 @@ export default async function Dashboard() {
       </section>
 
       {/* HERO PANEL */}
-      <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#101c35] via-[#0b1425] to-[#090e1b] p-6 sm:p-8">
+      <section className="admin-liquid-surface relative overflow-hidden rounded-2xl border border-white/10 p-6 sm:p-8">
 
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-500/15 blur-[100px]" />
         <div className="pointer-events-none absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-cyan-500/10 blur-[90px]" />
@@ -168,7 +168,7 @@ export default async function Dashboard() {
           {stats.map((stat, index) => (
             <div
               key={stat.title}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] p-5 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.045]"
+              className="admin-liquid-surface group relative overflow-hidden rounded-2xl border border-white/10 p-5 transition duration-300 hover:-translate-y-1 hover:border-white/20"
               style={{
                 animation: 'fadeInUp .55s ease-out both',
                 animationDelay: `${index * 100}ms`,
@@ -210,7 +210,7 @@ export default async function Dashboard() {
       </section>
 
       {/* GLOBAL PENDING REGISTRATION QUEUE */}
-      <section id="pending-review" className="overflow-hidden rounded-2xl border border-amber-400/20 bg-amber-400/[0.035]">
+      <section id="pending-review" className="admin-liquid-surface overflow-hidden rounded-2xl border border-amber-400/20">
         <div className="flex flex-col justify-between gap-3 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:p-6">
           <div>
             <div className="text-[10px] font-black tracking-[0.2em] text-amber-300">ACTION REQUIRED</div>
