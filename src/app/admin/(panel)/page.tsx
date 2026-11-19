@@ -126,7 +126,7 @@ export default async function Dashboard() {
       </section>
 
       {/* HERO PANEL */}
-      <section className="admin-liquid-surface relative overflow-hidden rounded-2xl border border-white/10 p-6 sm:p-8">
+      <section className="admin-liquid-surface admin-feature-glass relative overflow-hidden rounded-2xl border border-white/10 p-6 sm:p-8">
 
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-500/15 blur-[100px]" />
         <div className="pointer-events-none absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-cyan-500/10 blur-[90px]" />
@@ -168,7 +168,7 @@ export default async function Dashboard() {
           {stats.map((stat, index) => (
             <div
               key={stat.title}
-              className="admin-liquid-surface group relative overflow-hidden rounded-2xl border border-white/10 p-5 transition duration-300 hover:-translate-y-1 hover:border-white/20"
+              className="admin-liquid-surface admin-stat-surface group relative overflow-hidden rounded-2xl border border-white/10 p-5 transition duration-300 hover:-translate-y-1 hover:border-white/20"
               style={{
                 animation: 'fadeInUp .55s ease-out both',
                 animationDelay: `${index * 100}ms`,
