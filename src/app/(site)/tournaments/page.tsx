@@ -76,7 +76,7 @@ export default async function TournamentsPage() {
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
       />
-      <main className="wrap py-10">
+      <main className="arena-page-backdrop wrap py-10">
       <div className="text-xs font-bold tracking-widest text-accd">
         COMMUNITY COMPETITIONS
       </div>
