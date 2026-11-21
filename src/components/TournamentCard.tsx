@@ -88,7 +88,7 @@ export default function TournamentCard({
 
           <div>
             <p className="text-[10px] font-black tracking-[0.2em] text-slate-400">
-              TEAM REGISTRATION
+              REGISTRATION
             </p>
 
             <p className="mt-1.5 text-xl font-black tracking-tight text-white sm:text-2xl">
@@ -96,7 +96,7 @@ export default function TournamentCard({
               <span className="mx-1 text-white/35">/</span>
               <span>{maxTeams}</span>
               <span className="ml-1 text-xs font-semibold text-slate-400">
-                teams
+                {t.team_size === 1 ? 'players' : 'teams'}
               </span>
             </p>
           </div>
