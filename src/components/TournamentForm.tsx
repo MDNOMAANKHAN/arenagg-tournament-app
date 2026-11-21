@@ -49,11 +49,11 @@ export default function TournamentForm({
   }
 
   return (
-    <form onSubmit={submit} className="card grid w-full max-w-3xl gap-5 p-4 sm:p-6">
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+    <form onSubmit={submit} className="card grid w-full min-w-0 max-w-3xl gap-5 overflow-hidden p-4 sm:p-6">
+      <div className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2">
         <div>
           <label className="l mb-2 block">Game</label>
-          <select name="game_id" className="input w-full" required defaultValue={initial?.game_id || ''}>
+          <select name="game_id" className="input box-border w-full max-w-full min-w-0" required defaultValue={initial?.game_id || ''}>
             <option value="">Select game</option>
             {games.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}
           </select>
@@ -83,9 +83,9 @@ export default function TournamentForm({
           <p className="mt-1 text-xs text-white/40">Set 1 for Solo, or the number of players in each team.</p>
         </div>
         <div>
-          <label className="l mb-2 block">{teamSize === 1 ? 'Maximum solo entries' : 'Maximum teams'}</label>
+          <label className="l mb-2 block">{teamSize === 1 ? 'Maximum solo entries' : teamSize === 2 ? 'Maximum duo teams' : teamSize === 4 ? 'Maximum squad teams' : `Maximum ${teamSize}-player teams`}</label>
           <input name="max_teams" type="number" min="2" max={MAX_CAPACITY} className="input w-full" required defaultValue={initial?.max_teams ?? 12} />
-          <p className="mt-1 text-xs text-white/40">Choose your own capacity from 2 to {MAX_CAPACITY}. This counts registrations/slots, not individual squad members.</p>
+          <p className="mt-1 text-xs text-white/40">Capacity is registrations: solo entries or teams, not total players. Set 2 to {MAX_CAPACITY}.</p>
         </div>
       </div>
       <div>
@@ -96,7 +96,7 @@ export default function TournamentForm({
         <label className="l mb-2 block">Rules</label>
         <textarea name="rules" className="input w-full" rows={4} defaultValue={initial?.rules || ''} placeholder="Tournament rules" />
       </div>
-      {err && <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-red-300">{err}</div>}
+      {err && <div role="alert" className="min-w-0 break-words rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">{err}</div>}
       <button type="submit" className="arena-submit-button w-full" disabled={busy}>{busy ? 'Saving...' : initial ? 'Save Tournament' : '＋ Create Tournament'}</button>
     </form>
   );
