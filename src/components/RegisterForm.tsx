@@ -21,6 +21,8 @@ export default function RegisterForm({
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [teamName, setTeamName] = useState('');
+  const [captainName, setCaptainName] = useState('');
+  const [captainGameId, setCaptainGameId] = useState('');
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
   const [paymentUtr, setPaymentUtr] = useState('');
   const [registrationCode, setRegistrationCode] = useState('');
@@ -57,7 +59,7 @@ export default function RegisterForm({
 
     const body = {
       tournament_id: t.id,
-      team_name: g('team_name'),
+      team_name: t.team_size === 1 ? `${g('captain_name')} (${g('captain_game_id')})`.slice(0, 40) : g('team_name'),
       captain_name: g('captain_name'),
       captain_game_id: g('captain_game_id'),
       captain_contact: g('captain_contact'),
@@ -193,7 +195,7 @@ export default function RegisterForm({
           </h2>
 
           <p className="mt-2 text-center text-sm leading-6 text-slate-400">
-            Complete the details below to reserve your team's place. Your registration ID will be shown after submission.
+            Complete the details below to reserve your {t.team_size === 1 ? 'solo player slot' : 'team slot'}. Your registration ID will be shown after submission.
           </p>
 
         </div>
@@ -213,9 +215,9 @@ export default function RegisterForm({
           </h2>
 
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
-            {I('team_name', 'Team Name', 'Enter your team name', true, setTeamName)}
-            {I('captain_name', 'Captain Name', 'Full name')}
-            {I('captain_game_id', 'Captain Gaming ID', 'Your game ID')}
+            {t.team_size > 1 && I('team_name', 'Team Name', 'Enter your team name', true, setTeamName)}
+            {I('captain_name', t.team_size === 1 ? 'Player Name' : 'Captain Name', 'Full name', true, setCaptainName)}
+            {I('captain_game_id', t.team_size === 1 ? 'Player Gaming ID' : 'Captain Gaming ID', 'Your game ID', true, setCaptainGameId)}
             {I('captain_contact', 'Captain Phone Number', 'Contact number')}
           </div>
 
@@ -276,7 +278,7 @@ export default function RegisterForm({
             <UPIPayment
               amount={entryFee}
               tournamentName={t.title || 'ArenaGG Tournament'}
-              teamName={teamName || 'Your Team'}
+              teamName={teamName || (t.team_size === 1 ? captainName || 'Solo Player' : 'Your Team')}
             />
 
             <div className="grid gap-3">
