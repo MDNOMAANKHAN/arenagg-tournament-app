@@ -83,7 +83,7 @@ export const tournamentSchema = z.object({
   description: z.string().max(500).default(''),
   starts_at: iso,
   team_size: z.number().int().min(1).max(10),
-  // The payment migration narrows tournaments_max_teams_check to 2..12.
+  // Capacity is configurable up to 500 registrations per tournament.
   max_teams: z.number().int().min(2).max(MAX_TEAMS_PER_TOURNAMENT),
   entry_fee: z.number().int().min(0).max(100000).default(100),
   rules: z.string().max(5000).default(''),
