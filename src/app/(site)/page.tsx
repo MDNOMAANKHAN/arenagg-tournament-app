@@ -34,7 +34,8 @@ export default async function HomePage({ searchParams }: HomeProps) {
   let q = sb
     .from("tournament_public")
     .select("*")
-    .in("status", ["open", "closed", "live"])
+    .eq("status", "open")
+    .gte("starts_at", new Date().toISOString())
     .order("starts_at");
 
   if (activeGame) {
