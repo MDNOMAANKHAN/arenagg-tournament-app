@@ -211,7 +211,7 @@ export default function RegisterForm({
 
           <h2 className="flex items-center gap-3 text-xl font-bold text-white">
             <span className="h-7 w-1 rounded-full bg-cyan-400" />
-            Team & Captain
+            {t.team_size === 1 ? 'Solo Player Details' : 'Team & Captain'}
           </h2>
 
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
@@ -251,8 +251,8 @@ export default function RegisterForm({
           </section>
         )}
 
-        {/* SUBSTITUTE */}
-        <section className="grid min-w-0 gap-4">
+        {/* SUBSTITUTE — squads only */}
+        {t.team_size > 1 && <section className="grid min-w-0 gap-4">
 
           <h2 className="flex items-center gap-3 text-xl font-bold text-white">
             <span className="h-7 w-1 rounded-full bg-blue-400" />
@@ -264,7 +264,7 @@ export default function RegisterForm({
             {I('sg', 'Substitute Gaming ID', 'Gaming ID', false)}
           </div>
 
-        </section>
+        </section>}
 
         {/* PAYMENT — only for paid tournaments */}
         {entryFee > 0 && (
