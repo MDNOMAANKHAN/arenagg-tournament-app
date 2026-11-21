@@ -61,7 +61,13 @@ async function handle(req: NextRequest, resource: string, op: 'create' | 'update
     const row = resource === 'tournaments' ? { ...p.data, created_by: admin.user.id } : p.data;
     const q = cfg.conflict ? admin.sb.from(cfg.table).upsert(row, { onConflict: cfg.conflict }) : admin.sb.from(cfg.table).insert(row);
     const { data, error } = await q.select('id').single();
-    if (error) { console.error('Admin create failed', resource, error.message); return bad('Could not save this item. Check the fields and try again.', 422); }
+    if (error) {
+      console.error('Admin create failed', resource, error.message);
+      if (resource === 'tournaments' && error.code === '23514') {
+        return bad('Tournament capacity was rejected by the database. Apply the latest Supabase tournament-capacity migration, then try again.', 422);
+      }
+      return bad('Could not save this item. Check the fields and try again.', 422);
+    }
     return NextResponse.json({ id: data.id }, { status: 201 });
   }
   const { id, ...rest } = body as Record<string, unknown>;
