@@ -60,41 +60,41 @@ export default function TournamentForm({
         </div>
         <div>
           <label className="l mb-2 block">Status</label>
-          <select name="status" className="input w-full" defaultValue={initial?.status || 'open'}>
+          <select name="status" className="input box-border w-full max-w-full min-w-0" defaultValue={initial?.status || 'open'}>
             <option value="open">Open</option><option value="closed">Closed</option><option value="live">Live</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
           </select>
         </div>
         <div>
           <label className="l mb-2 block">Entry fee (₹)</label>
-          <input name="entry_fee" type="number" min="0" max="100000" step="1" className="input w-full" required defaultValue={initial?.entry_fee ?? 100} />
+          <input name="entry_fee" type="number" min="0" max="100000" step="1" className="input box-border w-full max-w-full min-w-0" required defaultValue={initial?.entry_fee ?? 100} />
           <p className="mt-1 text-xs text-white/40">Set 0 for a free tournament. Shown on the site and used for the UPI amount.</p>
         </div>
         <div>
           <label className="l mb-2 block">Tournament title</label>
-          <input name="title" className="input w-full" required defaultValue={initial?.title || ''} placeholder="Enter tournament name" />
+          <input name="title" className="input box-border w-full max-w-full min-w-0" required defaultValue={initial?.title || ''} placeholder="Enter tournament name" />
         </div>
         <div>
           <label className="l mb-2 block">Start date & time</label>
-          <input name="starts_at" type="datetime-local" className="input w-full" required defaultValue={initial?.starts_at ? toLocalInput(initial.starts_at) : ''} />
+          <input name="starts_at" type="datetime-local" className="input box-border w-full max-w-full min-w-0" required defaultValue={initial?.starts_at ? toLocalInput(initial.starts_at) : ''} />
         </div>
         <div>
           <label className="l mb-2 block">Players per registration</label>
-          <input name="team_size" type="number" min="1" max="10" className="input w-full" required value={teamSize} onChange={(e) => setTeamSize(Number(e.target.value))} />
+          <input name="team_size" type="number" min="1" max="10" className="input box-border w-full max-w-full min-w-0" required value={teamSize} onChange={(e) => setTeamSize(Number(e.target.value))} />
           <p className="mt-1 text-xs text-white/40">Set 1 for Solo, or the number of players in each team.</p>
         </div>
         <div>
           <label className="l mb-2 block">{teamSize === 1 ? 'Maximum solo entries' : teamSize === 2 ? 'Maximum duo teams' : teamSize === 4 ? 'Maximum squad teams' : `Maximum ${teamSize}-player teams`}</label>
-          <input name="max_teams" type="number" min="2" max={MAX_CAPACITY} className="input w-full" required defaultValue={initial?.max_teams ?? 12} />
+          <input name="max_teams" type="number" min="2" max={MAX_CAPACITY} className="input box-border w-full max-w-full min-w-0" required defaultValue={initial?.max_teams ?? 12} />
           <p className="mt-1 text-xs text-white/40">Capacity is registrations: solo entries or teams, not total players. Set 2 to {MAX_CAPACITY}.</p>
         </div>
       </div>
       <div>
         <label className="l mb-2 block">Description</label>
-        <textarea name="description" className="input w-full" rows={4} defaultValue={initial?.description || ''} placeholder="Tournament details" />
+        <textarea name="description" className="input box-border w-full max-w-full min-w-0" rows={4} defaultValue={initial?.description || ''} placeholder="Tournament details" />
       </div>
       <div>
         <label className="l mb-2 block">Rules</label>
-        <textarea name="rules" className="input w-full" rows={4} defaultValue={initial?.rules || ''} placeholder="Tournament rules" />
+        <textarea name="rules" className="input box-border w-full max-w-full min-w-0" rows={4} defaultValue={initial?.rules || ''} placeholder="Tournament rules" />
       </div>
       {err && <div role="alert" className="min-w-0 break-words rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">{err}</div>}
       <button type="submit" className="arena-submit-button w-full" disabled={busy}>{busy ? 'Saving...' : initial ? 'Save Tournament' : '＋ Create Tournament'}</button>
