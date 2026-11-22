@@ -73,8 +73,8 @@ export default function RegisterForm({
           : null,
       website: g('website'),
       terms_accepted: legalAccepted,
-      terms_version: '1.0',
-      privacy_version: '1.0',
+      terms_version: '1.1',
+      privacy_version: '1.1',
       t: loaded.current,
     };
 
@@ -362,7 +362,7 @@ export default function RegisterForm({
               <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-cyan-300 underline underline-offset-4 hover:text-white">Terms & Conditions</a>
               {' '}and acknowledge the{' '}
               <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-cyan-300 underline underline-offset-4 hover:text-white">Privacy Policy</a>.
-              I confirm that the information submitted is accurate and, if I am under 18, that my parent or legal guardian has reviewed and approved my participation.
+              I confirm the information is accurate. If I am under 18, I confirm that my parent or legal guardian has reviewed and approved my participation. I understand my data will be used for registration, tournament administration, payment verification and event communications as described in the Privacy Policy.
             </span>
           </label>
           <p className="mt-3 pl-7 text-xs leading-5 text-slate-500">Your acceptance is recorded with your registration, including the policy versions and acceptance time.</p>
