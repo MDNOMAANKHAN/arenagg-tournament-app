@@ -14,7 +14,7 @@ export default function PrivacyRequestPage() {
     const body = Object.fromEntries(form.entries());
     try {
       const response = await fetch('/api/privacy-requests', {
-        method: 'POST', headers: { 'Content-Type': 'application/json }, body: JSON.stringify(body),
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) { setError(result.error || 'Could not submit your request.'); return; }
