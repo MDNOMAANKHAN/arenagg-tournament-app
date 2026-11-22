@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { supabaseService } from '@/lib/supabase/service';
 
 const schema = z.object({
-  request_type: z.enum(['access', 'correction', 'deletion', 'other']),
+  request_type: z.enum(['access', 'correction', 'deletion', 'consent_withdrawal', 'grievance', 'parent_minor', 'other']),
   requester_name: z.string().trim().min(2).max(100),
   contact: z.string().trim().min(5).max(120),
   registration_code: z.string().trim().max(40).optional().default(''),
