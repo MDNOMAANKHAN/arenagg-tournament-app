@@ -45,8 +45,8 @@ export const registerSchema = z
 
     website: z.string().optional(),
     terms_accepted: z.literal(true),
-    terms_version: z.literal('1.0'),
-    privacy_version: z.literal('1.0'),
+    terms_version: z.literal('1.1'),
+    privacy_version: z.literal('1.1'),
 
     t: z.number().finite().positive(),
   })
