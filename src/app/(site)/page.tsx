@@ -153,7 +153,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
             <div className="relative flex flex-wrap gap-3">
               <Link href="#tournaments" className="arena-glass-button group transition hover:-translate-y-1">Find a tournament <span className="ml-2 transition group-hover:translate-x-1">→</span></Link>
               <Link href="/results" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">View results</Link>
-              <Link href="/about" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">How ARENAGG works</Link>
+              <Link href="/about" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">How ARENAGG works</Link>\n              <Link href="/track" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">Track registration</Link>
             </div>
           </div>
         </section>
