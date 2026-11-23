@@ -175,6 +175,8 @@ export default async function Confirmation({
                   }`}>
                     {r.status === 'rejected'
                       ? 'Not approved to play'
+                      : r.status === 'approved' && r.entry_fee > 0 && r.payment_status === 'rejected'
+                      ? 'Payment rejected — not eligible to play'
                       : r.status === 'approved' && r.entry_fee > 0 && r.payment_status !== 'paid'
                       ? 'Approval received — payment verification pending'
                       : r.status === 'approved'
