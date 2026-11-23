@@ -23,8 +23,12 @@ export default function PWAInstall() {
       setInstallPrompt(event as InstallPromptEvent);
     };
     window.addEventListener('beforeinstallprompt', onPrompt);
-    window.addEventListener('appinstalled', () => setInstallPrompt(null));
-    return () => window.removeEventListener('beforeinstallprompt', onPrompt);
+    const onInstalled = () => setInstallPrompt(null);
+    window.addEventListener('appinstalled', onInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', onPrompt);
+      window.removeEventListener('appinstalled', onInstalled);
+    };
   }, []);
 
   async function install() {
