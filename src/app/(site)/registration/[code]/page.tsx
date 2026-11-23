@@ -163,6 +163,26 @@ export default async function Confirmation({
                   </span>
                 </dd>
               </div>
+              <div className="flex flex-col gap-1 rounded-xl border border-cyan-300/15 bg-cyan-300/[0.04] p-4 sm:flex-row sm:items-center sm:justify-between">
+                <dt className="text-sm font-semibold text-slate-300">Play eligibility</dt>
+                <dd>
+                  <span className={`st ${
+                    r.status === 'rejected'
+                      ? 'bad'
+                      : r.status === 'approved' && (r.entry_fee <= 0 || r.payment_status === 'paid')
+                      ? 'ok'
+                      : 'wait'
+                  }`}>
+                    {r.status === 'rejected'
+                      ? 'Not approved to play'
+                      : r.status === 'approved' && r.entry_fee > 0 && r.payment_status !== 'paid'
+                      ? 'Approval received — payment verification pending'
+                      : r.status === 'approved'
+                      ? 'Approved — eligible to play'
+                      : 'Pending organiser decision'}
+                  </span>
+                </dd>
+              </div>
 
             </dl>
 
@@ -221,15 +241,21 @@ export default async function Confirmation({
 
           {/* ACTION */}
           <div className="relative mt-8">
-            <Link
-              href="/"
-              className="group flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-cyan-300/30 bg-gradient-to-r from-cyan-500 to-blue-600 px-5 text-sm font-extrabold text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/25"
-            >
-              <span className="transition-transform duration-300 group-hover:-translate-x-1">
-                ←
-              </span>
-              Back to tournaments
-            </Link>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Link
+                href={`/registration/${params.code}`}
+                className="group flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-cyan-300/30 bg-cyan-400/[0.07] px-5 text-sm font-extrabold text-cyan-100 transition hover:border-cyan-300/50"
+              >
+                Refresh status ↻
+              </Link>
+              <Link
+                href="/track"
+                className="group flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-cyan-300/30 bg-gradient-to-r from-cyan-500 to-blue-600 px-5 text-sm font-extrabold text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1"
+              >
+                Track another registration
+              </Link>
+            </div>
+            <Link href="/" className="mt-3 flex min-h-11 w-full items-center justify-center rounded-xl border border-white/10 bg-white/[0.025] px-5 text-sm font-bold text-slate-300 transition hover:border-white/20 hover:text-white">← Back to tournaments</Link>
           </div>
 
         </section>
