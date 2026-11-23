@@ -79,7 +79,7 @@ export default async function Registrations({ params, searchParams }: {
                     <span className={`st ${TONE[r.status] ?? 'wait'}`}>{r.status}</span>
                   </div>
                   <div className="grid gap-4 p-4 sm:grid-cols-2">
-                    <div className="min-w-0"><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Team captain</p><p className="break-all text-sm font-semibold text-slate-200">{r.captain_contact || '—'}</p></div>
+                    <div className="min-w-0"><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Captain phone</p><p className="break-all text-sm font-semibold text-slate-200">{r.captain_contact || '—'}</p></div>
                     <div><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Registered on</p><p className="text-sm text-slate-300">{fmt(r.created_at)}</p></div>
                   </div>
                   <div className="border-t border-white/[0.07] p-4">
