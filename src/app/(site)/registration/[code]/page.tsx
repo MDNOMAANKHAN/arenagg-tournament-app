@@ -168,7 +168,7 @@ export default async function Confirmation({
 
           </div>
 
-          {/* PAYMENT PROOF — only for paid tournaments */}
+          {/* PAYMENT REFERENCE — only for paid tournaments */}
           {r.entry_fee > 0 && (
             <div className="relative mt-8">
 
