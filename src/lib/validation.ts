@@ -34,7 +34,7 @@ export const registerSchema = z
     payment_utr: z.string().trim().max(40).optional().default(''),
     website: z.string().optional(),
     terms_accepted: z.literal(true),
-    terms_version: z.literal('1.2'),
+    terms_version: z.literal('1.3'),
     privacy_version: z.literal('1.3'),
     t: z.number().finite().positive(),
   })
