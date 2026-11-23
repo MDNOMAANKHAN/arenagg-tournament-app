@@ -21,7 +21,6 @@ export default function RegisterForm({
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [teamName, setTeamName] = useState('');
-  const [captainGameId, setCaptainGameId] = useState('');
   const [paymentUtr, setPaymentUtr] = useState('');
   const [registrationCode, setRegistrationCode] = useState('');
   const [legalAccepted, setLegalAccepted] = useState(false);
@@ -184,7 +183,7 @@ export default function RegisterForm({
 
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
             {I('team_name', 'Team Name (optional)', 'Choose a team nickname', false, setTeamName)}
-            {I('captain_game_id', t.team_size === 1 ? 'Player Gaming ID' : 'Captain Gaming ID', 'Your game ID', true, setCaptainGameId)}
+            {I('captain_game_id', t.team_size === 1 ? 'Player Gaming ID' : 'Captain Gaming ID', 'Your game ID')}
             {I('captain_contact', 'Captain Phone Number', 'Contact number', true)}
           </div>
 
@@ -243,7 +242,7 @@ export default function RegisterForm({
             <UPIPayment
               amount={entryFee}
               tournamentName={t.title || 'ArenaGG Tournament'}
-              teamName={teamName || (t.team_size === 1 ? captainName || 'Solo Player' : 'Your Team')}
+              teamName={teamName || 'Your Team'}
             />
 
             <div className="grid gap-3">
