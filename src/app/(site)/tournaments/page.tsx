@@ -37,10 +37,15 @@ export default async function TournamentsPage() {
 
   const { data: games } = await sb.from('games').select('slug,name').order('name');
 
+  // Public listings show events that have not started yet, plus events marked live.
+  // Past open/closed events remain available from their detail URLs but are not
+  // presented as current competitions. Registration is separately fail-closed.
+  const now = new Date().toISOString();
   const { data } = await sb
     .from('tournament_public')
     .select('*')
     .in('status', ['open', 'closed', 'live'])
+    .or(`starts_at.gt.${now},status.eq.live`)
     .order('starts_at');
 
   const ts = (data ?? []) as PublicTournament[];
@@ -169,7 +174,7 @@ export default async function TournamentsPage() {
         </div>
       ) : (
         <div className="card text-center text-muted">
-          No upcoming or live tournaments are available right now. Check the Results page for completed competitions.
+          No upcoming or live tournaments are available right now. Stay tuned for the next event, and check Results for completed competitions.
         </div>
       )}
       </main>
