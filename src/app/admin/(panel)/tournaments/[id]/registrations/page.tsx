@@ -16,7 +16,7 @@ export default async function Registrations({ params, searchParams }: {
   if (!t) notFound();
 
   const { data } = await a.sb.from('registrations')
-    .select('id,reg_code,team_name,captain_name,captain_contact,status,created_at,payment_status,payment_amount,payment_utr,payment_proof_path,registration_members(name,gaming_id,role)')
+    .select('id,reg_code,team_name,captain_contact,status,created_at,payment_status,payment_amount,payment_utr,payment_proof_path,registration_members(gaming_id,role)')
     .eq('tournament_id', t.id).order('created_at', { ascending: false });
 
   const q = (searchParams.q ?? '').trim().toLowerCase();
@@ -26,7 +26,6 @@ export default async function Registrations({ params, searchParams }: {
     return (!status || r.status === status) && (!q ||
       String(r.team_name ?? '').toLowerCase().includes(q) ||
       String(r.reg_code ?? '').toLowerCase().includes(q) ||
-      String(r.captain_name ?? '').toLowerCase().includes(q) ||
       members.some((m: any) => String(m.gaming_id ?? '').toLowerCase().includes(q)));
   });
 
@@ -48,13 +47,13 @@ export default async function Registrations({ params, searchParams }: {
 
       <section className="mb-5 rounded-2xl border border-white/10 bg-slate-950/60 p-3 shadow-lg shadow-black/10 sm:p-4">
         <form action="" method="GET" className="grid min-w-0 grid-cols-1 gap-2.5 sm:grid-cols-[minmax(0,1fr)_180px_auto_auto]">
-          <label className="min-w-0"><span className="sr-only">Search registrations</span><input type="search" name="q" defaultValue={searchParams.q} className="input !w-full min-w-0" placeholder="Search team, captain, gaming ID or code" /></label>
+          <label className="min-w-0"><span className="sr-only">Search registrations</span><input type="search" name="q" defaultValue={searchParams.q} className="input !w-full min-w-0" placeholder="Search team nickname, gaming ID or code" /></label>
           <label className="min-w-0"><span className="sr-only">Filter by registration status</span><select name="status" defaultValue={status} className="input !w-full"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label>
           <button type="submit" className="btn min-w-[96px]">Apply filters</button>
           <Link href={`/admin/tournaments/${t.id}/registrations`} className="btn light min-w-[88px]">Reset</Link>
         </form>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.07] pt-3">
-          <p className="text-xs text-slate-500">Search by team, captain, registration code or player gaming ID.</p>
+          <p className="text-xs text-slate-500">Search by team nickname, registration code or player gaming ID.</p>
           <a href={`/api/admin/tournaments/${t.id}/export`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-cyan-400/20 bg-cyan-400/[0.06] px-3 py-2 text-xs font-bold text-cyan-200 transition hover:border-cyan-300/40 hover:bg-cyan-400/10">↓ Export CSV</a>
         </div>
       </section>
@@ -80,7 +79,7 @@ export default async function Registrations({ params, searchParams }: {
                     <span className={`st ${TONE[r.status] ?? 'wait'}`}>{r.status}</span>
                   </div>
                   <div className="grid gap-4 p-4 sm:grid-cols-2">
-                    <div className="min-w-0"><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Team captain</p><p className="break-words text-sm font-semibold text-slate-200">{r.captain_name || '—'}</p><p className="mt-1 break-all text-xs text-slate-400">{r.captain_contact || 'No contact provided'}</p></div>
+                    <div className="min-w-0"><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Team captain</p><p className="break-all text-sm font-semibold text-slate-200">{r.captain_contact || '—'}</p></div>
                     <div><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Registered on</p><p className="text-sm text-slate-300">{fmt(r.created_at)}</p></div>
                   </div>
                   <div className="border-t border-white/[0.07] p-4">
@@ -88,7 +87,7 @@ export default async function Registrations({ params, searchParams }: {
                     <div className="grid gap-2 sm:grid-cols-2">
                       {(r.registration_members ?? []).map((m: any, i: number) => (
                         <div key={String(m.gaming_id ?? 'player') + '-' + i} className="min-w-0 rounded-lg border border-white/[0.07] bg-[#071326]/70 p-3">
-                          <div className="flex min-w-0 items-start justify-between gap-2"><p className="min-w-0 break-words text-sm font-semibold text-slate-200">{m.name || 'Unnamed player'}</p>{m.role ? <span className="shrink-0 rounded-md bg-cyan-400/[0.08] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-cyan-300">{m.role}</span> : null}</div>
+                          <div className="flex min-w-0 items-start justify-between gap-2"><p className="min-w-0 break-words text-sm font-semibold text-slate-200">{m.role === 'captain' ? 'Captain' : m.role === 'substitute' ? 'Substitute' : 'Player'}</p>{m.role ? <span className="shrink-0 rounded-md bg-cyan-400/[0.08] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-cyan-300">{m.role}</span> : null}</div>
                           <p className="mt-2 break-all font-mono text-xs text-cyan-200">{m.gaming_id || 'No gaming ID'}</p>
                         </div>
                       ))}
@@ -105,7 +104,7 @@ export default async function Registrations({ params, searchParams }: {
             <div className="hidden w-full overflow-x-auto lg:block">
               <table className="w-full min-w-[1180px] border-collapse text-left">
                 <thead><tr className="border-b border-white/10 bg-white/[0.035]">
-                  {['Team', 'Captain', 'Players & gaming IDs', 'Registered', 'Status', 'Payment', 'Actions'].map((label) => <th key={label} className="whitespace-nowrap px-4 py-4 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{label}</th>)}
+                  {['Team', 'Captain phone', 'Players & gaming IDs', 'Registered', 'Status', 'Payment', 'Actions'].map((label) => <th key={label} className="whitespace-nowrap px-4 py-4 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{label}</th>)}
                 </tr></thead>
                 <tbody>
                   {rows.map((r: any) => (
@@ -114,7 +113,7 @@ export default async function Registrations({ params, searchParams }: {
                       <td className="w-[13%] px-4 py-5"><p className="break-words text-sm font-semibold text-slate-200">{r.captain_name || '—'}</p><p className="mt-1 break-all text-xs text-slate-500">{r.captain_contact || '—'}</p></td>
                       <td className="w-[25%] px-4 py-5"><div className="grid gap-2">{(r.registration_members ?? []).map((m: any, i: number) => (
                         <div key={String(m.gaming_id ?? 'player') + '-' + i} className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-2.5 py-2">
-                          <span className="min-w-0 break-words text-xs font-semibold text-slate-200">{m.name || 'Unnamed player'}</span>{m.role ? <span className="text-[9px] font-bold uppercase tracking-wide text-slate-500">{m.role}</span> : null}
+                          <span className="min-w-0 break-words text-xs font-semibold text-slate-200">{m.role === 'captain' ? 'Captain' : m.role === 'substitute' ? 'Substitute' : 'Player'}</span>{m.role ? <span className="text-[9px] font-bold uppercase tracking-wide text-slate-500">{m.role}</span> : null}
                           <code className="col-span-2 mt-1 break-all text-[11px] text-cyan-300">{m.gaming_id || 'No gaming ID'}</code>
                         </div>
                       ))}</div></td>
