@@ -110,7 +110,7 @@ export default async function Registrations({ params, searchParams }: {
                   {rows.map((r: any) => (
                     <tr key={r.id} className="border-b border-white/[0.06] align-top transition-colors last:border-0 hover:bg-cyan-400/[0.025]">
                       <td className="w-[14%] px-4 py-5"><p className="break-words text-sm font-bold text-white">{r.team_name || 'Unnamed team'}</p><p className="mt-1 break-all font-mono text-[10px] text-slate-500">{r.reg_code}</p></td>
-                      <td className="w-[13%] px-4 py-5"><p className="break-words text-sm font-semibold text-slate-200">{r.captain_name || '—'}</p><p className="mt-1 break-all text-xs text-slate-500">{r.captain_contact || '—'}</p></td>
+                      <td className="w-[13%] px-4 py-5"><p className="break-all text-sm font-semibold text-slate-200">{r.captain_contact || '—'}</p></td>
                       <td className="w-[25%] px-4 py-5"><div className="grid gap-2">{(r.registration_members ?? []).map((m: any, i: number) => (
                         <div key={String(m.gaming_id ?? 'player') + '-' + i} className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-2.5 py-2">
                           <span className="min-w-0 break-words text-xs font-semibold text-slate-200">{m.role === 'captain' ? 'Captain' : m.role === 'substitute' ? 'Substitute' : 'Player'}</span>{m.role ? <span className="text-[9px] font-bold uppercase tracking-wide text-slate-500">{m.role}</span> : null}
