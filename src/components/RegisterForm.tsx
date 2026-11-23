@@ -58,7 +58,7 @@ export default function RegisterForm({
       payment_utr: paymentUtr.trim(),
       website: g('website'),
       terms_accepted: legalAccepted,
-      terms_version: '1.2',
+      terms_version: '1.3',
       privacy_version: '1.3',
       t: loaded.current,
     };
