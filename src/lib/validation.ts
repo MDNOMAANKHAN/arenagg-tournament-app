@@ -17,7 +17,7 @@ const gid = z
 const contact = z
   .string()
   .trim()
-  .regex(/^\\+?\\d[\\d\\s-]{8,14}$/, 'Enter a valid phone number');
+  .regex(/^\+?\d[\d\s-]{8,14}$/, 'Enter a valid phone number');
 
 const player = z.object({
   game_id: gid,
