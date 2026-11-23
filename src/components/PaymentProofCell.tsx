@@ -80,7 +80,7 @@ export default function PaymentProofCell({
         </button>
       ) : (
         <span className="text-[11px] text-slate-500">
-          No screenshot yet
+          No UTR or legacy proof
         </span>
       )}
 
