@@ -35,7 +35,7 @@ begin
   end if;
 
   if p->>'terms_accepted' <> 'true'
-     or p->>'terms_version' <> '1.2'
+     or p->>'terms_version' <> '1.3'
      or p->>'privacy_version' <> '1.3' then
     raise exception 'LEGAL_ACCEPTANCE_REQUIRED';
   end if;
