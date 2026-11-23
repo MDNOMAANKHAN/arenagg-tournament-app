@@ -17,37 +17,25 @@ const gid = z
 const contact = z
   .string()
   .trim()
-  .regex(
-    /^(?:\+?\d[\d\s-]{8,14}|[^\s@]+@[^\s@]+\.[^\s@]+)$/,
-    'Enter a valid phone number or email'
-  );
+  .regex(/^\\+?\\d[\\d\\s-]{8,14}$/, 'Enter a valid phone number');
 
 const player = z.object({
-  name,
   game_id: gid,
 });
 
 export const registerSchema = z
   .object({
     tournament_id: z.string().uuid(),
-
-    team_name: z.string().trim().min(2).max(40),
-
-    captain_name: name,
+    team_name: z.string().trim().max(40).optional().default(''),
     captain_game_id: gid,
     captain_contact: contact,
-
     teammates: z.array(player).max(9),
-
-    // Substitute is optional.
-    // Empty substitute fields should be sent as null.
-    substitute: player.nullable(),
-
+    substitute: z.object({ game_id: gid }).nullable(),
+    payment_utr: z.string().trim().max(40).optional().default(''),
     website: z.string().optional(),
     terms_accepted: z.literal(true),
     terms_version: z.literal('1.2'),
     privacy_version: z.literal('1.2'),
-
     t: z.number().finite().positive(),
   })
   .refine(
@@ -57,14 +45,17 @@ export const registerSchema = z
         ...d.teammates.map((m) => m.game_id),
         ...(d.substitute ? [d.substitute.game_id] : []),
       ].map((s) => s.toLowerCase());
-
       return new Set(ids).size === ids.length;
     },
     {
       message: 'Every player needs a different gaming ID',
       path: ['teammates'],
     }
-  );
+  )
+  .refine((d) => !d.payment_utr || /^[a-zA-Z0-9-]{6,40}$/.test(d.payment_utr), {
+    message: 'Enter a valid UPI reference/UTR',
+    path: ['payment_utr'],
+  });
 
 const iso = z.string().datetime({ offset: true });
 
