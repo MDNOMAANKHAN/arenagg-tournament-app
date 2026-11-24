@@ -1,13 +1,8 @@
 import type { Metadata } from 'next';
-
 import Link from 'next/link';
+import TournamentCard from '@/components/TournamentCard';
 import { supabaseServer } from '@/lib/supabase/server';
-import {
-  fmt,
-  gameColor,
-  slotInfo,
-  type PublicTournament,
-} from '@/lib/format';
+import type { PublicTournament } from '@/lib/format';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,22 +27,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function TournamentsPage() {
+type TournamentsPageProps = {
+  searchParams?: { game?: string };
+};
+
+export default async function TournamentsPage({ searchParams }: TournamentsPageProps) {
   const sb = supabaseServer();
-
   const { data: games } = await sb.from('games').select('slug,name').order('name');
+  const gameSlugs = new Set((games ?? []).map((g) => g.slug));
+  const activeGame = searchParams?.game && gameSlugs.has(searchParams.game)
+    ? searchParams.game
+    : '';
 
-  // Public listings show events that have not started yet, plus events marked live.
-  // Past open/closed events remain available from their detail URLs but are not
-  // presented as current competitions. Registration is separately fail-closed.
+  // Upcoming competitions and live events only. Registration is fail-closed in its own flow.
   const now = new Date().toISOString();
-  const { data } = await sb
+  let q = sb
     .from('tournament_public')
     .select('*')
     .in('status', ['open', 'closed', 'live'])
     .or(`starts_at.gt.${now},status.eq.live`)
     .order('starts_at');
-
+  if (activeGame) q = q.eq('game_slug', activeGame);
+  const { data } = await q;
   const ts = (data ?? []) as PublicTournament[];
 
   const structuredData = {
@@ -81,102 +82,90 @@ export default async function TournamentsPage() {
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
       />
-      <main className="wrap py-10">
-      <div className="text-xs font-bold tracking-widest text-accd">
-        COMMUNITY COMPETITIONS
-      </div>
+      <main className="arena-page relative min-h-screen overflow-hidden px-4 py-8 sm:px-8">
+        {/* Same atmosphere and section style as the homepage tournament section */}
+        <div className="pointer-events-none fixed inset-0 overflow-hidden">
+          <div className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-blue-600/[0.08] blur-[120px]" />
+          <div className="absolute -right-40 top-[35%] h-96 w-96 rounded-full bg-cyan-500/[0.07] blur-[120px]" />
+          <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-indigo-500/[0.06] blur-[120px]" />
+        </div>
 
-      <h1 className="mb-2 mt-1 text-4xl font-black">Tournament Information</h1>
-
-      <p className="mb-6 text-sm text-muted">
-        {ts.length} tournament{ts.length === 1 ? '' : 's'} across{' '}
-        {(games ?? []).length} games.
-      </p>
-
-      <div className="mb-8 flex flex-wrap gap-2">
-        <Link className="btn light sm" href="/">
-          ← Back to home
-        </Link>
-
-        {(games ?? []).map((g) => (
-          <Link
-            key={g.slug}
-            className="btn light sm"
-            href={`/?game=${g.slug}#tournaments`}
-          >
-            {g.name}
-          </Link>
-        ))}
-      </div>
-
-      {ts.length ? (
-        <div className="grid gap-4">
-          {ts.map((t) => {
-            const s = slotInfo(t);
-
-            return (
-              <article key={t.id} className="card group relative overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
-                <Link
-                  href={`/tournaments/${t.id}`}
-                  aria-label={`View full details for ${t.title}`}
-                  className="absolute inset-0 z-0 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
-                />
-                <div className="pointer-events-none relative z-10">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span
-                    className="text-xs font-black tracking-widest"
-                    style={{ color: gameColor(t.game_slug) }}
-                  >
-                    {t.game_name.toUpperCase()}
-                  </span>
-
-                  <span
-                    className={`st ${
-                      s.canRegister
-                        ? 'ok'
-                        : t.status === 'cancelled'
-                        ? 'bad'
-                        : t.status === 'live'
-                        ? 'info'
-                        : 'gray'
-                    }`}
-                  >
-                    {s.label}
-                  </span>
-                </div>
-
-                <h2 className="mt-2 text-xl font-black text-white transition-colors group-hover:text-cyan-300">
-                  {t.title}
-                </h2>
-
-                <p className="mt-2 text-sm text-muted">
-                  {fmt(t.starts_at)} ·{' '}
-                  {t.team_size === 1 ? 'Solo' : `Squad of ${t.team_size}`} ·{' '}
-                  {t.registered}/{t.max_teams} teams ·{' '}
-                  {t.entry_fee > 0 ? `₹${t.entry_fee} entry` : 'Free entry'}
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <section className="relative mt-4 scroll-mt-24 pb-12">
+            <div className="mb-8 flex flex-col justify-between gap-6 xl:flex-row xl:items-end">
+              <div>
+                <p className="text-xs font-black tracking-[0.3em] text-cyan-300">
+                  COMPETE NOW
                 </p>
+                <h1 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
+                  Tournaments
+                </h1>
+                <p className="mt-3 text-sm text-slate-400 sm:text-base">
+                  {ts.length} tournament{ts.length === 1 ? '' : 's'} available. Find your next competition and bring your team to victory.
+                </p>
+              </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-bold text-cyan-300">
-                    View tournament details →
-                  </span>
+              <div className="flex flex-wrap gap-2">
+                <Link
+                  scroll={false}
+                  href="/tournaments"
+                  className={`arena-glass-button arena-glass-secondary rounded-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 ${!activeGame ? "border-cyan-300/60 bg-cyan-400/10 text-cyan-200 shadow-lg shadow-cyan-500/10" : ""}`}
+                >
+                  All
+                </Link>
+                {(games ?? []).map((g) => (
+                  <Link
+                    scroll={false}
+                    key={g.slug}
+                    href={`/tournaments?game=${g.slug}`}
+                    className={`arena-glass-button arena-glass-secondary rounded-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 ${activeGame === g.slug ? "border-cyan-300/60 bg-cyan-400/10 text-cyan-200 shadow-lg shadow-cyan-500/10" : ""}`}
+                  >
+                    {g.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-                  {s.canRegister && (
-                    <Link href={`/register/${t.id}`} className="btn sm pointer-events-auto relative z-20">
-                      Register now →
-                    </Link>
-                  )}
+            {ts.length ? (
+              <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {ts.map((t, i) => (
+                  <div
+                    key={t.id}
+                    className="arena-animate h-full"
+                    style={{
+                      animation: "fadeInUp .6s ease-out both",
+                      animationDelay: `${Math.min(i * 100, 600)}ms`,
+                    }}
+                  >
+                    <div className="h-full transition duration-300 hover:-translate-y-1">
+                      <TournamentCard t={t} i={i} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="arena-premium-card relative overflow-hidden rounded-2xl border border-blue-300/15 bg-[#0b1424]/80 px-5 py-16 text-center shadow-xl shadow-blue-950/20 backdrop-blur-xl">
+                <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-72 -translate-x-1/2 rounded-full bg-blue-500/10 blur-[70px]" />
+                <div className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-4xl shadow-lg shadow-cyan-500/10">
+                  🏆
                 </div>
-                </div>
-              </article>
-            );
-          })}
+                <h2 className="relative mt-6 text-xl font-black text-white">
+                  No tournaments available
+                </h2>
+                <p className="relative mx-auto mt-3 max-w-md text-sm leading-7 text-slate-400">
+                  {activeGame
+                    ? 'No upcoming or live tournaments for this game at the moment. Try another game or check back soon.'
+                    : 'No tournaments are open right now. Check back soon for upcoming competitions.'}
+                </p>
+                {activeGame && (
+                  <Link href="/tournaments" className="arena-glass-button arena-glass-secondary relative mt-5 inline-flex">
+                    View all tournaments
+                  </Link>
+                )}
+              </div>
+            )}
+          </section>
         </div>
-      ) : (
-        <div className="card text-center text-muted">
-          No upcoming or live tournaments are available right now. Stay tuned for the next event, and check Results for completed competitions.
-        </div>
-      )}
       </main>
     </>
   );
