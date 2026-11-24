@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import PublicNavigation from "@/components/PublicNavigation";
+import PWAFeatures from "@/components/PWAFeatures";
 
 export default function SiteLayout({
   children,
@@ -33,7 +34,7 @@ export default function SiteLayout({
             </span>
           </Link>
 
-          <PublicNavigation />
+          <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto"><PublicNavigation /><PWAFeatures /></div>
         </div>
       </header>
 
