@@ -34,6 +34,8 @@ export const metadata: Metadata = {
   description:
     "Explore ARENAGG community information for players interested in Free Fire MAX, BGMI and Valorant, including game updates and published community results.",
   applicationName: "ARENAGG",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "ARENAGG", statusBarStyle: "black-translucent" },
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     shortcut: "/favicon.svg",
@@ -78,6 +80,9 @@ export default function RootLayout({
     <html lang="en-IN">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="96x96" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="apple-touch-icon" href="/pwa-icon.svg" />
+        <meta name="theme-color" content="#050b18" />
       </head>
       <body className="min-h-screen bg-[#050b18] text-white">
         <script

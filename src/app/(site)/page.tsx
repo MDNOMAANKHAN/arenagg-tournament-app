@@ -154,6 +154,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
               <Link href="#tournaments" className="arena-glass-button group transition hover:-translate-y-1">Find a tournament <span className="ml-2 transition group-hover:translate-x-1">→</span></Link>
               <Link href="/results" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">View results</Link>
               <Link href="/about" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">How ARENAGG works</Link>
+              <Link href="/track" className="arena-glass-button arena-glass-secondary transition hover:-translate-y-1">Track my registration</Link>
             </div>
           </div>
         </section>
