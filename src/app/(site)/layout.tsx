@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import PublicNavigation from "@/components/PublicNavigation";
+import PWAInstall from "@/components/PWAInstall";
 
 export default function SiteLayout({
   children,
@@ -33,7 +34,7 @@ export default function SiteLayout({
             </span>
           </Link>
 
-          <PublicNavigation />
+          <div className="flex w-full flex-wrap items-center justify-between gap-2 sm:w-auto sm:flex-nowrap"><PublicNavigation /><PWAInstall /></div>
         </div>
       </header>
 
@@ -68,6 +69,7 @@ export default function SiteLayout({
           <div>
             <h2 className="font-black tracking-widest text-slate-200">CONTACT US</h2>
             <div className="mt-3 flex flex-col items-start gap-2">
+              <Link href="/track" className="font-semibold text-cyan-300 transition-colors hover:text-white">Track registration →</Link>
               <Link href="/contact" className="font-semibold text-cyan-300 transition-colors hover:text-white">
                 Contact & Support →
               </Link>

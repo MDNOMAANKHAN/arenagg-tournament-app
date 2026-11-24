@@ -21,9 +21,6 @@ export default function RegisterForm({
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [teamName, setTeamName] = useState('');
-  const [captainName, setCaptainName] = useState('');
-  const [captainGameId, setCaptainGameId] = useState('');
-  const [paymentFile, setPaymentFile] = useState<File | null>(null);
   const [paymentUtr, setPaymentUtr] = useState('');
   const [registrationCode, setRegistrationCode] = useState('');
   const [legalAccepted, setLegalAccepted] = useState(false);
@@ -37,10 +34,6 @@ export default function RegisterForm({
       setErr('Please accept the Terms & Conditions and Privacy Policy before registering.');
       return;
     }
-    if (entryFee > 0 && !paymentFile) {
-      setErr('Please upload your payment screenshot before submitting.');
-      return;
-    }
     setBusy(true);
 
     const fd = new FormData(e.currentTarget);
@@ -49,38 +42,28 @@ export default function RegisterForm({
     const teammates = Array.from(
       { length: Math.max(0, t.team_size - 1) },
       (_, i) => ({
-        name: g(`tn${i}`),
         game_id: g(`tg${i}`),
       })
     );
 
-    const substituteName = g('sn');
     const substituteGameId = g('sg');
 
     const body = {
       tournament_id: t.id,
-      team_name: t.team_size === 1 ? `${g('captain_name')} (${g('captain_game_id')})`.slice(0, 40) : g('team_name'),
-      captain_name: g('captain_name'),
+      team_name: g('team_name'),
       captain_game_id: g('captain_game_id'),
       captain_contact: g('captain_contact'),
       teammates,
-      substitute:
-        substituteName || substituteGameId
-          ? {
-              name: substituteName,
-              game_id: substituteGameId,
-            }
-          : null,
+      substitute: substituteGameId ? { game_id: substituteGameId } : null,
+      payment_utr: paymentUtr.trim(),
       website: g('website'),
       terms_accepted: legalAccepted,
-      terms_version: '1.2',
-      privacy_version: '1.2',
+      terms_version: '1.3',
+      privacy_version: '1.3',
       t: loaded.current,
     };
 
     try {
-      // If the registration was already created but the screenshot upload failed,
-      // retry only the upload. Never create a duplicate team registration.
       let code = registrationCode;
 
       if (!code) {
@@ -109,22 +92,6 @@ export default function RegisterForm({
         setRegistrationCode(code);
       }
 
-      if (entryFee > 0 && paymentFile) {
-        const proof = new FormData();
-        proof.append('file', paymentFile);
-        if (paymentUtr.trim()) proof.append('utr', paymentUtr.trim());
-
-        const upload = await fetch(`/api/register/${encodeURIComponent(code)}/payment-proof`, {
-          method: 'POST',
-          body: proof,
-        });
-        const uploadData = await upload.json().catch(() => ({}));
-
-        if (!upload.ok) {
-          setErr(`Your team registration was created (ID: ${code}), but the payment screenshot could not be uploaded. Your details are saved. Press Submit Registration again to retry the screenshot upload without creating another registration. ${uploadData?.error || ''}`);
-          return;
-        }
-      }
 
       r.push(`/registration/${code}`);
       r.refresh();
@@ -215,10 +182,9 @@ export default function RegisterForm({
           </h2>
 
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
-            {t.team_size > 1 && I('team_name', 'Team Name', 'Enter your team name', true, setTeamName)}
-            {I('captain_name', t.team_size === 1 ? 'Player Name' : 'Captain Name', 'Full name', true, setCaptainName)}
-            {I('captain_game_id', t.team_size === 1 ? 'Player Gaming ID' : 'Captain Gaming ID', 'Your game ID', true, setCaptainGameId)}
-            {I('captain_contact', 'Captain Phone Number', 'Contact number')}
+            {I('team_name', 'Team Name (optional)', 'Choose a team nickname', false, setTeamName)}
+            {I('captain_game_id', t.team_size === 1 ? 'Player Gaming ID' : 'Captain Gaming ID', 'Your game ID')}
+            {I('captain_contact', 'Captain Phone Number', 'Contact number', true)}
           </div>
 
         </section>
@@ -242,8 +208,7 @@ export default function RegisterForm({
                     Player {i + 2}
                   </h3>
 
-                  {I(`tn${i}`, `Player ${i + 2} Name`, 'Full name')}
-                  {I(`tg${i}`, `Player ${i + 2} Gaming ID`, 'Gaming ID')}
+                                    {I(`tg${i}`, `Player ${i + 2} Gaming ID`, 'Gaming ID')}
                 </div>
               ))}
             </div>
@@ -260,8 +225,7 @@ export default function RegisterForm({
           </h2>
 
           <div className="grid min-w-0 grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition duration-300 hover:border-blue-400/25 sm:grid-cols-2">
-            {I('sn', 'Substitute Name', 'Full name', false)}
-            {I('sg', 'Substitute Gaming ID', 'Gaming ID', false)}
+                        {I('sg', 'Substitute Gaming ID', 'Gaming ID', false)}
           </div>
 
         </section>}
@@ -278,46 +242,13 @@ export default function RegisterForm({
             <UPIPayment
               amount={entryFee}
               tournamentName={t.title || 'ArenaGG Tournament'}
-              teamName={teamName || (t.team_size === 1 ? captainName || 'Solo Player' : 'Your Team')}
+              teamName={teamName || 'Your Team'}
             />
 
             <div className="grid gap-3">
               <div>
-                <label htmlFor="payment-screenshot" className="l mb-2 block">
-                  Payment Screenshot <span className="text-rose-300">*</span>
-                </label>
-                <input
-                  id="payment-screenshot"
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp"
-                  required
-                  onChange={(event) => {
-                    const file = event.currentTarget.files?.[0] ?? null;
-                    if (file && file.size > 5 * 1024 * 1024) {
-                      setPaymentFile(null);
-                      setErr('Screenshot must be 5 MB or smaller.');
-                      event.currentTarget.value = '';
-                      return;
-                    }
-                    if (file && !/^image\/(png|jpeg|webp)$/.test(file.type)) {
-                      setPaymentFile(null);
-                      setErr('Please choose a PNG, JPG or WEBP image.');
-                      event.currentTarget.value = '';
-                      return;
-                    }
-                    setErr('');
-                    setPaymentFile(file);
-                  }}
-                  className="w-full cursor-pointer rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-300 file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:bg-cyan-400/15 file:px-4 file:py-2 file:text-xs file:font-bold file:text-cyan-200 hover:border-cyan-400/30"
-                />
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  PNG, JPG or WEBP · Maximum 5 MB · Visible only to the organiser.
-                </p>
-              </div>
-
-              <div>
                 <label htmlFor="payment-utr" className="l mb-2 block">
-                  UPI Reference / UTR <span className="text-slate-500">(optional)</span>
+                  UPI Reference / UTR <span className="text-rose-300">(required)</span>
                 </label>
                 <input
                   id="payment-utr"
@@ -325,22 +256,15 @@ export default function RegisterForm({
                   onChange={(event) => setPaymentUtr(event.currentTarget.value.slice(0, 40))}
                   maxLength={40}
                   autoComplete="off"
-                  placeholder="e.g. 423456789012"
+                  required
+                  placeholder="Enter UPI transaction reference"
                   className="input w-full min-w-0"
                 />
               </div>
-
-              {paymentFile && (
-                <p className="rounded-lg border border-emerald-400/20 bg-emerald-400/[0.06] px-3 py-2 text-xs text-emerald-200">
-                  Screenshot selected: {paymentFile.name}
-                </p>
-              )}
             </div>
 
             <p className="text-sm leading-6 text-blue-300">
-              Scan the QR code, complete your payment, attach the screenshot,
-              and submit everything together. Your registration remains pending
-              until the organiser verifies your payment.
+              Pay using UPI and enter the transaction reference. We do not collect payment screenshots. Your registration remains pending until the organiser verifies the payment.
             </p>
 
           </section>
@@ -385,7 +309,7 @@ export default function RegisterForm({
           className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 font-black uppercase tracking-wider text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <span className="relative z-10">
-            {busy ? (registrationCode ? 'Uploading Payment Screenshot...' : 'Submitting Registration...') : 'Submit Registration'}
+            {busy ? 'Submitting Registration...' : 'Submit Registration'}
           </span>
         </button>
 
@@ -393,16 +317,14 @@ export default function RegisterForm({
           <div
             role="status"
             aria-live="polite"
-            aria-label={registrationCode ? 'Uploading payment screenshot' : 'Submitting tournament registration'}
+            aria-label="Submitting tournament registration"
             className="registration-progress mt-[-0.75rem] grid gap-2"
           >
             <div className="registration-progress-track" aria-hidden="true">
               <span className="registration-progress-indicator" />
             </div>
             <p className="text-center text-xs text-slate-400">
-              {registrationCode
-                ? 'Uploading your payment screenshot. Please wait...'
-                : 'Submitting your registration. Please wait...'}
+              Submitting your registration. Please wait...
             </p>
           </div>
         )}

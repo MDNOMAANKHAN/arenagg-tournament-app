@@ -74,6 +74,11 @@ async function handle(req: NextRequest, resource: string, op: 'create' | 'update
   const pid = uuid.safeParse(id);
   const p = cfg.update!.safeParse(rest);
   if (!pid.success || !p.success) return bad('Invalid input', 422);
+  if (resource === 'registrations' && p.data.payment_status === 'paid') {
+    const { data: current, error: lookupError } = await admin.sb.from('registrations').select('payment_utr,payment_proof_path').eq('id', pid.data).maybeSingle();
+    if (lookupError || !current) return bad('Registration not found or could not be checked.', 404);
+    if (!current.payment_utr && !current.payment_proof_path) return bad('Payment cannot be marked paid without a UPI reference.');
+  }
   if (resource === 'tournaments') {
     const { data: current, error: currentError } = await admin.sb.from('tournaments').select('game_id,team_size').eq('id', pid.data).maybeSingle();
     if (currentError || !current) return bad('Tournament not found or could not be checked.', 404);

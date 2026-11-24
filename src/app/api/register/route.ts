@@ -11,6 +11,7 @@ const MSG: Record<string, [number, string]> = {
   DUPLICATE_ID: [409, 'One or more gaming IDs are already registered in this tournament.'],
   INVALID_REGISTRATION: [422, 'Please complete all required registration details.'],
   LEGAL_ACCEPTANCE_REQUIRED: [422, 'Please accept the current Terms & Conditions and Privacy Policy before registering.'],
+  PAYMENT_REFERENCE_REQUIRED: [422, 'Enter your UPI transaction reference to register for this paid tournament.'],
 };
 function normalizeHost(value: string | null | undefined): string | null {
   if (!value) return null;

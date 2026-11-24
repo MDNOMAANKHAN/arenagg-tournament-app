@@ -34,6 +34,7 @@ export const metadata: Metadata = {
   description:
     "Explore ARENAGG community information for players interested in Free Fire MAX, BGMI and Valorant, including game updates and published community results.",
   applicationName: "ARENAGG",
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     shortcut: "/favicon.svg",
@@ -68,6 +69,8 @@ export const metadata: Metadata = {
     },
   },
 };
+
+export const viewport = { themeColor: '#071326', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({
   children,

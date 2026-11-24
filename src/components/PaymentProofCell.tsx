@@ -76,11 +76,11 @@ export default function PaymentProofCell({
           onClick={() => setOpen(true)}
           className="w-fit rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-1.5 text-[11px] font-bold text-cyan-200 transition hover:bg-cyan-400/20"
         >
-          View screenshot
+          View legacy screenshot
         </button>
       ) : (
         <span className="text-[11px] text-slate-500">
-          No screenshot yet
+          No UTR or legacy proof
         </span>
       )}
 
@@ -94,9 +94,9 @@ export default function PaymentProofCell({
         {current !== 'paid' && (
           <button
             type="button"
-            disabled={busy || !hasProof}
+            disabled={busy || (!hasProof && !utr)}
             onClick={() => setPaymentStatus('paid')}
-            title={hasProof ? 'Mark UPI payment as received' : 'Waiting for the screenshot'}
+            title={hasProof || utr ? 'Mark UPI payment as received' : 'Waiting for UPI transaction reference'}
             className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-[11px] font-bold text-emerald-300 transition hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Mark paid
