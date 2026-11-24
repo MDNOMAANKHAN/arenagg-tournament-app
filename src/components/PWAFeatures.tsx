@@ -8,6 +8,7 @@ type InstallPromptEvent = Event & {
 };
 
 function isStandalone() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
   return (
     window.matchMedia('(display-mode: standalone)').matches ||
     Boolean((navigator as Navigator & { standalone?: boolean }).standalone)
@@ -25,7 +26,7 @@ export default function PWAFeatures() {
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(() => {
-        // Manual installation guidance remains available if registration fails.
+        setMessage('App installation is temporarily unavailable. Please try again later.');
       });
     }
 
@@ -33,6 +34,7 @@ export default function PWAFeatures() {
       event.preventDefault();
       setInstallEvent(event as InstallPromptEvent);
       setShowHelp(false);
+      setMessage('');
     };
 
     const onInstalled = () => {
@@ -60,7 +62,6 @@ export default function PWAFeatures() {
     }
 
     if (!installEvent) {
-      // Always keep a reinstall path visible after users remove the app.
       setShowHelp(true);
       return;
     }
@@ -71,35 +72,36 @@ export default function PWAFeatures() {
       setInstallEvent(null);
 
       if (choice.outcome === 'accepted') {
-        setMessage('Installation started. If the app does not appear, use your browser menu to install it.');
+        setMessage('ARENAGG installation requested. Follow the Android confirmation to finish installing.');
       } else {
-        setShowHelp(true);
+        setMessage('Installation was cancelled. You can try again whenever you are ready.');
       }
     } catch {
       setInstallEvent(null);
-      setShowHelp(true);
+      setMessage('Android did not open the app installer. Please reload ARENAGG and try again.');
     }
   }
 
   if (installed) {
     return (
       <span className="inline-flex min-h-10 items-center rounded-xl border border-emerald-300/20 bg-emerald-400/[0.06] px-3 text-xs font-bold text-emerald-200">
-        ✓ App installed
+        ✓ ARENAGG app installed
       </span>
     );
   }
 
-  const isAppleMobile = typeof navigator !== 'undefined' && /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isAppleMobile =
+    typeof navigator !== 'undefined' && /iphone|ipad|ipod/i.test(navigator.userAgent);
 
   return (
     <>
       <button
         type="button"
         onClick={install}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-cyan-300/25 bg-gradient-to-r from-cyan-400/15 to-blue-500/15 px-3.5 text-xs font-extrabold text-cyan-100 shadow-[0_0_18px_rgba(69,215,255,0.08)] transition hover:border-cyan-200/50 hover:bg-cyan-300/20"
-        aria-label="Install ARENAGG app"
+        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-cyan-300/25 bg-gradient-to-r from-cyan-400/15 to-blue-500/15 px-3.5 text-xs font-extrabold text-cyan-100 shadow-[0_0_18px_rgba(69,215,255,0.08)] transition hover:border-cyan-200/50 hover:bg-cyan-300/20 disabled:cursor-not-allowed disabled:opacity-70"
+        aria-label="Install ARENAGG as an app"
       >
-        <span aria-hidden="true">⬇</span>Install App
+        <span aria-hidden="true">⬇</span>Install ARENAGG
       </button>
 
       {message && <p className="mt-2 text-xs text-cyan-200" role="status">{message}</p>}
@@ -108,27 +110,22 @@ export default function PWAFeatures() {
         <div
           className="fixed inset-x-3 bottom-4 z-[100] mx-auto max-w-sm rounded-2xl border border-cyan-300/20 bg-[#0b1729]/95 p-3.5 text-sm text-white shadow-2xl backdrop-blur-xl"
           role="dialog"
-          aria-label="Install ARENAGG instructions"
+          aria-label="Native app installation help"
         >
           <button
             type="button"
             onClick={() => setShowHelp(false)}
             className="float-right ml-3 rounded-lg px-2 py-1 text-slate-300"
-            aria-label="Close install instructions"
+            aria-label="Close installation help"
           >
             ✕
           </button>
-          <p className="font-black text-cyan-200">Install or reinstall ARENAGG</p>
+          <p className="font-black text-cyan-200">Install the ARENAGG app</p>
           <p className="mt-1.5 text-xs leading-5 text-slate-300">
             {isAppleMobile
-              ? 'Open this website in Safari. Tap Share → Add to Home Screen → Add.'
-              : 'Open this website directly in Chrome. Tap ⋮ → Install app. If you see “Add to Home screen” instead, choose it and enable “Install” or “Create shortcut” if offered.'}
+              ? 'On iPhone or iPad, open ARENAGG in Safari and use Share → Add to Home Screen. iOS uses its own web-app installation flow.'
+              : 'Your browser has not offered Android’s native “Install app” prompt yet. We will not create a Chrome shortcut. Open arenagg.live in an up-to-date Chrome browser, keep the site online, then reload and try Install ARENAGG again. If Chrome only offers “Add to Home screen” or “Create shortcut”, cancel it — that is not the standalone app installation you requested.'}
           </p>
-          {!isAppleMobile && (
-            <p className="mt-1.5 text-xs leading-5 text-slate-400">
-              If the install option is missing after uninstalling, open Chrome Settings → Site settings → Storage, clear ARENAGG site data, close Chrome fully, then reopen arenagg.live and try again.
-            </p>
-          )}
         </div>
       )}
     </>
