@@ -98,10 +98,12 @@ export default function PWAFeatures() {
       <button
         type="button"
         onClick={install}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-cyan-300/25 bg-gradient-to-r from-cyan-400/15 to-blue-500/15 px-3.5 text-xs font-extrabold text-cyan-100 shadow-[0_0_18px_rgba(69,215,255,0.08)] transition hover:border-cyan-200/50 hover:bg-cyan-300/20 disabled:cursor-not-allowed disabled:opacity-70"
+        className="group relative inline-flex min-h-11 items-center justify-center gap-2 overflow-hidden rounded-xl border border-cyan-300/30 bg-gradient-to-r from-cyan-400/20 via-sky-400/15 to-blue-500/20 px-3.5 text-xs font-extrabold text-cyan-100 shadow-[0_0_20px_rgba(69,215,255,0.12)] transition duration-200 hover:-translate-y-0.5 hover:border-cyan-200/60 hover:shadow-[0_0_26px_rgba(69,215,255,0.22)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70"
         aria-label="Install ARENAGG as an app"
       >
-        <span aria-hidden="true">⬇</span>Install ARENAGG
+        <span aria-hidden="true" className="inline-flex animate-bounce text-sm [animation-duration:1.8s]">↓</span>
+        <span>Install ARENAGG</span>
+        <span aria-hidden="true" className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
       </button>
 
       {message && <p className="mt-2 text-xs text-cyan-200" role="status">{message}</p>}
