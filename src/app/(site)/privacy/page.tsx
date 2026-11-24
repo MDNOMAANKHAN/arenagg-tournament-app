@@ -29,7 +29,7 @@ export default function PrivacyPage() {
     <main className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-8 sm:py-16">
       <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300">ARENAGG · Legal</p>
       <h1 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-5xl">Privacy Policy</h1>
-      <p className="mt-4 text-sm text-slate-400">Version 1.2 · Effective 23 November 2026 · Last updated 23 November 2026</p>
+      <p className="mt-4 text-sm text-slate-400">Version 1.3 · Effective 24 November 2026 · Last updated 24 November 2026</p>
       <div className="mt-8 rounded-2xl border border-cyan-300/15 bg-cyan-300/[0.04] p-5 text-sm leading-7 text-slate-300">
         This notice describes information the current registration and website features may collect, how we use and share it, retention considerations, and how you can request access, correction or deletion where applicable. We collect only information needed for tournament participation, payment verification, communication and site security.
       </div>
