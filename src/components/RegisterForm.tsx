@@ -25,7 +25,6 @@ export default function RegisterForm({
   const [captainGameId, setCaptainGameId] = useState('');
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
   const [paymentUtr, setPaymentUtr] = useState('');
-  const [registrationCode, setRegistrationCode] = useState('');
   const [legalAccepted, setLegalAccepted] = useState(false);
 
   const entryFee = t.entry_fee ?? 0;
@@ -39,6 +38,10 @@ export default function RegisterForm({
     }
     if (entryFee > 0 && !paymentFile) {
       setErr('Please upload your payment screenshot before submitting.');
+      return;
+    }
+    if (entryFee > 0 && paymentUtr.trim().length < 6) {
+      setErr('Please enter your UPI transaction reference / UTR (at least 6 characters).');
       return;
     }
     setBusy(true);
@@ -73,63 +76,42 @@ export default function RegisterForm({
           : null,
       website: g('website'),
       terms_accepted: legalAccepted,
-      terms_version: '1.2',
-      privacy_version: '1.2',
+      terms_version: '1.3',
+      privacy_version: '1.3',
       t: loaded.current,
     };
 
     try {
-      // If the registration was already created but the screenshot upload failed,
-      // retry only the upload. Never create a duplicate team registration.
-      let code = registrationCode;
-
-      if (!code) {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          setErr(
-            data?.fields
-              ? Object.entries(data.fields)
-                  .map(([field, messages]) =>
-                    `${field}: ${(messages as string[]).join(', ')}`
-                  )
-                  .join(' | ')
-              : data?.error || 'Registration failed'
-          );
-          return;
-        }
-
-        code = data.code;
-        setRegistrationCode(code);
-      }
-
+      const formData = new FormData(e.currentTarget);
+      formData.set('registration', JSON.stringify(body));
       if (entryFee > 0 && paymentFile) {
-        const proof = new FormData();
-        proof.append('file', paymentFile);
-        if (paymentUtr.trim()) proof.append('utr', paymentUtr.trim());
-
-        const upload = await fetch(`/api/register/${encodeURIComponent(code)}/payment-proof`, {
-          method: 'POST',
-          body: proof,
-        });
-        const uploadData = await upload.json().catch(() => ({}));
-
-        if (!upload.ok) {
-          setErr(`Your team registration was created (ID: ${code}), but the payment screenshot could not be uploaded. Your details are saved. Press Submit Registration again to retry the screenshot upload without creating another registration. ${uploadData?.error || ''}`);
-          return;
-        }
+        formData.set('payment_screenshot', paymentFile);
+        formData.set('payment_utr', paymentUtr.trim());
       }
 
-      r.push(`/registration/${code}`);
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErr(
+          data?.fields
+            ? Object.entries(data.fields)
+                .map(([field, messages]) =>
+                  `${field}: ${(messages as string[]).join(', ')}`
+                )
+                .join(' | ')
+            : data?.error || 'Registration failed'
+        );
+        return;
+      }
+
+      r.push(`/registration/${data.code}`);
       r.refresh();
     } catch {
-      setErr('Something went wrong. If your registration was created, use its registration ID to continue. Please try again.');
+      setErr('Something went wrong while submitting your registration. Please try again.');
     } finally {
       setBusy(false);
     }
@@ -288,6 +270,7 @@ export default function RegisterForm({
                 </label>
                 <input
                   id="payment-screenshot"
+                  name="payment_screenshot"
                   type="file"
                   accept="image/png,image/jpeg,image/webp"
                   required
@@ -317,13 +300,15 @@ export default function RegisterForm({
 
               <div>
                 <label htmlFor="payment-utr" className="l mb-2 block">
-                  UPI Reference / UTR <span className="text-slate-500">(optional)</span>
+                  UPI Reference / UTR <span className="text-rose-300">*</span>
                 </label>
                 <input
                   id="payment-utr"
+                  name="payment_utr"
                   value={paymentUtr}
                   onChange={(event) => setPaymentUtr(event.currentTarget.value.slice(0, 40))}
                   maxLength={40}
+                  required
                   autoComplete="off"
                   placeholder="e.g. 423456789012"
                   className="input w-full min-w-0"
@@ -381,11 +366,11 @@ export default function RegisterForm({
         {/* SUBMIT */}
         <button
           type="submit"
-          disabled={busy || !legalAccepted}
+          disabled={busy || !legalAccepted || (entryFee > 0 && (!paymentFile || paymentUtr.trim().length < 6))}
           className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 font-black uppercase tracking-wider text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <span className="relative z-10">
-            {busy ? (registrationCode ? 'Uploading Payment Screenshot...' : 'Submitting Registration...') : 'Submit Registration'}
+            {busy ? 'Submitting Registration...' : 'Submit Registration'}
           </span>
         </button>
 
@@ -393,16 +378,14 @@ export default function RegisterForm({
           <div
             role="status"
             aria-live="polite"
-            aria-label={registrationCode ? 'Uploading payment screenshot' : 'Submitting tournament registration'}
+            aria-label="Submitting tournament registration"
             className="registration-progress mt-[-0.75rem] grid gap-2"
           >
             <div className="registration-progress-track" aria-hidden="true">
               <span className="registration-progress-indicator" />
             </div>
             <p className="text-center text-xs text-slate-400">
-              {registrationCode
-                ? 'Uploading your payment screenshot. Please wait...'
-                : 'Submitting your registration. Please wait...'}
+              Submitting your registration and payment proof. Please wait...
             </p>
           </div>
         )}
