@@ -89,7 +89,7 @@ export default function PWAFeatures() {
     );
   }
 
-  const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isAppleMobile = typeof navigator !== 'undefined' && /iphone|ipad|ipod/i.test(navigator.userAgent);
 
   return (
     <>
