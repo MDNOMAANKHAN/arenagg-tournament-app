@@ -98,7 +98,6 @@ export default function PWAFeatures() {
       <button
         type="button"
         onClick={install}
-        disabled={!installEvent && !showHelp}
         className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-cyan-300/25 bg-gradient-to-r from-cyan-400/15 to-blue-500/15 px-3.5 text-xs font-extrabold text-cyan-100 shadow-[0_0_18px_rgba(69,215,255,0.08)] transition hover:border-cyan-200/50 hover:bg-cyan-300/20 disabled:cursor-not-allowed disabled:opacity-70"
         aria-label="Install ARENAGG as an app"
       >
