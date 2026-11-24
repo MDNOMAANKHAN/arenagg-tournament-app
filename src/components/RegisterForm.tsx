@@ -109,8 +109,9 @@ export default function RegisterForm({
       }
 
       r.push(`/registration/${data.code}`);
-      r.refresh();    } catch {
-      setErr('Something went wrong. If your registration was created, use its registration ID to continue. Please try again.');
+      r.refresh();
+    } catch {
+      setErr('Something went wrong while submitting your registration. Please try again.');
     } finally {
       setBusy(false);
     }
