@@ -76,8 +76,8 @@ export default function RegisterForm({
           : null,
       website: g('website'),
       terms_accepted: legalAccepted,
-      terms_version: '1.2',
-      privacy_version: '1.2',
+      terms_version: '1.3',
+      privacy_version: '1.3',
       t: loaded.current,
     };
 
