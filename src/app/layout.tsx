@@ -37,8 +37,13 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "ARENAGG", statusBarStyle: "black-translucent" },
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/pwa-icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/pwa-icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
     shortcut: "/favicon.svg",
+    apple: [{ url: "/pwa-icon-192.png", sizes: "192x192", type: "image/png" }],
   },
   alternates: {
     canonical: "/",
@@ -81,7 +86,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="96x96" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <link rel="apple-touch-icon" href="/pwa-icon.svg" />
+        <link rel="apple-touch-icon" href="/pwa-icon-192.png" />
         <meta name="theme-color" content="#050b18" />
       </head>
       <body className="min-h-screen bg-[#050b18] text-white">
