@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "ARENAGG privacy notice explaining information collection, use, sharing, retention and privacy requests.",
+  keywords: ["ARENAGG privacy policy", "tournament registration privacy", "esports data privacy"],
   alternates: { canonical: "/privacy" },
 };
 
