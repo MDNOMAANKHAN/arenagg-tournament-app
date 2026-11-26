@@ -28,11 +28,11 @@ const structuredData = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "ARENAGG | Gaming Community & Game Updates",
+    default: "Online Esports Tournaments in India | ARENAGG",
     template: "%s | ARENAGG",
   },
   description:
-    "Explore ARENAGG community information for players interested in Free Fire MAX, BGMI and Valorant, including game updates and published community results.",
+    "Join the ARENAGG gaming community to discover Free Fire MAX, BGMI and Valorant esports tournaments, follow event updates and view published results.",
   applicationName: "ARENAGG",
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "ARENAGG", statusBarStyle: "black-translucent" },
@@ -52,14 +52,14 @@ export const metadata: Metadata = {
     type: "website",
     url: siteUrl,
     siteName: "ARENAGG",
-    title: "ARENAGG | Gaming Community & Game Updates",
+    title: "Online Esports Tournaments in India | ARENAGG",
     description:
-      "Explore ARENAGG community information, game updates and published results.",
+      "Discover community esports tournaments for Free Fire MAX, BGMI and Valorant, with event updates and published results.",
     locale: "en_IN",
   },
   twitter: {
     card: "summary",
-    title: "ARENAGG | Gaming Community & Game Updates",
+    title: "Online Esports Tournaments in India | ARENAGG",
     description:
       "Explore ARENAGG community information, game updates and published results.",
   },

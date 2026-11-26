@@ -7,14 +7,15 @@ import type { PublicTournament } from '@/lib/format';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Community Tournament Information',
+  title: 'Free Fire MAX, BGMI & Valorant Tournaments',
   description:
-    'Explore active Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG. Check event dates, team sizes, entry details and registration availability.',
+    'Find Free Fire MAX, BGMI and Valorant community esports tournaments on ARENAGG. Check event schedules, team sizes, rules and registration availability.',
+  keywords: ['Free Fire MAX tournaments', 'BGMI tournaments', 'Valorant tournaments', 'online esports tournaments', 'community esports India'],
   alternates: { canonical: '/tournaments' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
-    title: 'Community Tournament Information | ARENAGG',
+    title: 'Free Fire MAX, BGMI & Valorant Tournaments | ARENAGG',
     description:
       'Explore active Free Fire MAX, BGMI and Valorant community tournaments. Check event dates, team sizes, entry details and registration availability.',
     url: '/tournaments',
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: 'Esports Tournaments | ARENAGG',
     description:
-      'Explore Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG.',
+      'Browse Free Fire MAX, BGMI and Valorant community esports tournaments on ARENAGG.',
   },
 };
 

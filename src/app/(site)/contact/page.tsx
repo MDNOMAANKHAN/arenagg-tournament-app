@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact ARENAGG",
+  title: "Contact ARENAGG Support",
   description:
-    "Contact the ARENAGG team by phone or join the official WhatsApp channel for community and tournament updates.",
+    "Contact ARENAGG support about tournament information or registration assistance, or follow the official WhatsApp channel for community updates.",
+  keywords: ["ARENAGG contact", "esports tournament support", "gaming community support"],
   alternates: { canonical: "/contact" },
   openGraph: {
     type: "website",

@@ -5,13 +5,14 @@ import { gameColor } from '@/lib/format';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Esports Tournament Results',
+  title: 'Esports Tournament Results & Standings',
   description:
-    'View published ARENAGG tournament results, team placements, points and kills across community esports competitions.',
+    'View published ARENAGG esports results, team placements, points and kills from Free Fire MAX, BGMI and Valorant community tournaments.',
+  keywords: ['esports tournament results', 'Free Fire MAX results', 'BGMI results', 'Valorant results', 'esports standings'],
   alternates: { canonical: '/results' },
   openGraph: {
     type: 'website',
-    title: 'Esports Tournament Results | ARENAGG',
+    title: 'Esports Tournament Results & Standings | ARENAGG',
     description:
       'Check published placements and tournament results on ARENAGG.',
     url: '/results',
