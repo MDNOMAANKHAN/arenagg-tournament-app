@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms & Conditions",
   description: "Terms governing ARENAGG website use, community esports tournaments, registrations, payments and participation.",
+  keywords: ["ARENAGG terms and conditions", "esports tournament rules", "tournament registration terms"],
   alternates: { canonical: "/terms" },
 };
 
