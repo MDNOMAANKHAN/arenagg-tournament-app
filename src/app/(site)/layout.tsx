@@ -9,7 +9,7 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col bg-[#050b18] text-white">
+    <div className="public-shell flex min-h-screen flex-col bg-[#050b18] text-white">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>

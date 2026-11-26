@@ -1592,3 +1592,82 @@ body:has(#main-content) footer{background:linear-gradient(145deg,rgba(255,255,25
 .public-nav-link:active{transform:scale(.96)}
 @media(max-width:640px){.public-nav-slider{backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%)}.public-nav-indicator::after{animation-duration:8s}}
 @media(prefers-reduced-motion:reduce){.public-nav-indicator,.public-nav-indicator::after,.public-nav-link{transition:none!important;animation:none!important}}
+
+
+/* ==========================================
+   LIQUID GLASS v2 — PUBLIC PAGES
+   Dark, reflective, layered surfaces; no backdrop blur.
+========================================== */
+.public-shell {
+  --arena-bg: #030713;
+  --arena-panel: #0a1428;
+  --arena-border: rgba(73, 164, 255, .22);
+  --arena-muted: #8da4c2;
+  background: linear-gradient(155deg, #030713 0%, #061126 58%, #03101c 100%);
+}
+.public-shell .arena-page {
+  background: radial-gradient(ellipse at 8% 0%, rgba(0,93,255,.13), transparent 32%),
+    radial-gradient(ellipse at 92% 28%, rgba(0,196,255,.075), transparent 34%),
+    linear-gradient(155deg, #030713 0%, #061126 58%, #03101c 100%);
+}
+.public-shell .arena-glass, .public-shell .arena-nav, .public-shell .arena-tournament,
+.public-shell .arena-premium-card, .public-shell .arena-glass-button,
+.public-shell .arena-glass-secondary, .public-shell .public-nav-slider,
+.public-shell .public-nav-indicator {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.public-shell .arena-glass, .public-shell .arena-premium-card, .public-shell .arena-tournament {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: linear-gradient(145deg, #102344 0%, #0a1830 52%, #071426 100%);
+  border: 1px solid rgba(91,174,255,.24);
+  box-shadow: 0 18px 36px rgba(0,0,0,.3), inset 0 1px 0 rgba(180,225,255,.09);
+}
+.public-shell .arena-glass::before, .public-shell .arena-premium-card::before, .public-shell .arena-tournament::before {
+  content: ""; position: absolute; pointer-events: none; inset: 0; border-radius: inherit;
+  background: linear-gradient(125deg, rgba(91,190,255,.11), transparent 30%, transparent 72%, rgba(20,130,255,.07));
+}
+.public-shell .arena-nav, .public-shell .public-nav-slider {
+  background: linear-gradient(145deg, #0b1a32, #071226 78%);
+  border-color: rgba(82,166,255,.23);
+  box-shadow: inset 0 1px 0 rgba(170,220,255,.08), 0 8px 22px rgba(0,0,0,.28);
+}
+.public-shell .public-nav-indicator {
+  background: linear-gradient(145deg, rgba(43,153,255,.25), rgba(12,66,137,.16)) !important;
+  border-color: rgba(81,188,255,.42) !important;
+  box-shadow: inset 0 1px 0 rgba(205,239,255,.18), 0 0 18px rgba(0,145,255,.12) !important;
+}
+.public-shell .arena-glass-button {
+  background: linear-gradient(135deg, #1479ed, #0865c8 58%, #0796c7);
+  border-color: rgba(119,207,255,.48);
+  box-shadow: 0 8px 22px rgba(0,88,210,.24), inset 0 1px 0 rgba(220,246,255,.28);
+}
+.public-shell .arena-glass-secondary {
+  background: linear-gradient(145deg, #102443, #0a172b);
+  border-color: rgba(89,167,255,.23);
+  box-shadow: inset 0 1px 0 rgba(180,220,255,.08);
+}
+.public-shell .arena-glass-secondary:hover, .public-shell .arena-filter:hover, .public-shell .arena-filter.active {
+  background: linear-gradient(145deg, rgba(19,113,220,.3), rgba(7,53,112,.35));
+  border-color: rgba(71,193,255,.55);
+}
+.public-shell .arena-filter {
+  background: linear-gradient(145deg, #0d1e39, #071328);
+  border-color: rgba(89,167,255,.22); color: #b9cbe2;
+}
+.public-shell .text-slate-400, .public-shell .arena-muted { color: #91a8c5 !important; }
+.public-shell .text-slate-500 { color: #7891b0 !important; }
+.public-shell .border-white\/10 { border-color: rgba(99,166,255,.16) !important; }
+@media (hover:hover) {
+  .public-shell .arena-glass, .public-shell .arena-premium-card, .public-shell .arena-tournament, .public-shell .arena-glass-secondary {
+    transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+  }
+  .public-shell .arena-glass:hover, .public-shell .arena-premium-card:hover, .public-shell .arena-tournament:hover, .public-shell .arena-glass-secondary:hover {
+    border-color: rgba(82,194,255,.44);
+    box-shadow: 0 16px 34px rgba(0,78,180,.18), inset 0 1px 0 rgba(190,235,255,.12);
+  }
+}
+@media (max-width:640px) {
+  .public-shell .arena-page { padding-top: 1.1rem; }
+  .public-shell .arena-glass, .public-shell .arena-premium-card, .public-shell .arena-tournament { border-radius: 18px; }
+}
