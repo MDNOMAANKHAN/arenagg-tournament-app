@@ -49,6 +49,9 @@ module.exports = {
       { source: '/admin/:path*', headers: privateHeaders },
       { source: '/api/admin/:path*', headers: privateHeaders },
       { source: '/register/:path*', headers: privateHeaders },
+      { source: '/registration/:path*', headers: privateHeaders },
+      { source: '/track/:path*', headers: privateHeaders },
+      { source: '/privacy-request/:path*', headers: privateHeaders },
     ];
   },
 };
