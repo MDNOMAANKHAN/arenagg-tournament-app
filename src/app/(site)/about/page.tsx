@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About ARENAGG",
+  title: "About ARENAGG Esports Community",
   description:
-    "Learn about ARENAGG and its community information for players interested in Free Fire MAX, BGMI and Valorant.",
+    "Learn how ARENAGG helps players discover community esports tournaments for Free Fire MAX, BGMI and Valorant and follow published results.",
+  keywords: ["about ARENAGG", "esports community", "gaming tournaments India", "Free Fire MAX", "BGMI", "Valorant"],
   alternates: { canonical: "/about" },
   openGraph: {
     type: "website",
