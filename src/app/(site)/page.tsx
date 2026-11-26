@@ -1,4 +1,5 @@
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import GameShowcase from "@/components/GameShowcase";
@@ -7,6 +8,24 @@ import TournamentCard from "@/components/TournamentCard";
 import type { PublicTournament } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Online Esports Tournaments in India",
+  description: "Discover community esports tournaments for Free Fire MAX, BGMI and Valorant on ARENAGG. Explore events, check rules and follow published results.",
+  keywords: ["online esports tournaments India", "Free Fire MAX tournaments", "BGMI tournaments", "Valorant tournaments", "community gaming tournaments", "ARENAGG"],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    title: "Online Esports Tournaments in India | ARENAGG",
+    description: "Discover Free Fire MAX, BGMI and Valorant community tournaments, event updates and published results on ARENAGG."
+  },
+  twitter: {
+    card: "summary",
+    title: "Online Esports Tournaments in India | ARENAGG",
+    description: "Find Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG."
+  }
+};
 
 type HomeProps = {
   searchParams: {
