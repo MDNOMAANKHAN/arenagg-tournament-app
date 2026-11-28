@@ -31,15 +31,15 @@ jobs:
       # npm regenerates the lockfile after the manifest upgrade.
       # Scripts are disabled here so no dependency code runs with write access.
       - name: Sync package lock
-        if: github.ref == 'refs/heads/upgrade/next16-react19-security'
+        if: github.head_ref == 'upgrade/next16-react19-security' || github.ref == 'refs/heads/upgrade/next16-react19-security'
         run: npm install --package-lock-only --ignore-scripts
 
       - name: Commit lockfile update
-        if: github.ref == 'refs/heads/upgrade/next16-react19-security'
+        if: github.head_ref == 'upgrade/next16-react19-security' || github.ref == 'refs/heads/upgrade/next16-react19-security'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-          BRANCH: ${{ github.ref_name }}
+          BRANCH: ${{ github.head_ref || github.ref_name }}
         run: |
           if git diff --quiet -- package-lock.json; then
             echo "package-lock.json is already in sync"
