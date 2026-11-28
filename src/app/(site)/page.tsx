@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Online Esports Tournaments in India | ARENAGG",
+    title: "Free Fire MAX, BGMI & Valorant Tournaments | ARENAGG",
     description: "Find online community esports tournaments for Free Fire MAX, BGMI and Valorant in India."
   }
 };
