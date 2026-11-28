@@ -20,7 +20,7 @@ export async function GET(_req: NextRequest, context: { params: Promise<{ id: st
   const { data, error } = await admin.sb
     .from('registrations')
     .select('reg_code,team_name,captain_name,captain_contact,status,created_at,payment_amount,payment_status,payment_utr,payment_proof_path,registration_members(name,gaming_id,role)')
-    .eq('tournament_id', id
+    .eq('tournament_id', id)
     .order('created_at', { ascending: true });
 
   if (error) {
