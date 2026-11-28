@@ -10,21 +10,62 @@ import type { PublicTournament } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Online Esports Tournaments in India",
-  description: "Discover community esports tournaments for Free Fire MAX, BGMI and Valorant on ARENAGG. Explore events, check rules and follow published results.",
+  title: "Free Fire MAX, BGMI & Valorant Esports Tournaments",
+  description: "Find online community esports tournaments in India for Free Fire MAX, BGMI and Valorant. Check event dates, formats, entry fees, rules and registration on ARENAGG.",
   keywords: ["online esports tournaments India", "Free Fire MAX tournaments", "BGMI tournaments", "Valorant tournaments", "community gaming tournaments", "ARENAGG"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: "/",
-    title: "Online Esports Tournaments in India | ARENAGG",
-    description: "Discover Free Fire MAX, BGMI and Valorant community tournaments, event updates and published results on ARENAGG."
+    title: "Free Fire MAX, BGMI & Valorant Tournaments | ARENAGG",
+    description: "Explore online community tournaments for Free Fire MAX, BGMI and Valorant in India. Review event information and register on ARENAGG."
   },
   twitter: {
     card: "summary",
-    title: "Online Esports Tournaments in India | ARENAGG",
-    description: "Find Free Fire MAX, BGMI and Valorant community tournaments on ARENAGG."
+    title: "Free Fire MAX, BGMI & Valorant Tournaments | ARENAGG",
+    description: "Find online community esports tournaments for Free Fire MAX, BGMI and Valorant in India."
   }
+};
+
+const homepageFaqs = [
+  {
+    question: "What games can I find tournaments for on ARENAGG?",
+    answer: "ARENAGG features community tournaments for Free Fire MAX, BGMI and Valorant. Available events and formats depend on the tournaments currently published.",
+  },
+  {
+    question: "How do I join an ARENAGG tournament?",
+    answer: "Choose an open tournament, review its details, rules, date, team size and entry fee, then use its registration form. Registration instructions are shown on each event page.",
+  },
+  {
+    question: "Do I need an account to register?",
+    answer: "ARENAGG public tournament registration does not require a player account. Follow the event registration form and save the registration ID provided after registration.",
+  },
+  {
+    question: "How can I check my registration?",
+    answer: "Use the Track Registration page at https://arenagg.live/track and enter the registration details requested there.",
+  },
+  {
+    question: "Where can I see tournament results?",
+    answer: "Published competition results are listed on the ARENAGG Results page at https://arenagg.live/results.",
+  },
+  {
+    question: "Are ARENAGG tournaments free to enter?",
+    answer: "Entry fees vary by event. Check the specific tournament details and registration page for the fee and payment instructions before registering.",
+  },
+  {
+    question: "Is ARENAGG affiliated with game publishers?",
+    answer: "ARENAGG is an independent community esports website and is not affiliated with or endorsed by the publishers of the games featured.",
+  },
+];
+
+const homepageFaqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: homepageFaqs.map(({ question, answer }) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: { "@type": "Answer", text: answer },
+  })),
 };
 
 type HomeProps = {
@@ -126,9 +167,14 @@ export default async function HomePage({ searchParams }: HomeProps) {
               Play. Compete. Rise.
             </p>
 
-            <p className="mt-5 max-w-lg text-sm leading-7 text-slate-300 sm:text-base">
-              Discover tournaments, connect with players and compete
-              in Free Fire MAX, BGMI and Valorant.
+            <h2 className="mt-4 text-base font-bold text-cyan-100 sm:text-lg">
+              Online community esports tournaments in India
+            </h2>
+
+            <p className="mt-3 max-w-lg text-sm leading-7 text-slate-300 sm:text-base">
+              Find Free Fire MAX, BGMI and Valorant tournaments. Compare event
+              dates, formats, team sizes, entry fees and rules, then register
+              and follow your tournament updates.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -336,6 +382,35 @@ export default async function HomePage({ searchParams }: HomeProps) {
           )}
 
         </section>
+
+        {/* SEARCH-FRIENDLY PLAYER FAQs */}
+        <section aria-labelledby="homepage-faq-heading" className="relative mt-20 pb-12">
+          <div className="mb-8">
+            <p className="text-xs font-black tracking-[0.3em] text-cyan-300">PLAYER QUESTIONS</p>
+            <h2 id="homepage-faq-heading" className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
+              Online esports tournaments — FAQs
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400">
+              Quick answers about finding events, registering, tracking a team and viewing published results on ARENAGG.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {homepageFaqs.map(({ question, answer }) => (
+              <article key={question} className="arena-premium-card rounded-2xl border border-blue-300/15 bg-gradient-to-br from-[#101d35]/90 to-[#080f20]/90 p-5 shadow-lg shadow-blue-950/20 backdrop-blur-xl">
+                <h3 className="text-base font-extrabold text-white">{question}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{answer}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(homepageFaqStructuredData).replace(/</g, "\\u003c"),
+          }}
+        />
 
       </div>
     </main>
