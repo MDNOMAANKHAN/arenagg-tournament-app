@@ -25,13 +25,14 @@ function sniff(buf: Buffer): string | null {
 
 function hasValidOrigin(req: NextRequest): boolean {
   const origin = req.headers.get('origin');
-  // Browsers send Origin for cross-origin requests. Compare it with the
-  // actual public request host (Vercel/reverse-proxy aware), not a separately
-  // configured canonical URL that may differ by www or custom domain.
-  if (!origin) return true;
+  if (!origin) return false;
+  // Match host and protocol; allow HTTP only for local development.
 
   try {
-    const originHost = new URL(origin).host.toLowerCase();
+    const parsed = new URL(origin);
+    const isLocal = parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1';
+    if (parsed.protocol !== 'https:' && !isLocal) return false;
+    const originHost = parsed.host.toLowerCase();
     const forwardedHost = req.headers.get('x-forwarded-host')?.split(',')[0].trim();
     const requestHost = req.headers.get('host');
     const expectedHost = (forwardedHost || requestHost || new URL(req.url).host).toLowerCase();
