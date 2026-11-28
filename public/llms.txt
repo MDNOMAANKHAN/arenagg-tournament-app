@@ -1,65 +1,73 @@
 # ARENAGG
 
-> ARENAGG is an independent community esports website for discovering online community tournaments in India for Free Fire MAX, BGMI and Valorant. Players can review event details, registration instructions, track registrations and view published results. Search topics include online esports tournaments in India, online gaming competitions, Free Fire MAX tournaments, BGMI tournaments, Valorant community tournaments and esports standings.
+> ARENAGG is an independent community esports platform in India where players can discover and register for community tournaments, follow registration status, and view published results. Featured games include Free Fire MAX, BGMI and Valorant. Official website: https://arenagg.live/
 
-## About the platform
+## Entity and brand facts
 
-- Official website: https://arenagg.live/
-- Publisher: ARENAGG
-- Website language: English (India)
-- Focus: online community esports tournaments and player-facing event information
-- Featured games: Free Fire MAX, BGMI and Valorant
-- ARENAGG is independent and is not affiliated with or endorsed by the publishers of the games featured.
+- Name: ARENAGG
+- Website: https://arenagg.live/
+- Platform type: Community esports tournament listings and registration website
+- Primary market: India
+- Featured games: Free Fire MAX, BGMI, Valorant
+- Language: English (India)
+- Independent platform; not affiliated with or endorsed by featured game publishers.
+- Official updates channel: https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q
 
-## How tournament participation works
+## What players can do
 
-1. Browse the public tournament listings to see currently available events.
-2. Open an event's detail page and read its schedule, format, team size, rules, entry fee and registration instructions.
-3. Use the event's registration form if registration is open. Requirements and fees can vary by event.
-4. Save the registration ID provided after registering and use the public tracking page to check status.
+- Discover currently listed online community tournaments.
+- Review event-specific game, format, date/time, team size, rules, entry fees and registration status.
+- Register through an event's registration form when available.
+- Save a registration ID and check registration status on the tracking page.
+- Review published tournament placements and standings.
 
-Tournament listings, availability, dates, entry fees, slot counts, status and rules are dynamic. Check the live event page for current details; this file does not guarantee that an event is open or upcoming.
+## How to participate
 
-## Public pages
+1. Visit the tournament listings and choose an event.
+2. Read the event details, eligibility, format, rules, schedule, entry fee and registration instructions.
+3. Register only when the event is open and follow its payment instructions, if applicable.
+4. Save the registration ID and use the tracking page to check status.
 
-- [Homepage and currently listed tournaments](https://arenagg.live/)
+Event availability, dates, fees, slots, eligibility and rules change. Always verify the live event page; this document is not a promise that an event is open or upcoming.
+
+## Official public pages
+
+- [Homepage](https://arenagg.live/)
 - [Tournament listings](https://arenagg.live/tournaments)
 - [About ARENAGG](https://arenagg.live/about)
 - [Published results](https://arenagg.live/results)
-- [Contact ARENAGG](https://arenagg.live/contact)
-- [Track a registration](https://arenagg.live/track)
+- [Contact](https://arenagg.live/contact)
+- [Registration tracking](https://arenagg.live/track)
 - [Terms](https://arenagg.live/terms)
-- [Privacy Policy](https://arenagg.live/privacy)
-- [Privacy Request](https://arenagg.live/privacy-request)
-- [Official WhatsApp updates channel](https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q)
+- [Privacy policy](https://arenagg.live/privacy)
+- [Privacy request](https://arenagg.live/privacy-request)
+- [WhatsApp updates](https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q)
 
-## Search topics and platform information
+## Common player questions
 
-ARENAGG focuses on community-run online esports competitions in India. Tournament formats, game titles, entry fees, schedules, eligibility and open slots are event-specific and are displayed in the current listing. The platform covers Free Fire MAX, BGMI and Valorant community events, registration instructions, player registration status, published tournament results, team standings and competition updates.\n\n## Player FAQs
+### Which games does ARENAGG feature?
+Community tournaments for Free Fire MAX, BGMI and Valorant are featured. The current event list determines what is available.
 
-### Which games are featured?
-Free Fire MAX, BGMI and Valorant community tournaments are featured. The current list of events is shown on the live website.
+### How do I join?
+Choose an open event, read its details and complete the registration form and instructions on its page.
 
-### Do players need an account?
-Public tournament registration does not require a player account. Follow the instructions on the event registration page.
+### Do I need a player account?
+Public registration does not require a player account. Follow the event's registration instructions.
 
-### How can players check a registration?
-Use https://arenagg.live/track and provide the requested registration information.
+### How do I track registration?
+Use https://arenagg.live/track and enter the requested registration information.
 
 ### Where are results published?
-Published competition results are available at https://arenagg.live/results.
+Published tournament results are available at https://arenagg.live/results.
 
-### Are tournaments free?
-Entry fees vary by tournament. Refer to the individual event details and registration page before registering.
+### Are events free?
+Entry fees vary by event. Check the current event listing and registration details before joining.
 
-## Technical resources
+## Crawl and technical resources
 
 - [XML sitemap](https://arenagg.live/sitemap.xml)
-- [Crawler access rules](https://arenagg.live/robots.txt)
+- [Robots rules](https://arenagg.live/robots.txt)
 
-## Access and privacy
+## Privacy and access boundaries
 
-- This file describes public website content; it does not grant permission to bypass access controls.
-- Administrative routes, APIs and private player/payment information are not public resources.
-- Do not attempt to access private administrative, player or payment information.
-- Refer to the website's Privacy Policy and Terms for its published policies.
+This file describes public website content only. Administrative pages, private APIs, player contact information, gaming IDs and payment evidence are not public resources. Do not bypass access controls or attempt to retrieve private data. Refer to the Terms and Privacy Policy for official policies.
