@@ -69,14 +69,15 @@ const homepageFaqStructuredData = {
 };
 
 type HomeProps = {
-  searchParams: {
+  searchParams: Promise<{
     game?: string;
-  };
+  }>;
 };
 
 export default async function HomePage({ searchParams }: HomeProps) {
+  const { game } = await searchParams;
   // Existing Supabase data fetching — preserved
-  const sb = supabaseServer();
+  const sb = await supabaseServer();
 
   const { data: games } = await sb
     .from("games")
@@ -87,8 +88,8 @@ export default async function HomePage({ searchParams }: HomeProps) {
   // (e.g. ?game=freefire) still shows the full list instead of an empty page.
   const gameSlugs = new Set((games ?? []).map((g) => g.slug));
   const activeGame =
-    searchParams.game && gameSlugs.has(searchParams.game)
-      ? searchParams.game
+    game && gameSlugs.has(game)
+      ? game
       : "";
 
   let q = sb
