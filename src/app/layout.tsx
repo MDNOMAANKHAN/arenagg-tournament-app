@@ -3,7 +3,7 @@ import "./globals.css";
 
 const siteUrl = "https://arenagg.live";
 
-// Keep structured data limited to verified information about the website.
+// Structured data uses only verified public facts and official URLs.
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -12,8 +12,9 @@ const structuredData = {
       "@id": `${siteUrl}/#organization`,
       name: "ARENAGG",
       url: siteUrl,
-      description: "ARENAGG is an independent community esports website for online community tournaments in India featuring Free Fire MAX, BGMI and Valorant.",
-      knowsAbout: ["Online community esports tournaments", "Free Fire MAX", "BGMI", "Valorant"],
+      description: "ARENAGG is an independent community esports platform in India for discovering and joining online community tournaments featuring Free Fire MAX, BGMI and Valorant, and viewing published results.",
+      knowsAbout: ["Community esports tournaments", "Online gaming tournaments in India", "Free Fire MAX", "BGMI", "Valorant", "Tournament registration", "Esports results and standings"],
+      sameAs: ["https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q"],
     },
     {
       "@type": "WebSite",
@@ -107,11 +108,9 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(structuredData).replace(/</g, "\u003c"),
           }}
         />
         {children}
       </body>
     </html>
-  );
-}
