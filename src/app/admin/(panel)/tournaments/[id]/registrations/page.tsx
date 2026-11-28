@@ -8,19 +8,21 @@ import PaymentProofCell from '@/components/PaymentProofCell';
 const TONE: Record<string, string> = { pending: 'wait', approved: 'ok', rejected: 'bad' };
 
 export default async function Registrations({ params, searchParams }: {
-  params: { id: string };
-  searchParams: { q?: string; status?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ q?: string; status?: string }>;
 }) {
+  const { id } = await params;
+  const { q: query, status: requestedStatus } = await searchParams;
   const a = (await getAdmin())!;
-  const { data: t } = await a.sb.from('tournaments').select('id,title').eq('id', params.id).maybeSingle();
+  const { data: t } = await a.sb.from('tournaments').select('id,title').eq('id', id.maybeSingle();
   if (!t) notFound();
 
   const { data } = await a.sb.from('registrations')
     .select('id,reg_code,team_name,captain_name,captain_contact,status,created_at,payment_status,payment_amount,payment_utr,payment_proof_path,registration_members(name,gaming_id,role)')
     .eq('tournament_id', t.id).order('created_at', { ascending: false });
 
-  const q = (searchParams.q ?? '').trim().toLowerCase();
-  const status = ['pending', 'approved', 'rejected'].includes(searchParams.status ?? '') ? searchParams.status : '';
+  const q = (query ?? '').trim().toLowerCase();
+  const status = ['pending', 'approved', 'rejected'].includes(requestedStatus ?? '') ? requestedStatus : '';
   const rows = (data ?? []).filter((r: any) => {
     const members = r.registration_members ?? [];
     return (!status || r.status === status) && (!q ||
@@ -48,7 +50,7 @@ export default async function Registrations({ params, searchParams }: {
 
       <section className="mb-5 rounded-2xl border border-white/10 bg-slate-950/60 p-3 shadow-lg shadow-black/10 sm:p-4">
         <form action="" method="GET" className="grid min-w-0 grid-cols-1 gap-2.5 sm:grid-cols-[minmax(0,1fr)_180px_auto_auto]">
-          <label className="min-w-0"><span className="sr-only">Search registrations</span><input type="search" name="q" defaultValue={searchParams.q} className="input !w-full min-w-0" placeholder="Search team, captain, gaming ID or code" /></label>
+          <label className="min-w-0"><span className="sr-only">Search registrations</span><input type="search" name="q" defaultValue={query} className="input !w-full min-w-0" placeholder="Search team, captain, gaming ID or code" /></label>
           <label className="min-w-0"><span className="sr-only">Filter by registration status</span><select name="status" defaultValue={status} className="input !w-full"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label>
           <button type="submit" className="btn min-w-[96px]">Apply filters</button>
           <Link href={`/admin/tournaments/${t.id}/registrations`} className="btn light min-w-[88px]">Reset</Link>
