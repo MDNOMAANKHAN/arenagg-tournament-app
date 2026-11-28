@@ -31,7 +31,7 @@ type PublicResult = {
 };
 
 export default async function Results() {
-  const sb = supabaseServer();
+  const sb = await supabaseServer();
   const { data: completed, error: completedError } = await sb
     .from('tournament_public')
     .select('id')
