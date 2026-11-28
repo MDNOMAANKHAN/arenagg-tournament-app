@@ -30,7 +30,7 @@ export async function generateMetadata({
   }
 
   const { data } = await (await supabaseServer())
-    .from('tournament_public'
+    .from('tournament_public')
     .select('id,title,description,game_name,game_slug,starts_at,status')
     .eq('id', id)
     .maybeSingle();
