@@ -1,6 +1,6 @@
 # ARENAGG
 
-> ARENAGG is an independent community esports website for discovering online community tournaments in India for Free Fire MAX, BGMI and Valorant. Players can review event details, registration instructions, track registrations and view published results.
+> ARENAGG is an independent community esports website for discovering online community tournaments in India for Free Fire MAX, BGMI and Valorant. Players can review event details, registration instructions, track registrations and view published results. Search topics include online esports tournaments in India, online gaming competitions, Free Fire MAX tournaments, BGMI tournaments, Valorant community tournaments and esports standings.
 
 ## About the platform
 
@@ -33,7 +33,7 @@ Tournament listings, availability, dates, entry fees, slot counts, status and ru
 - [Privacy Request](https://arenagg.live/privacy-request)
 - [Official WhatsApp updates channel](https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q)
 
-## Player FAQs
+## Search topics and platform information\n\nARENAGG focuses on community-run online esports competitions in India. Tournament formats, game titles, entry fees, schedules, eligibility and open slots are event-specific and are displayed in the current listing. The platform covers Free Fire MAX, BGMI and Valorant community events, registration instructions, player registration status, published tournament results, team standings and competition updates.\n\n## Player FAQs
 
 ### Which games are featured?
 Free Fire MAX, BGMI and Valorant community tournaments are featured. The current list of events is shown on the live website.
