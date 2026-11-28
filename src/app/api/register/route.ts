@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createHash, randomUUID } from 'crypto';
 import { registerSchema } from '@/lib/validation';
 import { supabaseService } from '@/lib/supabase/service';
+import { parseFormDataLimited, RequestBodyTooLargeError } from '@/lib/server-validation';
+import { paymentUtrSchema } from '@/lib/validation';
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const EXT: Record<string, string> = {
@@ -67,8 +69,9 @@ function sniff(buf: Buffer): string | null {
 export async function POST(req: NextRequest) {
   if (!hasValidOrigin(req)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
-  const length = Number(req.headers.get('content-length') || 0);
-  if (length > MAX_BYTES + 100_000) return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+  if (!req.headers.get('content-type')?.toLowerCase().startsWith('multipart/form-data')) {
+    return NextResponse.json({ error: 'Expected a multipart registration form.' }, { status: 415 });
+  }
 
   const sb = supabaseService();
 
@@ -79,8 +82,9 @@ export async function POST(req: NextRequest) {
 
   let form: FormData;
   try {
-    form = await req.formData();
-  } catch {
+    form = await parseFormDataLimited(req, MAX_BYTES + 64 * 1024);
+  } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) return NextResponse.json({ error: 'Request is too large. Maximum upload size is 5 MB.' }, { status: 413 });
     return NextResponse.json({ error: 'Invalid registration form.' }, { status: 400 });
   }
 
@@ -98,11 +102,14 @@ export async function POST(req: NextRequest) {
   if (!parsed.success) return NextResponse.json({ error: 'Please fix the highlighted problems.', fields: parsed.error.flatten().fieldErrors }, { status: 422 });
 
   const { website, t, ...payload } = parsed.data;
-  if (website || !Number.isFinite(t)) return NextResponse.json({ error: 'Request rejected.' }, { status: 400 });
+  const elapsed = Date.now() - t;
+  if (website || elapsed < 1200 || elapsed > 24 * 60 * 60 * 1000) return NextResponse.json({ error: 'Request rejected.' }, { status: 400 });
 
   const proofFile = form.get('payment_screenshot');
   const utrRaw = form.get('payment_utr');
-  const utr = typeof utrRaw === 'string' ? utrRaw.trim().slice(0, 40) : '';
+  const utrParsed = typeof utrRaw === 'string' && utrRaw.trim() ? paymentUtrSchema.safeParse(utrRaw) : null;
+  if (utrParsed && !utrParsed.success) return NextResponse.json({ error: 'Enter a valid UTR / transaction reference (6–40 letters or numbers).' }, { status: 422 });
+  const utr = utrParsed?.success ? utrParsed.data : '';
 
   const { data: tournament, error: tournamentError } = await sb
     .from('tournaments')
