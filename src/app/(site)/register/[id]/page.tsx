@@ -15,20 +15,21 @@ export const metadata: Metadata = {
 export default async function RegisterPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   if (
     !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-      params.id
+      id
     )
   ) {
     notFound();
   }
 
-  const { data } = await supabaseServer()
+  const { data } = await (await supabaseServer())
     .from('tournament_public')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .maybeSingle();
 
   if (!data) notFound();
