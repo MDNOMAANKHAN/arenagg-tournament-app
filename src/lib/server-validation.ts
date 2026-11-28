@@ -46,7 +46,9 @@ export async function parseFormDataLimited(req: Request, maxBytes: number): Prom
   const headers = new Headers(req.headers);
   headers.delete('content-length');
   headers.delete('transfer-encoding');
-  const rebuilt = new Request(req.url, { method: 'POST', headers, body: bytes });
+  const transferable = new ArrayBuffer(bytes.byteLength);
+  new Uint8Array(transferable).set(bytes);
+  const rebuilt = new Request(req.url, { method: 'POST', headers, body: transferable });
   return rebuilt.formData();
 }
 
