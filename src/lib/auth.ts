@@ -3,12 +3,12 @@ import { supabaseServer } from '@/lib/supabase/server';
 export type AdminCtx = {
   user: { id: string; email?: string };
   role: 'super_admin' | 'organizer';
-  sb: ReturnType<typeof supabaseServer>;
+  sb: Awaited<ReturnType<typeof supabaseServer>>;
 };
 
 /** Server-side permission check: valid session, explicit admin row and (by default) AAL2 TOTP. */
 export async function getAdmin(options: { requireMfa?: boolean } = {}): Promise<AdminCtx | null> {
-  const sb = supabaseServer();
+  const sb = await supabaseServer();
   const { data: { user }, error: userError } = await sb.auth.getUser();
   if (userError || !user) return null;
 
