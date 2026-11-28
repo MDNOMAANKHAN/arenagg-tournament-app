@@ -215,9 +215,4 @@ create policy m_admin on public.matches for all using (public.is_admin()) with c
 create policy res_admin on public.tournament_results for all using (public.is_admin()) with check (public.is_admin());
 -- rate_limits: no policies → unreachable except via service role.
 
--- Create your first admin AFTER adding the user in Authentication → Users:
--- insert into public.admins (user_id, email, role) select id, email, 'super_admin' from auth.users where email = 'you@example.com';
-INSERT INTO public.admins (user_id, email, role)
-SELECT id, email, 'super_admin'
-FROM auth.users
-WHERE email = 'mdnomaankhan5@gmail.com';
+-- Create the first admin manually using the setup instructions in README.md.
