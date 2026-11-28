@@ -23,7 +23,7 @@ export async function GET(_req: NextRequest, context: { params: Promise<{ id: st
   const { data: reg, error } = await admin.sb
     .from('registrations')
     .select('payment_proof_path')
-    .eq('id', id
+    .eq('id', id)
     .maybeSingle();
 
   if (error) {
