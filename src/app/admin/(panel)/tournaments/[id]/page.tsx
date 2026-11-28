@@ -6,6 +6,6 @@ export default async function EditTournament({ params }: { params: Promise<{ id:
   const a = (await getAdmin())!;
   const { data: games } = await a.sb.from('games').select('id,name').order('name');
   let initial = null;
-  if (id !== 'new') { const { data } = await a.sb.from('tournaments').select('*').eq('id', id.maybeSingle(); if (!data) notFound(); initial = data; }
+  if (id !== 'new') { const { data } = await a.sb.from('tournaments').select('*').eq('id', id).maybeSingle(); if (!data) notFound(); initial = data; }
   return (<div><h1 className="mb-5 text-3xl">{initial ? 'Edit tournament' : 'New tournament'}</h1><TournamentForm games={games ?? []} initial={initial} /></div>);
 }
