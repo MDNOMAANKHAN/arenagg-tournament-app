@@ -34,7 +34,19 @@ export const metadata: Metadata = {
     template: "%s | ARENAGG",
   },
   description:
-    "Join the ARENAGG gaming community to discover Free Fire MAX, BGMI and Valorant esports tournaments, follow event updates and view published results.",
+    "Join online community esports tournaments in India for Free Fire MAX, BGMI and Valorant. Browse events, formats, rules, entry fees and published results on ARENAGG.",
+  keywords: [
+    "online esports tournaments India",
+    "online gaming tournaments India",
+    "community esports tournaments",
+    "mobile esports tournaments India",
+    "Free Fire MAX tournaments",
+    "BGMI tournaments",
+    "Valorant community tournaments",
+    "gaming competitions India",
+    "esports tournament registration",
+    "ARENAGG",
+  ],
   applicationName: "ARENAGG",
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "ARENAGG", statusBarStyle: "black-translucent" },
@@ -63,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Online Esports Tournaments in India | ARENAGG",
     description:
-      "Explore ARENAGG community information, game updates and published results.",
+      "Explore online community esports tournaments in India for Free Fire MAX, BGMI and Valorant, and view published results.",
   },
   robots: {
     index: true,
