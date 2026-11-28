@@ -7,8 +7,9 @@ const schema = z.object({
   admin_notes: z.string().trim().max(2000).default(''),
 });
 
-export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
-  if (!z.string().uuid().safeParse(context.params.id).success) {
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) {
     return NextResponse.json({ error: 'Invalid request reference.' }, { status: 400 });
   }
   const admin = await getAdmin();
@@ -21,7 +22,7 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
   if (!parsed.success) return NextResponse.json({ error: 'Invalid status or notes.' }, { status: 422 });
 
   const { data, error } = await admin.sb.from('privacy_requests')
-    .update(parsed.data).eq('id', context.params.id)
+    .update(parsed.data).eq('id', id)
     .select('id,status').maybeSingle();
   if (error) {
     console.error('Privacy request update failed', error.message);

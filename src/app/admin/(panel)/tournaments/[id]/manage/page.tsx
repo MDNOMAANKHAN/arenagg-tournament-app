@@ -2,9 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAdmin } from '@/lib/auth';
 import ManagePanel from '@/components/ManagePanel';
-export default async function Manage({ params }: { params: { id: string } }) {
+export default async function Manage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const a = (await getAdmin())!;
-  const { data: t } = await a.sb.from('tournaments').select('id,title').eq('id', params.id).maybeSingle();
+  const { data: t } = await a.sb.from('tournaments').select('id,title').eq('id', id).maybeSingle();
   if (!t) notFound();
   const [{ data: matches }, { data: teams }, { data: results }] = await Promise.all([
     a.sb.from('matches').select('*').eq('tournament_id', t.id).order('match_no'),

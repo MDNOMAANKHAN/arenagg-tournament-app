@@ -19,19 +19,20 @@ type PublicTeam = {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  if (!/^[0-9a-f-]{36}$/i.test(params.id)) {
+  const { id } = await params;
+  if (!/^[0-9a-f-]{36}$/i.test(id)) {
     return {
       title: 'Tournament not found',
       robots: { index: false, follow: false },
     };
   }
 
-  const { data } = await supabaseServer()
+  const { data } = await (await supabaseServer())
     .from('tournament_public')
     .select('id,title,description,game_name,game_slug,starts_at,status')
-    .eq('id', params.id)
+    .eq('id', id)
     .maybeSingle();
 
   if (!data || data.status === 'draft' || data.status === 'cancelled') {
@@ -59,11 +60,12 @@ export default async function TournamentPage({
 }: {
   params: { id: string };
 }) {
-  if (!/^[0-9a-f-]{36}$/i.test(params.id)) {
+  const { id } = await params;
+  if (!/^[0-9a-f-]{36}$/i.test(id)) {
     notFound();
   }
 
-  const sb = supabaseServer();
+  const sb = await supabaseServer();
 
   const { data, error } = await sb
     .from('tournament_public')

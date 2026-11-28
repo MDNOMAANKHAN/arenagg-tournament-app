@@ -58,7 +58,8 @@ async function handle(req: NextRequest, resource: string, op: 'create' | 'update
       const { data: registration, error: registrationError } = await admin.sb.from('registrations').select('id').eq('id', result.registration_id).eq('tournament_id', result.tournament_id).eq('status', 'approved').maybeSingle();
       if (registrationError || !registration) return bad('Results can only be recorded for an approved team in this tournament.', 422);
     }
-    const row = resource === 'tournaments' ? { ...p.data, created_by: admin.user.id } : p.data;
+    const parsedData = p.data as Record<string, unknown>;
+    const row = resource === 'tournaments' ? { ...parsedData, created_by: admin.user.id } : parsedData;
     const q = cfg.conflict ? admin.sb.from(cfg.table).upsert(row, { onConflict: cfg.conflict }) : admin.sb.from(cfg.table).insert(row);
     const { data, error } = await q.select('id').single();
     if (error) {
@@ -87,11 +88,11 @@ async function handle(req: NextRequest, resource: string, op: 'create' | 'update
     }
   }
   if (resource === 'matches' && Object.prototype.hasOwnProperty.call(rest, 'tournament_id')) return bad('A match cannot be moved to another tournament.', 422);
-  const { data, error } = await admin.sb.from(cfg.table).update(p.data).eq('id', pid.data).select('id');
+  const { data, error } = await admin.sb.from(cfg.table).update(p.data as Record<string, unknown>).eq('id', pid.data).select('id');
   if (error) { console.error('Admin update failed', resource, error.message); return bad('Could not update this item. Please try again.'); }
   return data?.length ? NextResponse.json({ ok: true }) : bad('Not found or not permitted', 404);
 }
-type Ctx = { params: { resource: string } };
-export const POST = (r: NextRequest, c: Ctx) => handle(r, c.params.resource, 'create');
-export const PATCH = (r: NextRequest, c: Ctx) => handle(r, c.params.resource, 'update');
-export const DELETE = (r: NextRequest, c: Ctx) => handle(r, c.params.resource, 'remove');
+type Ctx = { params: Promise<{ resource: string }> };
+export const POST = async (r: NextRequest, c: Ctx) => handle(r, (await c.params).resource, 'create');
+export const PATCH = async (r: NextRequest, c: Ctx) => handle(r, (await c.params).resource, 'update');
+export const DELETE = async (r: NextRequest, c: Ctx) => handle(r, (await c.params).resource, 'remove');

@@ -17,11 +17,12 @@ export const metadata: Metadata = {
 export default async function Confirmation({
   params,
 }: {
-  params: { code: string };
+  params: Promise<{ code: string }>;
 }) {
-  if (!/^AGG-[0-9A-Fa-f]{20}$/.test(params.code)) notFound();
+  const { code } = await params;
+  if (!/^AGG-[0-9A-Fa-f]{20}$/.test(code)) notFound();
 
-  const h = headers();
+  const h = await headers();
   const ip = (
     h.get('x-real-ip') ||
     h.get('x-forwarded-for') ||
@@ -49,7 +50,7 @@ export default async function Confirmation({
   if (limitError || !allowed) notFound();
 
   const { data } = await sb.rpc('get_registration_public', {
-    p_code: params.code,
+    p_code: code,
   });
 
   const r = data?.[0];
@@ -103,7 +104,7 @@ export default async function Confirmation({
             </p>
 
             <div className="mt-4 break-all text-xl font-black tracking-wider text-white sm:text-3xl">
-              {params.code.toUpperCase()}
+              {code.toUpperCase()}
             </div>
 
             <p className="mt-4 text-xs text-slate-400">
@@ -216,7 +217,7 @@ export default async function Confirmation({
 
               <div className="mt-5 rounded-2xl border border-cyan-300/15 bg-[#061326]/55 p-4 sm:p-5">
                 <p className="mb-4 text-sm leading-6 text-slate-400">Upload or replace your payment screenshot here. The organiser will verify it before approving your team.</p>
-                <PaymentProofUpload code={params.code} alreadyUploaded={Boolean(r.has_payment_proof)} rejected={r.status === 'rejected'} />
+                <PaymentProofUpload code={code} alreadyUploaded={Boolean(r.has_payment_proof)} rejected={r.status === 'rejected'} />
               </div>
             </div>
           )}

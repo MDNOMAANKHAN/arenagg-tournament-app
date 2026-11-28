@@ -39,8 +39,8 @@ function hasValidOrigin(req: NextRequest): boolean {
   }
 }
 
-export async function POST(req: NextRequest, context: { params: { code: string } }) {
-  const code = context.params.code;
+export async function POST(req: NextRequest, context: { params: Promise<{ code: string }> }) {
+  const { code } = await context.params;
 
   if (!CODE_RE.test(code)) {
     return NextResponse.json({ error: 'Invalid registration ID.' }, { status: 404 });

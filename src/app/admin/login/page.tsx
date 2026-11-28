@@ -1,11 +1,12 @@
 
 import LoginForm from './LoginForm';
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: { denied?: string };
+  searchParams: Promise<{ denied?: string }>;
 }) {
+  const { denied } = await searchParams;
   return (
     <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-ink px-4 py-10 sm:px-6">
 
@@ -15,7 +16,7 @@ export default function LoginPage({
       <div className="pointer-events-none absolute left-0 top-0 h-72 w-72 rounded-full bg-blue-600/[0.06] blur-[100px]" />
 
       <div className="relative z-10 mx-auto w-full max-w-md">
-        <LoginForm denied={searchParams.denied === '1'} />
+        <LoginForm denied={denied === '1'} />
       </div>
 
     </main>
