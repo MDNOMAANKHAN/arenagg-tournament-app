@@ -1,7 +1,7 @@
 # ARENAGG — setup (laptop)
 
 1. **Supabase**: create a project → SQL Editor → paste and run `supabase/schema.sql`.
-2. **First admin**: Authentication → Users → *Add user* (email + password, tick auto-confirm). Then run:
+2. **First admin**: Authentication → Users → *Add user* (use a local-only email and a unique password, tick auto-confirm). Then run:
    `insert into public.admins (user_id, email, role) select id, email, 'super_admin' from auth.users where email = 'you@example.com';`
    Turn off public email sign-ups in Supabase Auth.
 3. Copy `.env.example` to `.env.local` and fill all five values (Supabase URL, anon key, service-role key, site URL, rate-limit salt). Never expose the service-role key in browser code or commit `.env.local`.
