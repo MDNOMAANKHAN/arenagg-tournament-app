@@ -29,15 +29,16 @@ export const metadata: Metadata = {
 };
 
 type TournamentsPageProps = {
-  searchParams?: { game?: string };
+  searchParams: Promise<{ game?: string }>;
 };
 
 export default async function TournamentsPage({ searchParams }: TournamentsPageProps) {
-  const sb = supabaseServer();
+  const { game } = await searchParams;
+  const sb = await supabaseServer();
   const { data: games } = await sb.from('games').select('slug,name').order('name');
   const gameSlugs = new Set((games ?? []).map((g) => g.slug));
-  const activeGame = searchParams?.game && gameSlugs.has(searchParams.game)
-    ? searchParams.game
+  const activeGame = game && gameSlugs.has(game)
+    ? game
     : '';
 
   // Upcoming competitions and live events only. Registration is fail-closed in its own flow.
