@@ -5,16 +5,16 @@ import { gameColor } from '@/lib/format';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Esports Tournament Results & Standings',
+  title: 'Esports Tournament Results, Rankings & Standings',
   description:
-    'View published ARENAGG esports results, team placements, points and kills from Free Fire MAX, BGMI and Valorant community tournaments.',
-  keywords: ['esports tournament results', 'Free Fire MAX results', 'BGMI results', 'Valorant results', 'esports standings'],
+    'See published online esports tournament results, team rankings, placements, points and kills from ARENAGG Free Fire MAX, BGMI and Valorant competitions.',
+  keywords: ['online esports tournament results', 'Free Fire MAX tournament results', 'BGMI tournament rankings', 'Valorant tournament results', 'esports standings India', 'team placements and rankings'],
   alternates: { canonical: '/results' },
   openGraph: {
     type: 'website',
-    title: 'Esports Tournament Results & Standings | ARENAGG',
+    title: 'Esports Results & Rankings | ARENAGG',
     description:
-      'Check published placements and tournament results on ARENAGG.',
+      'View published placements, team rankings and results from ARENAGG community esports tournaments.',
     url: '/results',
   },
 };
