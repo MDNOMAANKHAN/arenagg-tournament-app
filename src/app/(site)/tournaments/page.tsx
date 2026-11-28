@@ -7,24 +7,24 @@ import type { PublicTournament } from '@/lib/format';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Free Fire MAX, BGMI & Valorant Tournaments',
+  title: 'Online Tournaments for Free Fire MAX, BGMI & Valorant',
   description:
-    'Find Free Fire MAX, BGMI and Valorant community esports tournaments on ARENAGG. Check event schedules, team sizes, rules and registration availability.',
-  keywords: ['Free Fire MAX tournaments', 'BGMI tournaments', 'Valorant tournaments', 'online esports tournaments', 'community esports India'],
+    'Browse online gaming tournaments in India for Free Fire MAX, BGMI and Valorant. Check dates, team formats, entry fees, rules and whether registration is open.',
+  keywords: ['Free Fire MAX online tournaments India', 'BGMI online tournaments India', 'Valorant community tournaments', 'online gaming tournaments India', 'online esports competitions', 'community esports tournaments', 'tournament registration India'],
   alternates: { canonical: '/tournaments' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
-    title: 'Free Fire MAX, BGMI & Valorant Tournaments | ARENAGG',
+    title: 'Online Gaming Tournaments | ARENAGG',
     description:
-      'Explore active Free Fire MAX, BGMI and Valorant community tournaments. Check event dates, team sizes, entry details and registration availability.',
+      'Find active online esports events for Free Fire MAX, BGMI and Valorant. Compare schedules, team sizes, rules, entry details and registration availability.',
     url: '/tournaments',
   },
   twitter: {
     card: 'summary',
     title: 'Esports Tournaments | ARENAGG',
     description:
-      'Browse Free Fire MAX, BGMI and Valorant community esports tournaments on ARENAGG.',
+      'Explore online community tournaments in India for Free Fire MAX, BGMI and Valorant on ARENAGG.',
   },
 };
 
