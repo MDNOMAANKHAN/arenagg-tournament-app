@@ -11,6 +11,7 @@ const structuredData = {
       "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
       name: "ARENAGG",
+      alternateName: ["ARENAGG Esports", "ARENAGG.live"],
       url: siteUrl,
       description: "ARENAGG is an independent community esports platform in India for discovering and joining online community tournaments featuring Free Fire MAX, BGMI and Valorant, and viewing published results.",
       knowsAbout: ["Community esports tournaments", "Online gaming tournaments in India", "Free Fire MAX", "BGMI", "Valorant", "Tournament registration", "Esports results and standings"],
@@ -20,6 +21,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       name: "ARENAGG",
+      alternateName: ["ARENAGG Esports", "ARENAGG.live"],
       url: siteUrl,
       description: "Discover online community esports tournaments in India for Free Fire MAX, BGMI and Valorant.",
       publisher: { "@id": `${siteUrl}/#organization` },
@@ -114,3 +116,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
+      );
+}
