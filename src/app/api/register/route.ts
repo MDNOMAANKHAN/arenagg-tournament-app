@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createHash, randomUUID } from 'crypto';
-import { registerSchema } from '@/lib/validation';
+import { registerSchema, paymentUtrSchema } from '@/lib/validation';
 import { supabaseService } from '@/lib/supabase/service';
 import { parseFormDataLimited, RequestBodyTooLargeError } from '@/lib/server-validation';
-import { paymentUtrSchema } from '@/lib/validation';
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const EXT: Record<string, string> = {
@@ -36,7 +35,7 @@ function normalizeHost(value: string | null | undefined): string | null {
 
 function hasValidOrigin(req: NextRequest): boolean {
   const origin = req.headers.get('origin');
-  if (!origin) return true;
+  if (!origin) return false;
   try {
     const parsedOrigin = new URL(origin);
     const isLocalhost = parsedOrigin.hostname === 'localhost' || parsedOrigin.hostname === '127.0.0.1';
