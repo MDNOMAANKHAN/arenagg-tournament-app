@@ -14,7 +14,7 @@ export default async function Registrations({ params, searchParams }: {
   const { id } = await params;
   const { q: query, status: requestedStatus } = await searchParams;
   const a = (await getAdmin())!;
-  const { data: t } = await a.sb.from('tournaments').select('id,title').eq('id', id.maybeSingle();
+  const { data: t } = await a.sb.from('tournaments').select('id,title').eq('id', id).maybeSingle();
   if (!t) notFound();
 
   const { data } = await a.sb.from('registrations')
