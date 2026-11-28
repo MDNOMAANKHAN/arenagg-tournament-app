@@ -11,8 +11,9 @@ export const dynamic = 'force-dynamic';
  * The bucket is private, so a raw storage URL would 400 for everyone including
  * the organiser; this route is the only way in.
  */
-export async function GET(_req: NextRequest, context: { params: { id: string } }) {
-  if (!z.string().uuid().safeParse(context.params.id).success) {
+export async function GET(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) {
     return NextResponse.json({ error: 'Invalid registration ID.' }, { status: 400 });
   }
 
@@ -22,7 +23,7 @@ export async function GET(_req: NextRequest, context: { params: { id: string } }
   const { data: reg, error } = await admin.sb
     .from('registrations')
     .select('payment_proof_path')
-    .eq('id', context.params.id)
+    .eq('id', id
     .maybeSingle();
 
   if (error) {
