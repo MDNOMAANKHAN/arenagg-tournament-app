@@ -10,19 +10,19 @@ import type { PublicTournament } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Free Fire MAX, BGMI & Valorant Esports Tournaments",
-  description: "Find online community esports tournaments in India for Free Fire MAX, BGMI and Valorant. Check event dates, formats, entry fees, rules and registration on ARENAGG.",
-  keywords: ["online esports tournaments India", "Free Fire MAX tournaments", "BGMI tournaments", "Valorant tournaments", "community gaming tournaments", "ARENAGG"],
+  title: "Online Esports Tournaments India | Free Fire MAX, BGMI & Valorant",
+  description: "Join online community esports tournaments in India for Free Fire MAX, BGMI and Valorant. Browse event dates, formats, rules, entry fees and published results on ARENAGG.",
+  keywords: ["online esports tournaments India", "online gaming tournaments India", "Free Fire MAX tournament India", "BGMI tournament India", "Valorant tournaments India", "community esports tournaments", "mobile gaming competitions India", "esports tournament registration", "ARENAGG"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: "/",
-    title: "Free Fire MAX, BGMI & Valorant Tournaments | ARENAGG",
-    description: "Explore online community tournaments for Free Fire MAX, BGMI and Valorant in India. Review event information and register on ARENAGG."
+    title: "Online Esports Tournaments India | ARENAGG",
+    description: "Discover community esports tournaments for Free Fire MAX, BGMI and Valorant in India. Check event details and published results."
   },
   twitter: {
     card: "summary",
-    title: "Free Fire MAX, BGMI & Valorant Tournaments | ARENAGG",
+    title: "Online Esports Tournaments India | ARENAGG",
     description: "Find online community esports tournaments for Free Fire MAX, BGMI and Valorant in India."
   }
 };
@@ -60,12 +60,28 @@ const homepageFaqs = [
 
 const homepageFaqStructuredData = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: homepageFaqs.map(({ question, answer }) => ({
-    "@type": "Question",
-    name: question,
-    acceptedAnswer: { "@type": "Answer", text: answer },
-  })),
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://arenagg.live/#homepage",
+      url: "https://arenagg.live/",
+      name: "Online Esports Tournaments in India | ARENAGG",
+      description: "Discover online community esports tournaments in India for Free Fire MAX, BGMI and Valorant, and view published results.",
+      inLanguage: "en-IN",
+      isPartOf: { "@id": "https://arenagg.live/#website" },
+      about: { "@id": "https://arenagg.live/#organization" },
+      keywords: ["online esports tournaments India", "online gaming tournaments India", "Free Fire MAX tournaments", "BGMI tournaments", "Valorant tournaments", "community esports", "ARENAGG"],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://arenagg.live/#faq",
+      mainEntity: homepageFaqs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    },
+  ],
 };
 
 type HomeProps = {
@@ -404,6 +420,12 @@ export default async function HomePage({ searchParams }: HomeProps) {
               </article>
             ))}
           </div>
+          <nav aria-label="Explore ARENAGG" className="mt-6 flex flex-wrap gap-3">
+            <Link href="/tournaments" className="arena-glass-button arena-glass-secondary rounded-xl">Browse tournaments</Link>
+            <Link href="/results" className="arena-glass-button arena-glass-secondary rounded-xl">View results</Link>
+            <Link href="/about" className="arena-glass-button arena-glass-secondary rounded-xl">About ARENAGG</Link>
+            <Link href="/contact" className="arena-glass-button arena-glass-secondary rounded-xl">Contact</Link>
+          </nav>
         </section>
 
         <script
