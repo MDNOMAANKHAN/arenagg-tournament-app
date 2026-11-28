@@ -1,28 +1,63 @@
 # ARENAGG
 
-> ARENAGG is an independent community esports website for players interested in Free Fire MAX, BGMI and Valorant. The site publishes community information, game-related updates and completed competition results.
+> ARENAGG is an independent community esports website for discovering online community tournaments in India for Free Fire MAX, BGMI and Valorant. Players can review event details, registration instructions, track registrations and view published results.
+
+## About the platform
 
 - Official website: https://arenagg.live/
-- Website language: English (India)
 - Publisher: ARENAGG
-- Game publisher affiliation: ARENAGG is not affiliated with or endorsed by the publishers of the games featured.
+- Website language: English (India)
+- Focus: online community esports tournaments and player-facing event information
+- Featured games: Free Fire MAX, BGMI and Valorant
+- ARENAGG is independent and is not affiliated with or endorsed by the publishers of the games featured.
 
-## Public informational pages
+## How tournament participation works
 
-- [Homepage](https://arenagg.live/)
+1. Browse the public tournament listings to see currently available events.
+2. Open an event's detail page and read its schedule, format, team size, rules, entry fee and registration instructions.
+3. Use the event's registration form if registration is open. Requirements and fees can vary by event.
+4. Save the registration ID provided after registering and use the public tracking page to check status.
+
+Tournament listings, availability, dates, entry fees, slot counts, status and rules are dynamic. Check the live event page for current details; this file does not guarantee that an event is open or upcoming.
+
+## Public pages
+
+- [Homepage and currently listed tournaments](https://arenagg.live/)
+- [Tournament listings](https://arenagg.live/tournaments)
 - [About ARENAGG](https://arenagg.live/about)
 - [Published results](https://arenagg.live/results)
 - [Contact ARENAGG](https://arenagg.live/contact)
+- [Track a registration](https://arenagg.live/track)
+- [Terms](https://arenagg.live/terms)
+- [Privacy Policy](https://arenagg.live/privacy)
+- [Privacy Request](https://arenagg.live/privacy-request)
 - [Official WhatsApp updates channel](https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q)
+
+## Player FAQs
+
+### Which games are featured?
+Free Fire MAX, BGMI and Valorant community tournaments are featured. The current list of events is shown on the live website.
+
+### Do players need an account?
+Public tournament registration does not require a player account. Follow the instructions on the event registration page.
+
+### How can players check a registration?
+Use https://arenagg.live/track and provide the requested registration information.
+
+### Where are results published?
+Published competition results are available at https://arenagg.live/results.
+
+### Are tournaments free?
+Entry fees vary by tournament. Refer to the individual event details and registration page before registering.
 
 ## Technical resources
 
 - [XML sitemap](https://arenagg.live/sitemap.xml)
 - [Crawler access rules](https://arenagg.live/robots.txt)
 
-## Content and access notes
+## Access and privacy
 
-- Public informational pages describe the ARENAGG community and published results.
-- Tournament, registration, administrative and API routes are not included as public search resources in this index.
-- Do not attempt to access private player, payment or administrative information.
-- This file describes the website; it does not grant permission to bypass access controls or reuse personal information.
+- This file describes public website content; it does not grant permission to bypass access controls.
+- Administrative routes, APIs and private player/payment information are not public resources.
+- Do not attempt to access private administrative, player or payment information.
+- Refer to the website's Privacy Policy and Terms for its published policies.
