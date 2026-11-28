@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createHash } from 'crypto';
 import { supabaseService } from '@/lib/supabase/service';
+import { parseFormDataLimited, RequestBodyTooLargeError } from '@/lib/server-validation';
+import { paymentUtrSchema } from '@/lib/validation';
 
 export const runtime = 'nodejs';
 
@@ -51,9 +53,8 @@ export async function POST(req: NextRequest, context: { params: Promise<{ code: 
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
-  const length = Number(req.headers.get('content-length') || 0);
-  if (length > MAX_BYTES + 64 * 1024) {
-    return NextResponse.json({ error: 'Screenshot is too large. Maximum size is 5 MB.' }, { status: 413 });
+  if (!req.headers.get('content-type')?.toLowerCase().startsWith('multipart/form-data')) {
+    return NextResponse.json({ error: 'Expected a multipart upload.' }, { status: 415 });
   }
 
   const ip = (req.headers.get('x-real-ip') || req.headers.get('x-forwarded-for') || 'unknown')
@@ -72,8 +73,9 @@ export async function POST(req: NextRequest, context: { params: Promise<{ code: 
 
   let form: FormData;
   try {
-    form = await req.formData();
-  } catch {
+    form = await parseFormDataLimited(req, MAX_BYTES + 64 * 1024);
+  } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) return NextResponse.json({ error: 'Screenshot is too large. Maximum size is 5 MB.' }, { status: 413 });
     return NextResponse.json({ error: 'Invalid upload.' }, { status: 400 });
   }
 
@@ -98,7 +100,9 @@ export async function POST(req: NextRequest, context: { params: Promise<{ code: 
   }
 
   const utrRaw = form.get('utr');
-  const utr = typeof utrRaw === 'string' ? utrRaw.trim().slice(0, 40) : '';
+  const utrParsed = typeof utrRaw === 'string' && utrRaw.trim() ? paymentUtrSchema.safeParse(utrRaw) : null;
+  if (utrParsed && !utrParsed.success) return NextResponse.json({ error: 'Enter a valid UTR / transaction reference (6–40 letters or numbers).' }, { status: 422 });
+  const utr = utrParsed?.success ? utrParsed.data : '';
 
   const { data: reg, error: regError } = await sb
     .from('registrations')
