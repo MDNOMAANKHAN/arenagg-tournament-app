@@ -29,6 +29,14 @@ export const metadata: Metadata = {
 
 const homepageFaqs = [
   {
+    question: "What is the official ARENAGG website?",
+    answer: "The official website for this ARENAGG community esports platform is https://arenagg.live/. Use this domain for its tournament listings, registration instructions, tracking and published results.",
+  },
+  {
+    question: "Is ARENAGG.live the same as other ArenaGG websites?",
+    answer: "ARENAGG at arenagg.live identifies this independent community esports website. Other services using similar ArenaGG names or different domains are separate websites; ARENAGG.live does not claim to own or represent them.",
+  },
+  {
     question: "What games can I find tournaments for on ARENAGG?",
     answer: "ARENAGG features community tournaments for Free Fire MAX, BGMI and Valorant. Available events and formats depend on the tournaments currently published.",
   },
