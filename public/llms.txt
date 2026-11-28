@@ -33,7 +33,9 @@ Tournament listings, availability, dates, entry fees, slot counts, status and ru
 - [Privacy Request](https://arenagg.live/privacy-request)
 - [Official WhatsApp updates channel](https://whatsapp.com/channel/0029VbEYQeV6mYPQJ4YFF62Q)
 
-## Search topics and platform information\n\nARENAGG focuses on community-run online esports competitions in India. Tournament formats, game titles, entry fees, schedules, eligibility and open slots are event-specific and are displayed in the current listing. The platform covers Free Fire MAX, BGMI and Valorant community events, registration instructions, player registration status, published tournament results, team standings and competition updates.\n\n## Player FAQs
+## Search topics and platform information
+
+ARENAGG focuses on community-run online esports competitions in India. Tournament formats, game titles, entry fees, schedules, eligibility and open slots are event-specific and are displayed in the current listing. The platform covers Free Fire MAX, BGMI and Valorant community events, registration instructions, player registration status, published tournament results, team standings and competition updates.\n\n## Player FAQs
 
 ### Which games are featured?
 Free Fire MAX, BGMI and Valorant community tournaments are featured. The current list of events is shown on the live website.
