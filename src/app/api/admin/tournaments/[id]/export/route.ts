@@ -9,8 +9,9 @@ const csvCell = (value: unknown) => {
   return `"${text.replace(/"/g, '""')}"`;
 };
 
-export async function GET(_req: NextRequest, context: { params: { id: string } }) {
-  if (!z.string().uuid().safeParse(context.params.id).success) {
+export async function GET(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) {
     return NextResponse.json({ error: 'Invalid tournament ID.' }, { status: 400 });
   }
   const admin = await getAdmin();
@@ -19,7 +20,7 @@ export async function GET(_req: NextRequest, context: { params: { id: string } }
   const { data, error } = await admin.sb
     .from('registrations')
     .select('reg_code,team_name,captain_name,captain_contact,status,created_at,payment_amount,payment_status,payment_utr,payment_proof_path,registration_members(name,gaming_id,role)')
-    .eq('tournament_id', context.params.id)
+    .eq('tournament_id', id
     .order('created_at', { ascending: true });
 
   if (error) {
@@ -45,7 +46,7 @@ export async function GET(_req: NextRequest, context: { params: { id: string } }
   return new NextResponse(csv, {
     headers: {
       'Content-Type': 'text/csv; charset=utf-8',
-      'Content-Disposition': `attachment; filename="arenagg-${context.params.id}-registrations.csv"`,
+      'Content-Disposition': `attachment; filename="arenagg-${id}-registrations.csv"`,
       'Cache-Control': 'private, no-store',
       'X-Content-Type-Options': 'nosniff',
     },
