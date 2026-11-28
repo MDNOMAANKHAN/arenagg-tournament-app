@@ -60,12 +60,28 @@ const homepageFaqs = [
 
 const homepageFaqStructuredData = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: homepageFaqs.map(({ question, answer }) => ({
-    "@type": "Question",
-    name: question,
-    acceptedAnswer: { "@type": "Answer", text: answer },
-  })),
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://arenagg.live/#homepage",
+      url: "https://arenagg.live/",
+      name: "Online Esports Tournaments in India | ARENAGG",
+      description: "Discover online community esports tournaments in India for Free Fire MAX, BGMI and Valorant, and view published results.",
+      inLanguage: "en-IN",
+      isPartOf: { "@id": "https://arenagg.live/#website" },
+      about: { "@id": "https://arenagg.live/#organization" },
+      keywords: ["online esports tournaments India", "online gaming tournaments India", "Free Fire MAX tournaments", "BGMI tournaments", "Valorant tournaments", "community esports", "ARENAGG"],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://arenagg.live/#faq",
+      mainEntity: homepageFaqs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    },
+  ],
 };
 
 type HomeProps = {
@@ -404,6 +420,12 @@ export default async function HomePage({ searchParams }: HomeProps) {
               </article>
             ))}
           </div>
+          <nav aria-label="Explore ARENAGG" className="mt-6 flex flex-wrap gap-3">
+            <Link href="/tournaments" className="arena-glass-button arena-glass-secondary rounded-xl">Browse tournaments</Link>
+            <Link href="/results" className="arena-glass-button arena-glass-secondary rounded-xl">View results</Link>
+            <Link href="/about" className="arena-glass-button arena-glass-secondary rounded-xl">About ARENAGG</Link>
+            <Link href="/contact" className="arena-glass-button arena-glass-secondary rounded-xl">Contact</Link>
+          </nav>
         </section>
 
         <script
