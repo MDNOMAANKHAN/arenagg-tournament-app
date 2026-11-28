@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getAdmin } from '@/lib/auth';
-import { tournamentSchema, matchSchema, resultSchema, regStatusSchema } from '@/lib/validation';
+import { tournamentSchema, tournamentUpdateSchema, matchSchema, matchUpdateSchema, resultSchema, regStatusSchema } from '@/lib/validation';
+import { parseJsonLimited, RequestBodyTooLargeError } from '@/lib/server-validation';
 
 type Cfg = { table: string; create?: z.ZodTypeAny; update?: z.ZodTypeAny; remove?: boolean; conflict?: string };
 const R: Record<string, Cfg> = {
-  tournaments: { table: 'tournaments', create: tournamentSchema, update: tournamentSchema.partial(), remove: true },
+  tournaments: { table: 'tournaments', create: tournamentSchema, update: tournamentUpdateSchema, remove: true },
   registrations: { table: 'registrations', update: regStatusSchema },
-  matches: { table: 'matches', create: matchSchema, update: matchSchema.partial(), remove: true },
+  matches: { table: 'matches', create: matchSchema, update: matchUpdateSchema, remove: true },
   results: { table: 'tournament_results', create: resultSchema, conflict: 'tournament_id,registration_id', remove: true },
 };
 const bad = (error: string, status = 400) => NextResponse.json({ error }, { status });
@@ -47,8 +48,15 @@ async function handle(req: NextRequest, resource: string, op: 'create' | 'update
     if (error) { console.error('Admin delete failed', resource, error.message); return bad('Could not complete this action. Please try again.'); }
     return data?.length ? NextResponse.json({ ok: true }) : bad('Not found or not permitted', 404);
   }
-  const body = await req.json().catch(() => null);
-  if (!body || typeof body !== 'object') return bad('Invalid body');
+  if (!req.headers.get('content-type')?.toLowerCase().includes('application/json')) return bad('Expected JSON request body.', 415);
+  let body: unknown;
+  try {
+    body = await parseJsonLimited(req, 32 * 1024);
+  } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) return bad('Request body is too large.', 413);
+    return bad('Invalid JSON body.', 400);
+  }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return bad('Invalid body');
 
   if (op === 'create') {
     const p = cfg.create!.safeParse(body);
