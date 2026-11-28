@@ -22,7 +22,7 @@ export async function PATCH(req: NextRequest, context: { params: Promise<{ id: s
   if (!parsed.success) return NextResponse.json({ error: 'Invalid status or notes.' }, { status: 422 });
 
   const { data, error } = await admin.sb.from('privacy_requests')
-    .update(parsed.data).eq('id', id
+    .update(parsed.data).eq('id', id)
     .select('id,status').maybeSingle();
   if (error) {
     console.error('Privacy request update failed', error.message);
