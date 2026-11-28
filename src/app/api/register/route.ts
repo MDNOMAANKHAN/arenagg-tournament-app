@@ -70,6 +70,11 @@ export async function POST(req: NextRequest) {
   const length = Number(req.headers.get('content-length') || 0);
   if (length > MAX_BYTES + 100_000) return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
 
+  const ip = (req.headers.get('x-real-ip') || req.headers.get('x-forwarded-for') || 'unknown').split(',')[0].trim().slice(0, 128);
+  const key = 'reg:' + createHash('sha256').update(ip + (process.env.RATE_LIMIT_SALT ?? '')).digest('hex').slice(0, 32);
+  const { data: ok } = await sb.rpc('check_rate_limit', { p_key: key, p_limit: 5, p_window: 600 });
+  if (!ok) return NextResponse.json({ error: 'Too many attempts. Try again in a few minutes.' }, { status: 429 });
+
   let form: FormData;
   try {
     form = await req.formData();
@@ -130,10 +135,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const ip = (req.headers.get('x-real-ip') || req.headers.get('x-forwarded-for') || 'unknown').split(',')[0].trim().slice(0, 128);
-  const key = 'reg:' + createHash('sha256').update(ip + (process.env.RATE_LIMIT_SALT ?? '')).digest('hex').slice(0, 32);
-  const { data: ok } = await sb.rpc('check_rate_limit', { p_key: key, p_limit: 5, p_window: 600 });
-  if (!ok) return NextResponse.json({ error: 'Too many attempts. Try again in a few minutes.' }, { status: 429 });
+
 
   // Upload the proof before creating the registration. If upload fails, no team
   // registration is created. The object is removed if registration creation fails.
