@@ -91,7 +91,7 @@ async function handle(req: NextRequest, resource: string, op: 'create' | 'update
   if (error) { console.error('Admin update failed', resource, error.message); return bad('Could not update this item. Please try again.'); }
   return data?.length ? NextResponse.json({ ok: true }) : bad('Not found or not permitted', 404);
 }
-type Ctx = { params: { resource: string } };
-export const POST = (r: NextRequest, c: Ctx) => handle(r, c.params.resource, 'create');
-export const PATCH = (r: NextRequest, c: Ctx) => handle(r, c.params.resource, 'update');
-export const DELETE = (r: NextRequest, c: Ctx) => handle(r, c.params.resource, 'remove');
+type Ctx = { params: Promise<{ resource: string }> };
+export const POST = async (r: NextRequest, c: Ctx) => handle(r, (await c.params).resource, 'create');
+export const PATCH = async (r: NextRequest, c: Ctx) => handle(r, (await c.params).resource, 'update');
+export const DELETE = async (r: NextRequest, c: Ctx) => handle(r, (await c.params).resource, 'remove');
